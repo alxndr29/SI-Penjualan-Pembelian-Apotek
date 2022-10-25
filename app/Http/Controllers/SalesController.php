@@ -7,14 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use PhpParser\Node\Stmt\Catch_;
-
+use App\Models\Sales;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 class SalesController extends Controller
 {
     public function index()
     {
         $products = DB::table('get_product')->get();
         $customers = Customer::all();
-
         return view('pages.transaksi.penjualan.buat-transaksi-baru', compact('products', 'customers'));
     }
 
@@ -67,8 +68,34 @@ class SalesController extends Controller
     public function store(Request $request)
     {
         //
-        
         try {
+            $sales = new Sales();
+            $sales->customer_id = $request->get('pelanggan');
+            $sales->employee_id = Auth::user()->id;
+            $sales->no_transaction = 1;
+            $sales->transaction_date = Carbon::now();
+            $sales->payment_method = $request->get('metode-pembayaran');
+            if($request->get('metode-pembayaran') == "Cash"){
+                $sales->no_bpjs = "Tidak Ada";
+                $sales->no_bpjs = "Lunass";
+            }else{
+                $sales->no_bpjs = $request->get('nomor-bpjs');
+                $sales->state = "Belum Lunas";
+            }
+            $sales->total = $request->get('total');
+            $sales->save();
+            // return $request->get('data_produk');
+            foreach($request->get('data_produk') as  $value){
+                DB::table('stock_out')->insert([
+                    'sales_order_id' => $sales->id,
+                    'product_id' => $value['id'],
+                    'jumlah' => $value['qty'],
+                    'keuntungan' => 0,
+                    'diskon' => $value['diskon'],
+                    'harga' => $value['harga']
+                ]);
+                // return $value['id'];
+            }
             return response()->json(
                 [
                     'status' => 'ok',
@@ -78,7 +105,7 @@ class SalesController extends Controller
         } catch (\Exception $e) {
             return response()->json(
                 [
-                    'error' => $e,
+                    'error' => $e->getMessage(),
                     'status' => 'bad'
                 ]
             );

@@ -31,7 +31,7 @@
                 <div class="col-3">
                     <label>Pelanggan</label>
                     <select class="js-example-basic-single col-sm-12 form-control-sm" id="pelanggan">
-                        <option value="">Pelanggan Umum</option>
+                        <option value="1">Pelanggan Umum</option>
                         @foreach($customers as $customer)
                         <option value="{{$customer->id}}">{{$customer->name}}</option>
                         @endforeach
@@ -279,7 +279,8 @@
                     'data_produk': daftar_produk_jual,
                     'pelanggan': $("#pelanggan").val(),
                     'metode-pembayaran': $("#metode_penjualan").val(),
-                    'nomor-bpjs': $("#nomor_bpjs").val()
+                    'nomor-bpjs': $("#nomor_bpjs").val(),
+                    'total' : grand_total + ppn - total_disc
                 },
                 success: function(data) {
                     console.log(data);
@@ -356,7 +357,7 @@
         });
         $("#ppn").html('Rp. ' + addCommas(ppn));
         $("#total-harga-barang").html('Rp. ' + addCommas(total_harga_barang));
-        $("#total-potongan-diskon").html('Rp. ' + addComas(total_disc));
+        $("#total-potongan-diskon").html('Rp. ' + addCommas(total_disc));
         $("#grand-total").html('Rp. ' + addCommas(grand_total + ppn - total_disc));
     }
 
