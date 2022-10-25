@@ -9,9 +9,9 @@
                     <option>Credit</option>
                 </select>
                 <select v-model="paymentSelected" name="metode_penjualan" v-else
-                        class="form-select form-control-sm digits w-100" id="exampleFormControlSelect9">
-                    <option>Cash</option>
-                    <option>BPJS</option>
+                        class="form-select form-control-sm digits w-100" id="metode_penjualan">
+                    <option value="Cash">Cash</option>
+                    <option value="BPJS">BPJS</option>
                 </select>
             </div>
             <div class="col-6" v-if="paymentSelected == 'Credit'">
@@ -22,7 +22,7 @@
             </div>
             <div class="col-6" v-if="paymentSelected == 'BPJS'">
                 <label class="form-label" for="exampleFormControlInput1">No.BPJS</label>
-                <input class="form-control" id="exampleFormControlInput1" name="no_bpjs" type="text"
+                <input class="form-control" id="nomor_bpjs" name="no_bpjs" type="text"
                        placeholder="Masukan nomor BPJS">
             </div>
         </div>
