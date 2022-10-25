@@ -13,7 +13,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^9.0",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "4.x-dev"
+        "laravel/ui": "^4.0"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",
