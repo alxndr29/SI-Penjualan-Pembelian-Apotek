@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="mb-4">Total Produk</h6>
-                        <h3 class="mb-4">1566 Produk</h3>
+                        <h3 class="mb-4">{{$products->count()}} Produk</h3>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="mb-4">Total Pendapatan</h6>
+                        <h6 class="mb-4">Total Pendapatan Hari Ini</h6>
                         <h3 class="mb-4">Rp 15.000.000</h3>
                     </div>
                 </div>
@@ -75,18 +75,16 @@
                                 </thead>
                                 <tbody>
                                 @php
-                                    $i = 0;
+                                    $i = 1;
                                 @endphp
                                 @foreach($products as $product)
                                     <tr>
-                                        <td>No</td>
+                                        <td>{{$i++}}</td>
                                         <td>{{$product->nama}}</td>
                                         <td>{{$product->uom}}</td>
                                         <td><span class="fw-bold badge badge-info">{{$product->type}}</span> - {{$product->category}}</td>
                                         <td>{{$product->min_stock}}</td>
                                         <td>15</td>
-                                        <td>{{$product->harga == null ? '0' : $product->harga}}</td>
-                                        <td>{{$product->harga == null ? '0' : $product->harga}}</td>
                                         <td>{{$product->harga == null ? '0' : $product->harga}}</td>
                                         <td>{{$product->harga == null ? '0' : $product->harga}}</td>
                                     </tr>

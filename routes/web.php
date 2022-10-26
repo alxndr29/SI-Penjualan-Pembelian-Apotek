@@ -30,13 +30,12 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::prefix('penjualan')->group(function () {
         Route::resource('transaksi-penjualan', SalesController::class);
         Route::get('riwayat-transaksi',[SalesController::class,'riwayat_transaksi']);
-        Route::get('laporan-transaksi',[SalesController::class,'riwayat_transaksi']);
+        Route::get('laporan-transaksi',[SalesController::class,'viewLaporanBulananPenjualan'])->name('laporan-penjualan');
         Route::get('ambil-data-ajax-produk', [SalesController::class,'ambil_data_ajax_produk'])->name('ambil-data-ajax-produk');
     });
     Route::prefix('pembelian')->group(function () {
         Route::resource('transaksi-pembelian', PurchasesController::class);
-        Route::get('riwayat-transaksi',[PurchasesController::class,'riwayat_transaksi']);
-        Route::get('laporan-transaksi',[SalesController::class,'riwayat_transaksi']);
+        Route::get('laporan-transaksi',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian');
     });
 });
 Route::prefix('penyimpanan')->middleware('auth')->group(function (){

@@ -132,4 +132,9 @@ class SalesController extends Controller
     {
         //
     }
+    //Custom Function
+    public function viewLaporanBulananPenjualan()
+    {
+        return view('pages.transaksi.penjualan.laporan-bulanan');
+    }
 }

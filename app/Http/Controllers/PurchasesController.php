@@ -43,4 +43,11 @@ class PurchasesController extends Controller
     {
         //
     }
+
+    // Custom Function
+
+    public function viewLaporanBulananPembelian()
+    {
+        return view('pages.transaksi.pembelian.laporan-bulanan');
+    }
 }

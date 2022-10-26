@@ -74,6 +74,12 @@
                                     <input class="form-control" type="text" placeholder="1"><span class="input-group-text">%</span>
                                 </div>
                             </div>
+                            <div class="col-lg-12 col-xl-12 col-xxl-12">
+                                <label class="col-form-label">Harga Pembelian</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span><input class="form-control" style="text-align: right;" type="text" placeholder="Masukan Harga Pembelian : Ex. 50.000">
+                                </div>
+                            </div>
                         </div>
 
                         <hr class="mt-4 mb-4">
@@ -181,6 +187,8 @@
             </div>
         </div>
     </div>
+    <x-modal-large title="Tambah Data Pelanggan"></x-modal-large>
+    <x-modal-large title="Penyimpanan Barang"></x-modal-large>
 @endsection
 
 @section('script')
