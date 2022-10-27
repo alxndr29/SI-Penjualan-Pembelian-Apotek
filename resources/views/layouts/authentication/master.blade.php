@@ -9,18 +9,18 @@
     <meta name="author" content="pixelstrap">
     <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
     <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
-     <title>Cuba - Premium Admin Template - @yield('title')</title>
+     <title>Sistem Informasi Apotek Paramel - @yield('title')</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
-    
+
     @include('layouts.authentication.css')
-    @yield('style') 
+    @yield('style')
   </head>
   <body>
     <!-- login page start-->
-    @yield('content')  
+    @yield('content')
     <!-- latest jquery-->
-    @include('layouts.authentication.script') 
+    @include('layouts.authentication.script')
   </body>
 </html>
