@@ -6,14 +6,14 @@
 @endsection
 
 @section('breadcrumb-title')
-    <h3>Hutang</h3>
+    <h3>Daftar Hutang</h3>
 @endsection
 
 @section('breadcrumb-items')
     <li class="breadcrumb-item">
         Keuangan
     </li>
-    <li class="breadcrumb-item active">Hutang</li>
+    <li class="breadcrumb-item active">Daftar Hutang</li>
 @endsection
 
 @section('content')
@@ -41,19 +41,23 @@
                                 @php
                                     $i = 0;
                                 @endphp
-                                <tr>
-                                    <td>1</td>
-                                    <td class="text-primary fw-bolder">PO-00001</td>
-                                    <td>PT Jaya Abadi</td>
-                                    <td>20-10-2022 13:05:05</td>
-                                    <td>20-10-2022 13:05:05</td>
-                                    <td>Rp. 15.000</td>
-                                    <td><span class="badge badge-success">Lunas (20-10-2022 13:05:05)</span> </td>
-                                    <td>
-                                        <a class="btn btn-primary btn-xl me-2">Set Status</a>
-                                        <a class="btn btn-outline-info btn-xl me-2">Detail Order</a>
-                                    </td>
-                                </tr>
+                                @foreach($data_hutang as $hutang)
+                                    <tr>
+                                        <td>{{$i+=1}}</td>
+                                        <td class="text-primary fw-bolder">PO-000{{$hutang->no_transaction}}</td>
+                                        <td>{{$hutang->supplier->name}}</td>
+                                        <td>{{$hutang->created_at}}</td>
+                                        <td>{{ \Carbon\Carbon::parse($hutang->tanggal_jatuh_tempo)->format('d M y') }}</td>
+                                        <td> Rp. {{number_format($hutang->total,0,',','.') }}</td>
+                                        <td><span class="badge {{$hutang->state == 'Lunas' ? 'badge-success' : 'badge-danger'}}">{{$hutang->state}} ({{date('d-M-Y',strtotime($hutang->tanggal_pelunasan))}})</span> </td>
+                                        <td>
+                                            <a class="btn btn-primary btn-xl me-2" {{$hutang->state == 'lunas' ? 'hidden' : ''}} data-bs-toggle="modal"
+                                               data-bs-target=".bd-example-modal-lg">Set Status</a>
+                                            <a class="btn btn-outline-info btn-xl me-2">Detail Order</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
 
                                 {{--                                @foreach($suppliers as $supplier)--}}
                                 {{--                                    <tr>--}}
@@ -86,6 +90,7 @@
             </div>
         </div>
     </div>
+    <x-modal-large title="Ubah Status"></x-modal-large>
 @endsection
 
 @section('script')

@@ -137,4 +137,5 @@ class SalesController extends Controller
     {
         return view('pages.transaksi.penjualan.laporan-bulanan');
     }
+
 }

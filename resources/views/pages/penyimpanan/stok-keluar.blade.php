@@ -31,33 +31,25 @@
                                     <th>No.Transaksi</th>
                                     <th>Produk</th>
                                     <th>Pelanggan</th>
-                                    <th>Jenis & Kategori</th>
                                     <th>Jumlah Stok Dikeluarkan</th>
                                     <th>Harga</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @php
-                                    $i = 0;
+                                    $i = 1;
                                 @endphp
-                                <tr>
-                                    <td>1</td>
-                                    <td class="text-danger fw-bolder" >SO-00001</td>
-                                    <td>Panadol Extra</td>
-                                    <td>Pelanggan Umum</td>
-                                    <td><span class="fw-bold badge badge-primary">Obat-Obatan</span> - Vitamin C</td>
-                                    <td>10 Strip</td>
-                                    <td>Rp. 15.000</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="text-danger fw-bolder" >SO-00001</td>
-                                    <td>Panadol Extra D</td>
-                                    <td>Pelanggan Umum</td>
-                                    <td><span class="fw-bold badge badge-primary">Obat-Obatan</span> - Vitamin C</td>
-                                    <td>15 Strip</td>
-                                    <td>Rp. 10.000</td>
-                                </tr>
+                                @foreach($stockOut as $item)
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td class="text-danger fw-bolder" >{{$item->no_transaction}}</td>
+                                        <td>{{$item->nama}}</td>
+                                        <td>{{$item->no_transaction}}</td>
+                                        <td>{{$item->jumlah}}</td>
+                                        <td>Rp. {{$item->harga}}</td>
+                                    </tr>
+                                @endforeach
+
 {{--                                @foreach($suppliers as $supplier)--}}
 {{--                                    <tr>--}}
 {{--                                        <td>{{$i+= 1}}</td>--}}

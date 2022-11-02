@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Purchase extends Model
 {
     protected $table = 'purchase_order';
-    protected $fillable = ['supplier_id','employe_id','no_transaction','transaction_date','payment_method','total','state'];
+    protected $fillable = ['supplier_id','employe_id','no_transaction','tanggal_jatuh_tempo','tanggal_pelunasan', 'transaction_date','payment_method','total','state'];
 
     public function supplier()
     {
@@ -23,4 +25,5 @@ class Purchase extends Model
     {
         return $this->hasMany(StockIN::class);
     }
+
 }

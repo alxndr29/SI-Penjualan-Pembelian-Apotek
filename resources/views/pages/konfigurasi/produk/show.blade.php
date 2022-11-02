@@ -44,18 +44,18 @@
                                 <span>Satuan</span>
                                 <h5>{{$product->UOM->name}}</h5>
                             </div>
-{{--                            <div>--}}
-{{--                                <span>Batas Minimum Stok</span>--}}
-{{--                                <h5>5 Produk</h5>--}}
-{{--                            </div>--}}
-{{--                            <div>--}}
-{{--                                <span>Diskon</span>--}}
-{{--                                <h5>5%</h5>--}}
-{{--                            </div>--}}
-{{--                            <div>--}}
-{{--                                <span>Keuntungan yang diambil</span>--}}
-{{--                                <h5>5%</h5>--}}
-{{--                            </div>--}}
+                            {{--                            <div>--}}
+                            {{--                                <span>Batas Minimum Stok</span>--}}
+                            {{--                                <h5>5 Produk</h5>--}}
+                            {{--                            </div>--}}
+                            {{--                            <div>--}}
+                            {{--                                <span>Diskon</span>--}}
+                            {{--                                <h5>5%</h5>--}}
+                            {{--                            </div>--}}
+                            {{--                            <div>--}}
+                            {{--                                <span>Keuntungan yang diambil</span>--}}
+                            {{--                                <h5>5%</h5>--}}
+                            {{--                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -76,10 +76,18 @@
                     <div class="card-body">
                         <h4 class="mb-4">Stok Masuk</h4>
                         <div class="table-responsive">
-                            <table class="display" id="basic-1">
+                            <table class="cell-border" style="min-width: 100%" id="basic-1">
                                 <thead>
-                                <tr class="fs-sm-6">
-                                    <th>No</th>
+{{--                                <tr class="d-flex">--}}
+{{--                                    <th class="col-1">No</th>--}}
+{{--                                    <th class="col-3">Nomor Transaksi</th>--}}
+{{--                                    <th class="col-3">Supplier</th>--}}
+{{--                                    <th class="col-3">Expired Date</th>--}}
+{{--                                    <th>Tanggal Masuk</th>--}}
+{{--                                    <th>Jumlah</th>--}}
+{{--                                    <th>Harga Beli</th>--}}
+{{--                                </tr>--}}
+                                <tr>
                                     <th>Nomor Transaksi</th>
                                     <th>Supplier</th>
                                     <th>Expired Date</th>
@@ -94,48 +102,17 @@
                                 @endphp
                                 @for($i; $i < 100; $i++)
                                     <tr>
-                                        <th>{{$i}}</th>
-                                        <th>PO-001</th>
-                                        <th>Supplier A</th>
-                                        <th>20-10-2022</th>
-                                        <th>01-10-2022 16:06:05</th>
-                                        <th></th>
-                                        <th>Harga Beli</th>
+                                        <td>PO-0{{$i < 10 ? '0'.$i : $i}}</td>
+                                        <td>Supplier A</td>
+                                        <td>20-10-2022</td>
+                                        <td>01-10-2022 16:06:05</td>
+                                        <td>15 Strip</td>
+                                        <td>Rp. 150.000</td>
                                     </tr>
-                                @endforeach
+                                @endfor
+                                </tbody>
 
 
-                                {{--                            @foreach($products as $product)--}}
-                                {{--                                <tr>--}}
-                                {{--                                    <td>{{$i += 1}}</td>--}}
-                                {{--                                    <td style="font-size: 11px">{{$product->nama}}</td>--}}
-                                {{--                                    <td>{{$product->uom}}</td>--}}
-                                {{--                                    <td>{{$product->type}}</td>--}}
-                                {{--                                    <td>{{$product->category}}</td>--}}
-                                {{--                                    <td class="text-center">{{ $product->min_stock != 0 ? $product->min_stock : '0'}}</td>--}}
-                                {{--                                    <td class="text-center">{{$product->keuntungan}} %</td>--}}
-                                {{--                                    <td class="text-center">{{$product->diskon}} %</td>--}}
-                                {{--                                    <td class="text-center">--}}
-                                {{--                                        Rp. {{number_format($product->harga * 1.45,0,',','.') }}</td>--}}
-                                {{--                                    <td>--}}
-                                {{--                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"--}}
-                                {{--                                              action="{{ route('daftar-produk.destroy', $product->id) }}"--}}
-                                {{--                                              method="POST">--}}
-                                {{--                                            <a href="{{route('daftar-produk.show', $product->id)}}"--}}
-                                {{--                                               class="btn btn-info btn-sm">Detail</a>--}}
-                                {{--                                            <a href="{{route('daftar-produk.edit', $product->id)}}"--}}
-                                {{--                                               class="btn btn-warning btn-sm">Edit</a>--}}
-                                {{--                                            @csrf--}}
-                                {{--                                            @method('DELETE')--}}
-                                {{--                                            <button class="btn btn-danger btn-sm" type="submit">--}}
-                                {{--                                                Delete--}}
-                                {{--                                            </button>--}}
-                                {{--                                        </form>--}}
-                                {{--                                    </td>--}}
-                                {{--                                </tr>--}}
-                                {{--                            @endforeach--}}
-
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -146,70 +123,32 @@
                     <div class="card-body">
                         <h4 class="mb-4">Stok Keluar</h4>
                         <div class="table-responsive">
-                            <table class="display" id="basic-1">
+                            <table class="display" id="basic-2">
                                 <thead>
                                 <tr class="fs-sm-6">
                                     <th>No</th>
-                                    <th>Nama Produk</th>
-                                    <th>Satuan</th>
-                                    <th>Jenis & Kategori</th>
-                                    <th>Tanggal Expired</th>
-                                    <th>Sisa Stok</th>
+                                    <th>Nomor Transaksi</th>
+                                    <th>Pelanggan</th>
+                                    <th>Tanggal Keluar</th>
+                                    <th>Jumlah</th>
                                     <th>Harga Jual</th>
-                                    <th>Harga Beli</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @php
-                                    $i = 0;
+                                    $i = 1;
                                 @endphp
-                                @foreach($products as $product)
+                                @for($i; $i < 100; $i++)
                                     <tr>
-                                        <td>No</td>
-                                        <td>{{$product->nama}}</td>
-                                        <td>{{$product->uom}}</td>
-                                        <td><span class="fw-bold badge badge-info">{{$product->type}}</span> - {{$product->category}}</td>
-                                        <td>{{$product->min_stock}}</td>
-                                        <td>15</td>
-                                        <td>{{$product->harga == null ? '0' : $product->harga}}</td>
-                                        <td>{{$product->harga == null ? '0' : $product->harga}}</td>
-                                        <td>{{$product->harga == null ? '0' : $product->harga}}</td>
-                                        <td>{{$product->harga == null ? '0' : $product->harga}}</td>
+                                        <td>{{$i}}</td>
+                                        <td>SO-0{{$i}}</td>
+                                        <td>Pelanggan Umum</td>
+                                        <td>01-10-2022 16:06:05</td>
+                                        <td>15 Item</td>
+                                        <td>Rp. 15.000</td>
                                     </tr>
-                                @endforeach
-
-
-                                {{--                            @foreach($products as $product)--}}
-                                {{--                                <tr>--}}
-                                {{--                                    <td>{{$i += 1}}</td>--}}
-                                {{--                                    <td style="font-size: 11px">{{$product->nama}}</td>--}}
-                                {{--                                    <td>{{$product->uom}}</td>--}}
-                                {{--                                    <td>{{$product->type}}</td>--}}
-                                {{--                                    <td>{{$product->category}}</td>--}}
-                                {{--                                    <td class="text-center">{{ $product->min_stock != 0 ? $product->min_stock : '0'}}</td>--}}
-                                {{--                                    <td class="text-center">{{$product->keuntungan}} %</td>--}}
-                                {{--                                    <td class="text-center">{{$product->diskon}} %</td>--}}
-                                {{--                                    <td class="text-center">--}}
-                                {{--                                        Rp. {{number_format($product->harga * 1.45,0,',','.') }}</td>--}}
-                                {{--                                    <td>--}}
-                                {{--                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"--}}
-                                {{--                                              action="{{ route('daftar-produk.destroy', $product->id) }}"--}}
-                                {{--                                              method="POST">--}}
-                                {{--                                            <a href="{{route('daftar-produk.show', $product->id)}}"--}}
-                                {{--                                               class="btn btn-info btn-sm">Detail</a>--}}
-                                {{--                                            <a href="{{route('daftar-produk.edit', $product->id)}}"--}}
-                                {{--                                               class="btn btn-warning btn-sm">Edit</a>--}}
-                                {{--                                            @csrf--}}
-                                {{--                                            @method('DELETE')--}}
-                                {{--                                            <button class="btn btn-danger btn-sm" type="submit">--}}
-                                {{--                                                Delete--}}
-                                {{--                                            </button>--}}
-                                {{--                                        </form>--}}
-                                {{--                                    </td>--}}
-                                {{--                                </tr>--}}
-                                {{--                            @endforeach--}}
-
-                                </tfoot>
+                                @endfor
+                                </tbody>
                             </table>
                         </div>
                     </div>

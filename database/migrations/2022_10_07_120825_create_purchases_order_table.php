@@ -15,7 +15,7 @@ class CreatePurchasesOrderTable extends Migration
             $table->string('no_transaction',8);
             $table->dateTime('transaction_date');
             $table->enum('payment_method',['Tunai','Kredit']);
-            $table->dateTime('tanggal_jatuh_tempo');
+            $table->date('tanggal_jatuh_tempo');
             $table->dateTime('tanggal_pelunasan');
             $table->double('total');
             $table->enum('state',['Lunas','Belum Lunas','Draft']);

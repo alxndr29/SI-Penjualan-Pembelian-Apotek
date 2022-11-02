@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
+use Illuminate\Support\Facades\DB;
+
 class KeuanganController extends Controller
 {
     public function hutangView()
     {
-        return view('pages.keuangan.hutang');
+        $data_hutang = Purchase::with('supplier')->
+        where('payment_method', '=', 'Kredit')->get();
+
+        return view('pages.keuangan.hutang',compact('data_hutang'));
     }
     public function piutangView()
     {
