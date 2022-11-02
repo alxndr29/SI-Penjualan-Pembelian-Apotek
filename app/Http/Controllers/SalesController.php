@@ -10,6 +10,8 @@ use PhpParser\Node\Stmt\Catch_;
 use App\Models\Sales;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use App\Models\StockIN;
+
 class SalesController extends Controller
 {
     public function index()
@@ -68,6 +70,7 @@ class SalesController extends Controller
     public function store(Request $request)
     {
         //
+        // return $request->all();
         try {
             $sales = new Sales();
             $sales->customer_id = $request->get('pelanggan');
@@ -75,17 +78,17 @@ class SalesController extends Controller
             $sales->no_transaction = 1;
             $sales->transaction_date = Carbon::now();
             $sales->payment_method = $request->get('metode-pembayaran');
-            if($request->get('metode-pembayaran') == "Cash"){
+            if ($request->get('metode-pembayaran') == "Cash") {
                 $sales->no_bpjs = "Tidak Ada";
                 $sales->no_bpjs = "Lunass";
-            }else{
+            } else {
                 $sales->no_bpjs = $request->get('nomor-bpjs');
                 $sales->state = "Belum Lunas";
             }
             $sales->total = $request->get('total');
             $sales->save();
             // return $request->get('data_produk');
-            foreach($request->get('data_produk') as  $value){
+            foreach ($request->get('data_produk') as  $value) {
                 DB::table('stock_out')->insert([
                     'sales_order_id' => $sales->id,
                     'product_id' => $value['id'],
@@ -94,7 +97,31 @@ class SalesController extends Controller
                     'diskon' => $value['diskon'],
                     'harga' => $value['harga']
                 ]);
-                // return $value['id'];
+                $stok_in = StockIN::where('product_id', $value['id'])->orderBy('expired_date', 'asc')->get();
+                // for ($i = 0; $i <= count($stok_in); $i++) {
+                //     $stok = $stok_in[$i]->jumlah;
+                //     if ($stok != 0 && (($stok - $value['qty']) <= $stok)) {
+                //         $s = StockIN::where('product_id', '=', $value['id'])->first();
+                //         $s->jumlah = $stok - $value['qty'];
+                //         $s->save();
+                //     } else {
+                //         $s = StockIN::where('product_id', '=', $value['id'])->first();
+                //         $s->jumlah = 0;
+                //         $s->save();
+                //     }
+                // }
+                foreach ($stok_in as $key => $value2) {
+                    $stok = $value2->jumlah;
+                    if ($stok != 0 && (($stok - $value['qty']) <= $stok)) {
+                        $s = StockIN::where('product_id', '=', $value['id'])->first();
+                        $s->jumlah = $stok - $value['qty'];
+                        $s->save();
+                    } else {
+                        $s = StockIN::where('product_id', '=', $value['id'])->first();
+                        $s->jumlah = 0;
+                        $s->save();
+                    }
+                }
             }
             return response()->json(
                 [
@@ -110,7 +137,6 @@ class SalesController extends Controller
                 ]
             );
         }
-
     }
 
     public function show($id)
@@ -137,5 +163,4 @@ class SalesController extends Controller
     {
         return view('pages.transaksi.penjualan.laporan-bulanan');
     }
-
 }
