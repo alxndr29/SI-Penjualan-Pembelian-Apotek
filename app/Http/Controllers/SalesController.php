@@ -87,7 +87,7 @@ class SalesController extends Controller
             }
             $sales->total = $request->get('total');
             $sales->save();
-            // return $request->get('data_produk');
+
             foreach ($request->get('data_produk') as  $value) {
                 DB::table('stock_out')->insert([
                     'sales_order_id' => $sales->id,
@@ -95,31 +95,29 @@ class SalesController extends Controller
                     'jumlah' => $value['qty'],
                     'keuntungan' => 0,
                     'diskon' => $value['diskon'],
-                    'harga' => $value['harga']
+                    'harga' => $value['harga'],
+                    'keuntungan' => $value['keuntungan']
                 ]);
                 $stok_in = StockIN::where('product_id', $value['id'])->orderBy('expired_date', 'asc')->get();
-                // for ($i = 0; $i <= count($stok_in); $i++) {
-                //     $stok = $stok_in[$i]->jumlah;
-                //     if ($stok != 0 && (($stok - $value['qty']) <= $stok)) {
-                //         $s = StockIN::where('product_id', '=', $value['id'])->first();
-                //         $s->jumlah = $stok - $value['qty'];
-                //         $s->save();
-                //     } else {
-                //         $s = StockIN::where('product_id', '=', $value['id'])->first();
-                //         $s->jumlah = 0;
-                //         $s->save();
-                //     }
-                // }
+                $kebutuhan = (int) $value['qty'];
                 foreach ($stok_in as $key => $value2) {
-                    $stok = $value2->jumlah;
-                    if ($stok != 0 && (($stok - $value['qty']) <= $stok)) {
-                        $s = StockIN::where('product_id', '=', $value['id'])->first();
-                        $s->jumlah = $stok - $value['qty'];
-                        $s->save();
-                    } else {
-                        $s = StockIN::where('product_id', '=', $value['id'])->first();
-                        $s->jumlah = 0;
-                        $s->save();
+                    $stok = (int) $value2->jumlah;
+                    // return $kebutuhan-$stok;
+                    //  return "Pengurangan"." ".$stok." dan ".$kebutuhan." adalah :". $stok-$kebutuhan;
+                    // return $stok - $kebutuhan;
+                    if ($stok != 0 && ($stok >= $kebutuhan)) {
+                        $stok_in = StockIN::where('product_id', '=', $value['id'])->where('id','=',$value2->id)->first();
+                        $stok_in->jumlah = $stok-$kebutuhan;
+                        $stok_in->save();
+                        $kebutuhan = $stok-$kebutuhan;
+                        break;
+                    } else if ($stok != 0 && ($stok < $kebutuhan)) {
+                        $stok_in = StockIN::where('product_id', '=', $value['id'])->where('id', '=', $value2->id)->first();
+                        $stok_in->jumlah = 0;
+                        $stok_in->save();
+                        $kebutuhan = $kebutuhan - $stok;
+                    } else { 
+
                     }
                 }
             }

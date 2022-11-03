@@ -251,6 +251,7 @@
                                 daftar_produk_jual[counter].id = v.id;
                                 daftar_produk_jual[counter].jumlah_stok = v.jumlah_stok;
                                 daftar_produk_jual[counter].nama = v.nama;
+                                daftar_produk_jual[counter].keuntungan = v.keuntungan;
                                 daftar_produk_jual[counter].product_category_id = v.product_category_id;
                                 daftar_produk_jual[counter].product_type_id = v.product_type_id;
                                 daftar_produk_jual[counter].product_uom_id = v.product_uom_id;
@@ -280,7 +281,7 @@
                     'pelanggan': $("#pelanggan").val(),
                     'metode-pembayaran': $("#metode_penjualan").val(),
                     'nomor-bpjs': $("#nomor_bpjs").val(),
-                    'total' : grand_total + ppn - total_disc
+                    'total': grand_total + ppn - total_disc
                 },
                 success: function(data) {
                     console.log(data);
@@ -334,10 +335,12 @@
         total_harga_barang = 0;
         grand_total = 0;
         ppn = 0;
+        // daftar_produk_jual.flat(Infinity);
+        daftar_produk_jual = daftar_produk_jual.filter(Boolean);
         $.each(daftar_produk_jual, function(i, v) {
             $("#tabel-daftar-produk").append(
                 '<tr>' +
-                '<td>' + (i+=1) + '</td>' +
+                '<td>' + (i += 1) + '</td>' +
                 '<td>' + v.nama + '</td>' +
                 '<td>Rp.' + addCommas(v.harga) + '</td>' +
                 '<td>' + v.qty + '</td>' +
@@ -353,7 +356,7 @@
             total_harga_barang += v.harga * v.qty;
             grand_total += v.harga * v.qty;
             ppn = total_harga_barang * 0.10;
-            total_disc += (v.harga * v.qty * v.diskon / 100) ;
+            total_disc += (v.harga * v.qty * v.diskon / 100);
         });
         $("#ppn").html('Rp. ' + addCommas(ppn));
         $("#total-harga-barang").html('Rp. ' + addCommas(total_harga_barang));
@@ -366,6 +369,7 @@
         $.each(daftar_produk_jual, function(i, v) {
             if (id == v.id) {
                 daftar_produk_jual.splice(i, 1);
+                console.table(daftar_produk_jual);
                 show_data();
                 return false;
             }
