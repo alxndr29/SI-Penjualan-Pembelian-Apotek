@@ -40,7 +40,7 @@
                         </a>
                         <ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == 'transaksi/penjualan' ? 'block;' : 'none;' }}">
                             <li><a class="lan-4 {{ Route::currentRouteName()=='transaksi-penjualan.index' ? 'active' : '' }}" href="{{route('transaksi-penjualan.index')}}">Buat Transaksi Baru</a></li>
-                            <li><a class="lan-4 {{ Route::currentRouteName()=='index' ? 'active' : '' }}" href="{{route('index')}}">Transaksi Hari Ini</a></li>
+                            <li><a class="lan-4 {{ Route::currentRouteName()=='riwayat-penjualan' ? 'active' : '' }}" href="{{route('riwayat-penjualan')}}">Transaksi Hari Ini</a></li>
                             <li><a class="lan-5 {{ Route::currentRouteName()=='laporan-penjualan' ? 'active' : '' }}" href="{{route('laporan-penjualan')}}">Laporan Bulanan</a></li>
                         </ul>
                     </li>

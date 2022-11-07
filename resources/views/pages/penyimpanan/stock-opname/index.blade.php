@@ -23,9 +23,7 @@
                 <div class="card p-4">
                     <div class="row">
                         <div class="col">
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                    data-bs-target=".bd-example-modal-lg">Create
-                            </button>
+                            <a href="{{route('stock-opname.create')}}" class="btn btn-primary">Create</a>
                         </div>
                     </div>
                 </div>

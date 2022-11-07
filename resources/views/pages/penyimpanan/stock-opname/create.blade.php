@@ -23,10 +23,22 @@
             <div class="col-sm-12">
                 <div class="card p-4">
                     <div class="row">
-                        <div class="col">
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                    data-bs-target=".bd-example-modal-lg">Create
-                            </button>
+                        <div class="col-3">
+                            <label class="form-label" for="exampleFormControlSelect9">Tanggal Mulai Pemeriksaan</label>
+                            <div class="input-group">
+                                <input class="datepicker-here form-control digits" type="date">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label" for="exampleFormControlSelect9">Tanggal Berakhir
+                                Pemeriksaan</label>
+                            <div class="input-group">
+                                <input class="datepicker-here form-control digits" type="date">
+                            </div>
+                        </div>
+                        <div class="col-6 d-flex justify-content-end">
+                            <button class="btn btn-lg btn-outline-dark mt-4 me-2">Simpan sebagai draft</button>
+                            <button class="btn btn-lg btn-primary mt-4 ">Simpan Data</button>
                         </div>
                     </div>
                 </div>
@@ -36,56 +48,62 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="display" id="basic-1">
+                            <table class="cell-border" id="basic-1">
                                 <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No.Adjusting</th>
-                                    <th>Bulan</th>
-                                    <th>Mulai Tanggal</th>
-                                    <th>S/D Tanggal</th>
-                                    <th>Operator</th>
-                                    <th>Aksi</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jenis & Kategori</th>
+                                    <th>Harga Jual</th>
+                                    <th>Stok Sistem</th>
+                                    <th>Stok Aktual</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @php
                                     $i = 0;
                                 @endphp
-                                <tr>
-                                    <td>1</td>
-                                    <td>OPN-0001</td>
-                                    <td>Januari</td>
-                                    <td>22-06-2022</td>
-                                    <td>30-06-2022</td>
-                                    <td>Pegawai A</td>
-                                    <td> <a href=""
-                                            class="btn btn-primary btn-sm me-2">Detail Barang</a></td>
-                                </tr>
-{{--                                @foreach($suppliers as $supplier)--}}
-{{--                                    <tr>--}}
-{{--                                        <td>{{$i+= 1}}</td>--}}
-{{--                                        <td>{{$supplier->name}}</td>--}}
-{{--                                        <td>{{$supplier->address}}</td>--}}
-{{--                                        <td>{{$supplier->telephone}}</td>--}}
-{{--                                        <td>--}}
-{{--                                            <span class="badge badge-{{$supplier->status == 0 ? 'danger' : 'success'}}">{{$supplier->status == 0 ? 'Tidak Aktif' : 'Aktif'}}</span>--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"--}}
-{{--                                                  action="{{ route('supplier.destroy', $supplier->id) }}" method="POST">--}}
-{{--                                                <a href="{{route('supplier.edit', $supplier->id)}}" class="btn btn-warning btn-xl me-2">Edit</a>--}}
-{{--                                                @csrf--}}
-{{--                                                @method('DELETE')--}}
-{{--                                                <button class="btn btn-danger btn-xs" type="submit"--}}
-{{--                                                        data-original-title="btn btn-danger btn-xs" title=""--}}
-{{--                                                        data-bs-original-title="">Delete--}}
-{{--                                                </button>--}}
-{{--                                            </form>--}}
+                                @for($i = 1; $i<100;$i++)
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Paramex {{$i}}</td>
+                                        <td><span class="fw-bold badge badge-info"></span> -</td>
+                                        <td>Rp. 15.000</td>
+                                        <td>5 Strip</td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input class="form-control" type="number" min="0" value="0" placeholder="Masukan Jumlah Stok Aktual"
+                                                       id="jumlah-pembelian-produk">
+                                                <span class="input-group-text" id="detail-produk-satuan">UOM</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endfor
 
-{{--                                        </td>--}}
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
+                                {{--                                @foreach($suppliers as $supplier)--}}
+                                {{--                                    <tr>--}}
+                                {{--                                        <td>{{$i+= 1}}</td>--}}
+                                {{--                                        <td>{{$supplier->name}}</td>--}}
+                                {{--                                        <td>{{$supplier->address}}</td>--}}
+                                {{--                                        <td>{{$supplier->telephone}}</td>--}}
+                                {{--                                        <td>--}}
+                                {{--                                            <span class="badge badge-{{$supplier->status == 0 ? 'danger' : 'success'}}">{{$supplier->status == 0 ? 'Tidak Aktif' : 'Aktif'}}</span>--}}
+                                {{--                                        </td>--}}
+                                {{--                                        <td>--}}
+                                {{--                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"--}}
+                                {{--                                                  action="{{ route('supplier.destroy', $supplier->id) }}" method="POST">--}}
+                                {{--                                                <a href="{{route('supplier.edit', $supplier->id)}}" class="btn btn-warning btn-xl me-2">Edit</a>--}}
+                                {{--                                                @csrf--}}
+                                {{--                                                @method('DELETE')--}}
+                                {{--                                                <button class="btn btn-danger btn-xs" type="submit"--}}
+                                {{--                                                        data-original-title="btn btn-danger btn-xs" title=""--}}
+                                {{--                                                        data-bs-original-title="">Delete--}}
+                                {{--                                                </button>--}}
+                                {{--                                            </form>--}}
+
+                                {{--                                        </td>--}}
+                                {{--                                    </tr>--}}
+                                {{--                                @endforeach--}}
                             </table>
                         </div>
                     </div>

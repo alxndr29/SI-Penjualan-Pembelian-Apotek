@@ -55,10 +55,8 @@
 
                         <label class="col-form-label">Jumlah</label>
                         <div class="input-group">
-
                             <input class="form-control" type="number" placeholder="0" id="jumlah-pembelian-produk">
                             <span class="input-group-text" id="detail-produk-satuan">UOM</span>
-
                         </div>
                     </div>
                     <hr class="mt-4 mb-4">

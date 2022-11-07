@@ -42,20 +42,23 @@
                                 @php
                                     $i = 0;
                                 @endphp
-                                <tr>
-                                    <td>1</td>
-                                    <td class="text-primary fw-bolder">PO-00001</td>
-                                    <td>Pelanggan A</td>
-                                    <td>151231231</td>
-                                    <td>20-10-2022 13:05:05</td>
-                                    <td>20-10-2022 13:05:05</td>
-                                    <td>Rp. 15.000</td>
-                                    <td><span class="badge badge-success">Lunas (20-10-2022 13:05:05)</span> </td>
-                                    <td>
-                                        <a class="btn btn-primary btn-xl me-2">Set Status</a>
-                                        <a class="btn btn-outline-info btn-xl me-2">Detail Order</a>
-                                    </td>
-                                </tr>
+                                @foreach($data_piutang as $items)
+                                    <tr>
+                                        <td>1</td>
+                                        <td class="text-danger fw-bolder">{{$items->no_transaction}}</td>
+                                        <td>{{$items->Customer->name}}</td>
+                                        <td>{{$items->no_bpjs}}</td>
+                                        <td>20-10-2022 13:05:05</td>
+                                        <td>20-10-2022 13:05:05</td>
+                                        <td>Rp. 15.000</td>
+                                        <td><span class="badge badge-success">Lunas (20-10-2022 13:05:05)</span> </td>
+                                        <td>
+                                            <a class="btn btn-primary btn-xl me-2">Set Status</a>
+                                            <a class="btn btn-outline-info btn-xl me-2">Detail Order</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
 
                                 {{--                                @foreach($suppliers as $supplier)--}}
                                 {{--                                    <tr>--}}

@@ -26,8 +26,7 @@ class PenyimpananController extends Controller
 //            ->join('products as p', 's.product_id', '=', 'p.id')
 //            ->select('so.*', 'p.*', 's.*')
 //            ->get();
-        $stockOut = StockOut::with('product','sales_order')->get();
-        dd($stockOut);
+        $stockOut = StockOut::with('Product','SalesOrder')->get();
         $uoms = ProductUOM::pluck('id', 'name');
         return view('pages.penyimpanan.stok-keluar', compact('stockOut', 'uoms'));
     }

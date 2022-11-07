@@ -51,7 +51,7 @@
                                         <td> Rp. {{number_format($hutang->total,0,',','.') }}</td>
                                         <td><span class="badge {{$hutang->state == 'Lunas' ? 'badge-success' : 'badge-danger'}}">{{$hutang->state}} ({{date('d-M-Y',strtotime($hutang->tanggal_pelunasan))}})</span> </td>
                                         <td>
-                                            <a class="btn btn-primary btn-xl me-2" {{$hutang->state == 'lunas' ? 'hidden' : ''}} data-bs-toggle="modal"
+                                            <a class="btn btn-primary btn-xl me-2" {{$hutang->state == 'Lunas' ? 'hidden' : ''}} data-bs-toggle="modal"
                                                data-bs-target=".bd-example-modal-lg">Set Status</a>
                                             <a class="btn btn-outline-info btn-xl me-2">Detail Order</a>
                                         </td>
@@ -90,7 +90,25 @@
             </div>
         </div>
     </div>
-    <x-modal-large title="Ubah Status"></x-modal-large>
+    <x-modal-large title="Ubah Status">
+        <form method="POST" action="{{route('kategori-produk.store')}}">
+            @csrf
+            <div class="modal-body">
+                <div class="row gy-4">
+                    <div class="col-xl-12">
+                        <label class="form-label" for="Kategori">Tanggal Pelunasan</label>
+                        <div class="input-group">
+                            <input class="datepicker-here form-control digits" type="date">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="submit">Lunas</button>
+            </div>
+        </form>
+    </x-modal-large>
 @endsection
 
 @section('script')

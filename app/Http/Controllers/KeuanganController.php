@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use App\Models\Sales;
 use Illuminate\Support\Facades\DB;
 
 class KeuanganController extends Controller
@@ -16,7 +17,9 @@ class KeuanganController extends Controller
     }
     public function piutangView()
     {
-        return view('pages.keuangan.piutang');
+        $data_piutang = Sales::with('Customer')->where('payment_method','=','BPJS')->get();
+
+        return view('pages.keuangan.piutang',compact('data_piutang'));
     }
     public function cashFlowView()
     {

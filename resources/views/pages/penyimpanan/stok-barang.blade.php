@@ -53,7 +53,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Produk</th>
-                                    <th>Satuan</th>
                                     <th>Stok Awal</th>
                                     <th>Stok Masuk</th>
                                     <th>Total Persediaan</th>
@@ -62,52 +61,26 @@
                                     <th>Total Penjualan</th>
                                     <th>Stok Akhir</th>
                                     <th>Asset (Rp)</th>
-                                    <th>Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @php
                                     $i = 0;
                                 @endphp
-                                <tr>
-                                    <td>1</td>
-                                    <td>Nama Produk</td>
-                                    <td>Tablet</td>
-                                    <td>500</td>
-                                    <td>300</td>
-                                    <td>800</td>
-                                    <td>50</td>
-                                    <td>Rp. 23.000</td>
-                                    <td>Rp. {{50 * 23000}}</td>
-                                    <td>750</td>
-                                    <td>Rp. {{50 * 23000}}</td>
-                                    <td> <a href=""
-                                            class="btn btn-primary btn-sm me-2">Detail Barang</a></td>
-                                </tr>
-{{--                                @foreach($suppliers as $supplier)--}}
-{{--                                    <tr>--}}
-{{--                                        <td>{{$i+= 1}}</td>--}}
-{{--                                        <td>{{$supplier->name}}</td>--}}
-{{--                                        <td>{{$supplier->address}}</td>--}}
-{{--                                        <td>{{$supplier->telephone}}</td>--}}
-{{--                                        <td>--}}
-{{--                                            <span class="badge badge-{{$supplier->status == 0 ? 'danger' : 'success'}}">{{$supplier->status == 0 ? 'Tidak Aktif' : 'Aktif'}}</span>--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"--}}
-{{--                                                  action="{{ route('supplier.destroy', $supplier->id) }}" method="POST">--}}
-{{--                                                <a href="{{route('supplier.edit', $supplier->id)}}" class="btn btn-warning btn-xl me-2">Edit</a>--}}
-{{--                                                @csrf--}}
-{{--                                                @method('DELETE')--}}
-{{--                                                <button class="btn btn-danger btn-xs" type="submit"--}}
-{{--                                                        data-original-title="btn btn-danger btn-xs" title=""--}}
-{{--                                                        data-bs-original-title="">Delete--}}
-{{--                                                </button>--}}
-{{--                                            </form>--}}
-
-{{--                                        </td>--}}
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
+                                @for($i = 1; $i<100; $i++)
+                                    <tr>
+                                        <td>{{$i}}</td>
+                                        <td><a href="" class="fw-bold text-primary">Paramex {{$i}}</a></td>
+                                        <td>500</td>
+                                        <td>300</td>
+                                        <td>800</td>
+                                        <td>50</td>
+                                        <td>Rp. 23.000</td>
+                                        <td>Rp. {{50 * 23000}}</td>
+                                        <td>750</td>
+                                        <td>Rp. {{50 * 23000}}</td>
+                                    </tr>
+                                @endfor
                             </table>
                         </div>
                     </div>
@@ -115,6 +88,9 @@
             </div>
         </div>
     </div>
+    <x-modal-large title="Detail Barang">
+
+    </x-modal-large>
 @endsection
 
 @section('script')

@@ -29,7 +29,7 @@ Route::get('dashboard', [\App\Http\Controllers\HomeController::class, 'dashboard
 Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::prefix('penjualan')->group(function () {
         Route::resource('transaksi-penjualan', SalesController::class);
-        Route::get('riwayat-transaksi',[SalesController::class,'riwayat_transaksi']);
+        Route::get('riwayat-transaksi',[SalesController::class,'riwayat_transaksi'])->name('riwayat-penjualan');
         Route::get('laporan-transaksi',[SalesController::class,'viewLaporanBulananPenjualan'])->name('laporan-penjualan');
         Route::get('ambil-data-ajax-produk', [SalesController::class,'ambil_data_ajax_produk'])->name('ambil-data-ajax-produk');
     });

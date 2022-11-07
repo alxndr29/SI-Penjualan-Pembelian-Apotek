@@ -31,6 +31,7 @@
                                     <th>No.Transaksi</th>
                                     <th>Produk</th>
                                     <th>Pelanggan</th>
+                                    <th>Jenis & Kategori</th>
                                     <th>Jumlah Stok Dikeluarkan</th>
                                     <th>Harga</th>
                                 </tr>
@@ -41,11 +42,12 @@
                                 @endphp
                                 @foreach($stockOut as $item)
                                     <tr>
-                                        <td>{{$i++}}</td>
-                                        <td class="text-danger fw-bolder" >{{$item->no_transaction}}</td>
-                                        <td>{{$item->nama}}</td>
-                                        <td>{{$item->no_transaction}}</td>
-                                        <td>{{$item->jumlah}}</td>
+                                        <td>{{$i++}} </td>
+                                        <td class="text-danger fw-bolder">{{$item->SalesOrder->no_transaction}}</td>
+                                        <td>{{$item->Product->nama}}</td>
+                                        <td>{{$item->SalesOrder->Customer->name}}</td>
+                                        <td><span class="fw-bold badge badge-info">{{$item->Product->Type->name}}</span> - {{$item->Product->Category->name}}</td>
+                                        <td>{{$item->jumlah}} {{$item->Product->UOM->name}}</td>
                                         <td>Rp. {{$item->harga}}</td>
                                     </tr>
                                 @endforeach

@@ -13,6 +13,7 @@ class StockOpnameController extends Controller
 
     public function create()
     {
+        return view('pages.penyimpanan.stock-opname.create');
     }
 
     public function store(Request $request)
