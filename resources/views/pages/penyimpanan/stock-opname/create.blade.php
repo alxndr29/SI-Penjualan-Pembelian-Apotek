@@ -63,22 +63,38 @@
                                 @php
                                     $i = 0;
                                 @endphp
-                                @for($i = 1; $i<100;$i++)
+                                @foreach($products as $product)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Paramex {{$i}}</td>
-                                        <td><span class="fw-bold badge badge-info"></span> -</td>
-                                        <td>Rp. 15.000</td>
-                                        <td>5 Strip</td>
+                                        <td>{{$i += 1}}</td>
+                                        <td>{{$product->nama}}</td>
+                                        <td><span class="fw-bold badge badge-info">{{$product->type}}</span> - {{$product->category}}</td>
+                                        <td>Rp. {{number_format($product->harga,0,',','.') }}</td>
+                                        <td><span id="stok_sistem">{{number_format($product->stok_barang,0,',','.') }} </span>{{$product->uom}}</td>
                                         <td>
                                             <div class="input-group">
-                                                <input class="form-control" type="number" min="0" value="0" placeholder="Masukan Jumlah Stok Aktual"
-                                                       id="jumlah-pembelian-produk">
-                                                <span class="input-group-text" id="detail-produk-satuan">UOM</span>
+                                                <input class="form-control" type="number" min="0" value="{{$product->stok_barang}}" placeholder="Masukan Jumlah Stok Aktual"
+                                                       id="stok_aktual">
+                                                <span class="input-group-text" id="detail-produk-satuan">{{$product->uom}}</span>
                                             </div>
                                         </td>
                                     </tr>
-                                @endfor
+                                @endforeach
+{{--                                @for($i = 1; $i<100;$i++)--}}
+{{--                                    <tr>--}}
+{{--                                        <td>1</td>--}}
+{{--                                        <td>Paramex {{$i}}</td>--}}
+{{--                                        <td><span class="fw-bold badge badge-info"></span> -</td>--}}
+{{--                                        <td>Rp. 15.000</td>--}}
+{{--                                        <td>5 Strip</td>--}}
+{{--                                        <td>--}}
+{{--                                            <div class="input-group">--}}
+{{--                                                <input class="form-control" type="number" min="0" value="0" placeholder="Masukan Jumlah Stok Aktual"--}}
+{{--                                                       id="jumlah-pembelian-produk">--}}
+{{--                                                <span class="input-group-text" id="detail-produk-satuan">UOM</span>--}}
+{{--                                            </div>--}}
+{{--                                        </td>--}}
+{{--                                    </tr>--}}
+{{--                                @endfor--}}
 
                                 {{--                                @foreach($suppliers as $supplier)--}}
                                 {{--                                    <tr>--}}

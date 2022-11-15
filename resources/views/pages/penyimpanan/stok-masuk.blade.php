@@ -39,50 +39,21 @@
                                 </thead>
                                 <tbody>
                                 @php
-                                    $i = 0;
+                                    $i = 1;
                                 @endphp
-                                <tr>
-                                    <td>1</td>
-                                    <td class="text-primary fw-bolder" >PO-00001</td>
-                                    <td>Panadol Extra</td>
-                                    <td>Pelanggan Umum</td>
-                                    <td><span class="fw-bold badge badge-info">Obat-Obatan</span> - Vitamin C</td>
-                                    <td>10 Strip</td>
-                                    <td>Rp. 15.000</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="text-primary fw-bolder" >PO-00001</td>
-                                    <td>Panadol Extra D</td>
-                                    <td>Pelanggan Umum</td>
-                                    <td><span class="fw-bold badge badge-info">Obat-Obatan</span> - Vitamin C</td>
-                                    <td>15 Strip</td>
-                                    <td>Rp. 10.000</td>
-                                </tr>
-{{--                                @foreach($suppliers as $supplier)--}}
-{{--                                    <tr>--}}
-{{--                                        <td>{{$i+= 1}}</td>--}}
-{{--                                        <td>{{$supplier->name}}</td>--}}
-{{--                                        <td>{{$supplier->address}}</td>--}}
-{{--                                        <td>{{$supplier->telephone}}</td>--}}
-{{--                                        <td>--}}
-{{--                                            <span class="badge badge-{{$supplier->status == 0 ? 'danger' : 'success'}}">{{$supplier->status == 0 ? 'Tidak Aktif' : 'Aktif'}}</span>--}}
-{{--                                        </td>--}}
-{{--                                        <td>--}}
-{{--                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"--}}
-{{--                                                  action="{{ route('supplier.destroy', $supplier->id) }}" method="POST">--}}
-{{--                                                <a href="{{route('supplier.edit', $supplier->id)}}" class="btn btn-warning btn-xl me-2">Edit</a>--}}
-{{--                                                @csrf--}}
-{{--                                                @method('DELETE')--}}
-{{--                                                <button class="btn btn-danger btn-xs" type="submit"--}}
-{{--                                                        data-original-title="btn btn-danger btn-xs" title=""--}}
-{{--                                                        data-bs-original-title="">Delete--}}
-{{--                                                </button>--}}
-{{--                                            </form>--}}
+                                @foreach($stockIn as $item)
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td class="text-primary fw-bolder" >PO-{{$item->purchase_order->no_transaction}}</td>
+                                        <td>{{$item->product->nama}}</td>
+                                        <td>{{$item->purchase_order->supplier->name}}</td>
+                                        <td><span class="fw-bold badge badge-info">{{$item->Product->Type->name}}</span> - {{$item->Product->Category->name}}</td>
+                                        <td>{{$item->jumlah}} {{$item->Product->UOM->name}}</td>
+                                        <td>Rp. {{$item->harga}}</td>
+                                    </tr>
+                                @endforeach
 
-{{--                                        </td>--}}
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
+
                             </table>
                         </div>
                     </div>

@@ -46,6 +46,10 @@ Route::prefix('penyimpanan')->middleware('auth')->group(function (){
 });
 Route::prefix('keuangan')->middleware('auth')->group(function (){
     Route::get('hutang',[KeuanganController::class,'hutangView'])->name('hutang');
+    Route::post('showModalHutang',[KeuanganController::class,'showModalHutang'])->name('showModalHutang');
+    Route::post('showModalPurchaseOrder',[KeuanganController::class,'showModalPurchaseOrder'])->name('showModalPurchaseOrder');
+    Route::post('UpdateStatusHutang/{id}',[KeuanganController::class,'UpdateStatusHutang'])->name('setStatusHutang');
+
     Route::get('piutang',[KeuanganController::class,'piutangView'])->name('piutang');
     Route::get('cashflow',[KeuanganController::class,'cashFlowView'])->name('cashflow');
 });

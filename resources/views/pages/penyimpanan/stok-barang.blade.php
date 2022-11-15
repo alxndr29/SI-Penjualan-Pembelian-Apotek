@@ -25,8 +25,8 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-9">
-                                <label class="form-label" for="exampleFormControlSelect9">Bulan</label>
-                                <select class="form-select digits" id="exampleFormControlSelect9">
+                                <label class="form-label" for="months">Bulan</label>
+                                <select class="form-select digits" id="months">
                                     <option value="1">Januari</option>
                                     <option value="2">Februari</option>
                                     <option value="3">Maret</option>
@@ -65,22 +65,36 @@
                                 </thead>
                                 <tbody>
                                 @php
-                                    $i = 0;
+                                    $i = 1;
                                 @endphp
-                                @for($i = 1; $i<100; $i++)
+                                @foreach($stockProduct as $items)
                                     <tr>
-                                        <td>{{$i}}</td>
-                                        <td><a href="" class="fw-bold text-primary">Paramex {{$i}}</a></td>
-                                        <td>500</td>
-                                        <td>300</td>
-                                        <td>800</td>
-                                        <td>50</td>
-                                        <td>Rp. 23.000</td>
-                                        <td>Rp. {{50 * 23000}}</td>
-                                        <td>750</td>
-                                        <td>Rp. {{50 * 23000}}</td>
+                                        <td>{{$i++}}</td>
+                                        <td><a href="" class="fw-bold text-primary">{{$items->nama}}</a></td>
+                                        <td>{{$items->stok_awal ?? '0'}}</td>
+                                        <td>{{$items->stok_masuk ?? '0'}}</td>
+                                        <td>{{$items->stok_masuk + $items->stok_awal}}</td>
+                                        <td class="text-danger fw-bold">{{$items->stok_keluar ?? '0'}}</td>
+                                        <td>Rp. {{number_format($items->harga,0,',','.') }}</td>
+                                        <td class="fw-bold text-success">Rp.{{number_format($items->harga * $items->stok_keluar,0,',','.') }}</td>
+                                        <td>{{$items->stok_awal + $items->stok_masuk - $items->stok_keluar }}</td>
+                                        <td class="fw-bold">Rp. {{number_format(($items->stok_awal + $items->stok_masuk - $items->stok_keluar) * $items->harga,0,',','.') }}</td>
                                     </tr>
-                                @endfor
+                                @endforeach
+{{--                                @for($i = 1; $i<100; $i++)--}}
+{{--                                    <tr>--}}
+{{--                                        <td>{{$i}}</td>--}}
+{{--                                        <td><a href="" class="fw-bold text-primary">Paramex {{$i}}</a></td>--}}
+{{--                                        <td>{{rand(50,512)}}</td>--}}
+{{--                                        <td>{{rand(50,512)}}</td>--}}
+{{--                                        <td>{{rand(50,512)}}</td>--}}
+{{--                                        <td class="text-danger fw-bold">{{rand(10,20)}}</td>--}}
+{{--                                        <td>Rp. {{number_format(rand(20000,50000),0,',','.') }}</td>--}}
+{{--                                        <td class="fw-bold text-success">Rp.{{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
+{{--                                        <td>{{rand(50,512)}}</td>--}}
+{{--                                        <td class="fw-bold">Rp. {{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
+{{--                                    </tr>--}}
+{{--                                @endfor--}}
                             </table>
                         </div>
                     </div>
@@ -96,4 +110,13 @@
 @section('script')
     <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
+    <script>
+        var d = new Date(),
+            n = d.getMonth(),
+            y = d.getFullYear();
+        console.log(n)
+        $('#months option:eq('+n+')').prop('selected', true);
+
+        $('#years option[value="'+y+'"]').prop('selected', true);
+    </script>
 @endsection

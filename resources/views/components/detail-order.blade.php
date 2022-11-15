@@ -1,5 +1,6 @@
-@props(['title'])
-<div class="modal fade bd-example-modal-lg modal-{{$title}}"  tabindex="9999" role="dialog" aria-labelledby="myLargeModalLabel"
+@props(['type','title'])
+<div class="modal fade bd-example-modal-lg order" id="modal-{{$type}}" tabindex="9999" role="dialog"
+     aria-labelledby="myLargeModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

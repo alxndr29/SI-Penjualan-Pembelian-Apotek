@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Purchase extends Model
 {
     protected $table = 'purchase_order';
-    protected $fillable = ['supplier_id','employe_id','no_transaction','tanggal_jatuh_tempo','tanggal_pelunasan', 'transaction_date','payment_method','total','state'];
+    protected $fillable = ['id', 'supplier_id', 'employe_id', 'no_transaction', 'tanggal_jatuh_tempo', 'tanggal_pelunasan', 'transaction_date', 'payment_method', 'total', 'state'];
 
     public function supplier()
     {

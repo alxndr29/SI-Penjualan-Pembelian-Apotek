@@ -52,37 +52,12 @@
                                         <td><span class="badge {{$hutang->state == 'Lunas' ? 'badge-success' : 'badge-danger'}}">{{$hutang->state}} ({{date('d-M-Y',strtotime($hutang->tanggal_pelunasan))}})</span> </td>
                                         <td>
                                             <a class="btn btn-primary btn-xl me-2" {{$hutang->state == 'Lunas' ? 'hidden' : ''}} data-bs-toggle="modal"
-                                               data-bs-target=".bd-example-modal-lg">Set Status</a>
-                                            <a class="btn btn-outline-info btn-xl me-2">Detail Order</a>
+                                               data-bs-target=".bd-example-modal-lg" onclick="showHutang({{$hutang->id}})">Set Status</a>
+                                            <a class="btn btn-outline-info btn-xl me-2" data-bs-toggle="modal" onclick="showPurchaseOrder({{$hutang->id}})"
+                                               data-bs-target=".order">Detail Order</a>
                                         </td>
                                     </tr>
                                 @endforeach
-
-
-                                {{--                                @foreach($suppliers as $supplier)--}}
-                                {{--                                    <tr>--}}
-                                {{--                                        <td>{{$i+= 1}}</td>--}}
-                                {{--                                        <td>{{$supplier->name}}</td>--}}
-                                {{--                                        <td>{{$supplier->address}}</td>--}}
-                                {{--                                        <td>{{$supplier->telephone}}</td>--}}
-                                {{--                                        <td>--}}
-                                {{--                                            <span class="badge badge-{{$supplier->status == 0 ? 'danger' : 'success'}}">{{$supplier->status == 0 ? 'Tidak Aktif' : 'Aktif'}}</span>--}}
-                                {{--                                        </td>--}}
-                                {{--                                        <td>--}}
-                                {{--                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"--}}
-                                {{--                                                  action="{{ route('supplier.destroy', $supplier->id) }}" metdod="POST">--}}
-                                {{--                                                <a href="{{route('supplier.edit', $supplier->id)}}" class="btn btn-warning btn-xl me-2">Edit</a>--}}
-                                {{--                                                @csrf--}}
-                                {{--                                                @metdod('DELETE')--}}
-                                {{--                                                <button class="btn btn-danger btn-xs" type="submit"--}}
-                                {{--                                                        data-original-title="btn btn-danger btn-xs" title=""--}}
-                                {{--                                                        data-bs-original-title="">Delete--}}
-                                {{--                                                </button>--}}
-                                {{--                                            </form>--}}
-
-                                {{--                                        </td>--}}
-                                {{--                                    </tr>--}}
-                                {{--                                @endforeach--}}
                             </table>
                         </div>
                     </div>
@@ -91,27 +66,65 @@
         </div>
     </div>
     <x-modal-large title="Ubah Status">
-        <form method="POST" action="{{route('kategori-produk.store')}}">
-            @csrf
-            <div class="modal-body">
-                <div class="row gy-4">
-                    <div class="col-xl-12">
-                        <label class="form-label" for="Kategori">Tanggal Pelunasan</label>
-                        <div class="input-group">
-                            <input class="datepicker-here form-control digits" type="date">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                <button class="btn btn-primary" type="submit">Lunas</button>
-            </div>
-        </form>
+        <div id="modalHutang">
+
+        </div>
     </x-modal-large>
+    <x-detail-order title="Detail Purchase Order" type="purchase">
+        <div id="purchase">
+
+
+        </div>
+        <div class="table-responsive mt-4">
+            <table class="display" id="basic-2">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Produk</th>
+                    <th>Expired Date</th>
+                    <th>Jumlah</th>
+                    <th>Diskon</th>
+                    <th>Harga</th>
+                </tr>
+                </thead>
+                <tbody id="detail_po">
+
+                </tbody>
+            </table>
+        </div>
+    </x-detail-order>
 @endsection
 
 @section('script')
     <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
+    <script>
+        function showHutang(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("showModalHutang")}}',
+                data: {
+                    '_token': '<?php echo csrf_token() ?>',
+                    'id': id,
+                },
+                success: function (v) {
+                    $('#modalHutang').html(v.data)
+                }
+            });
+        }
+        function showPurchaseOrder(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("showModalPurchaseOrder")}}',
+                data: {
+                    '_token': '<?php echo csrf_token() ?>',
+                    'id': id,
+                },
+                success: function (v) {
+                    $('#purchase').html(v.purchase_order)
+                    $('#detail_po').html(v.detail_purchase)
+                }
+            });
+        }
+    </script>
 @endsection

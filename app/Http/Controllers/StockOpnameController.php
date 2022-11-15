@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StockOpnameController extends Controller
 {
@@ -13,7 +14,8 @@ class StockOpnameController extends Controller
 
     public function create()
     {
-        return view('pages.penyimpanan.stock-opname.create');
+        $products = DB::table('get_product')->get();
+        return view('pages.penyimpanan.stock-opname.create', compact('products'));
     }
 
     public function store(Request $request)
