@@ -2,11 +2,11 @@
     <div class="col-6">
         <div class="row">
             <div :class="paymentSelected == 'Cash' ? 'col-12' : 'col-6'">
-                <label class="form-label" for="exampleFormControlSelect9">Metode Pembayaran</label>
+                <label class="form-label" for="exampleFormControlSelect9" name="metode_pembayaran">Metode Pembayaran</label>
                 <select v-model="paymentSelected" name="metode_pembelian" v-if="transaksi == 'Pembelian'"
-                        class="form-select form-control-sm digits w-100" id="exampleFormControlSelect9">
-                    <option>Cash</option>
-                    <option>Credit</option>
+                        class="form-select form-control-sm digits w-100" id="metode_pembelian">
+                    <option value="Cash">Cash</option>
+                    <option value="Credit">Credit</option>
                 </select>
                 <select v-model="paymentSelected" name="metode_penjualan" v-else
                         class="form-select form-control-sm digits w-100" id="metode_penjualan">
@@ -17,7 +17,7 @@
             <div class="col-6" v-if="paymentSelected == 'Credit'">
                 <label class="form-label" for="exampleFormControlSelect9">Tanggal Jatuh Tempo</label>
                 <div class="input-group">
-                    <input class="datepicker-here form-control digits" type="date" v-model="date">
+                    <input class="datepicker-here form-control digits" id="tanggal-jatuh-tempo" type="date" v-model="date">
                 </div>
             </div>
             <div class="col-6" v-if="paymentSelected == 'BPJS'">

@@ -353,13 +353,19 @@
             );
             total_harga_barang += v.harga * v.qty;
             grand_total += v.harga * v.qty;
-            ppn = total_harga_barang * 0.10;
+
             total_disc += (v.harga * v.qty * v.diskon / 100);
+            ppn = (total_harga_barang - total_disc) * 0.10;
         });
         $("#ppn").html('Rp. ' + addCommas(ppn));
         $("#total-harga-barang").html('Rp. ' + addCommas(total_harga_barang));
         $("#total-potongan-diskon").html('Rp. ' + addCommas(total_disc));
         $("#grand-total").html('Rp. ' + addCommas(grand_total + ppn - total_disc));
+
+        total_harga_barang = 0;
+        grand_total = 0;
+        ppn = 0;
+        total_disc = 0;
     }
 
     $("body").on("click", "#hapus-produk-jual", function(e) {
