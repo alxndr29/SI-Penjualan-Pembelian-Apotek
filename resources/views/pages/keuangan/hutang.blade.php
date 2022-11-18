@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="display" id="basic-1">
+                            <table class="display" id="basic-1" style="min-width: 100%; font-size: 12px">
                                 <thead>
                                 <tr>
                                     <th>No</th>

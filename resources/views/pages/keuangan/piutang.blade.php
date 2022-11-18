@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="display" id="basic-1">
+                            <table class="display" id="basic-1" style="min-width: 100%; font-size: 12px">
                                 <thead>
                                 <tr>
                                     <th>No</th>
@@ -32,7 +32,6 @@
                                     <th>Pelanggan</th>
                                     <th>NO.BPJS</th>
                                     <th>Tanggal dan Waktu Transaksi</th>
-                                    <th>Tanggal Jatuh Tempo</th>
                                     <th>Total Transaksi</th>
                                     <th>Status Pembayaran</th>
                                     <th>Aksi</th>
@@ -48,42 +47,18 @@
                                         <td class="text-danger fw-bolder">{{$items->no_transaction}}</td>
                                         <td>{{$items->Customer->name}}</td>
                                         <td>{{$items->no_bpjs}}</td>
-                                        <td>20-10-2022 13:05:05</td>
-                                        <td>20-10-2022 13:05:05</td>
-                                        <td>Rp. 15.000</td>
-                                        <td><span class="badge badge-success">Lunas (20-10-2022 13:05:05)</span> </td>
+                                        <td>{{ \Carbon\Carbon::parse($items->transaction_date)->format('d M y h:m:s') }}</td>
+                                        <td> Rp. {{number_format($items->total,0,',','.') }}</td>
+                                        <td><span class="badge badge-success">Lunas ({{ \Carbon\Carbon::parse($items->tanggal_pelunasan)->format('d M y h:m:s') }})</span> </td>
                                         <td>
-                                            <a class="btn btn-primary btn-xl me-2">Set Status</a>
-                                            <a class="btn btn-outline-info btn-xl me-2">Detail Order</a>
+                                            <a class="btn btn-primary btn-xl me-2" {{$items->state == 'Lunas' ? 'hidden' : ''}} data-bs-toggle="modal"
+                                               data-bs-target=".bd-example-modal-lg" onclick="showPurchaseOrder({{$items->id}})">Set Status</a>
+
+                                            <a class="btn btn-outline-info btn-xl me-2" data-bs-toggle="modal" onclick="showPurchaseOrder({{$items->id}})"
+                                               data-bs-target=".order">Detail Order</a>
                                         </td>
                                     </tr>
                                 @endforeach
-
-
-                                {{--                                @foreach($suppliers as $supplier)--}}
-                                {{--                                    <tr>--}}
-                                {{--                                        <td>{{$i+= 1}}</td>--}}
-                                {{--                                        <td>{{$supplier->name}}</td>--}}
-                                {{--                                        <td>{{$supplier->address}}</td>--}}
-                                {{--                                        <td>{{$supplier->telephone}}</td>--}}
-                                {{--                                        <td>--}}
-                                {{--                                            <span class="badge badge-{{$supplier->status == 0 ? 'danger' : 'success'}}">{{$supplier->status == 0 ? 'Tidak Aktif' : 'Aktif'}}</span>--}}
-                                {{--                                        </td>--}}
-                                {{--                                        <td>--}}
-                                {{--                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"--}}
-                                {{--                                                  action="{{ route('supplier.destroy', $supplier->id) }}" metdod="POST">--}}
-                                {{--                                                <a href="{{route('supplier.edit', $supplier->id)}}" class="btn btn-warning btn-xl me-2">Edit</a>--}}
-                                {{--                                                @csrf--}}
-                                {{--                                                @metdod('DELETE')--}}
-                                {{--                                                <button class="btn btn-danger btn-xs" type="submit"--}}
-                                {{--                                                        data-original-title="btn btn-danger btn-xs" title=""--}}
-                                {{--                                                        data-bs-original-title="">Delete--}}
-                                {{--                                                </button>--}}
-                                {{--                                            </form>--}}
-
-                                {{--                                        </td>--}}
-                                {{--                                    </tr>--}}
-                                {{--                                @endforeach--}}
                             </table>
                         </div>
                     </div>
@@ -91,9 +66,66 @@
             </div>
         </div>
     </div>
+    <x-modal-large title="Ubah Status">
+        <div id="modalPiutang">
+
+        </div>
+    </x-modal-large>
+    <x-detail-order title="Detail Sales Order" type="sales">
+        <div id="sales">
+
+
+        </div>
+        <div class="table-responsive mt-4">
+            <table class="display" id="basic-2">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Produk</th>
+                    <th>Expired Date</th>
+                    <th>Jumlah</th>
+                    <th>Diskon</th>
+                    <th>Harga</th>
+                </tr>
+                </thead>
+                <tbody id="detail_so">
+
+                </tbody>
+            </table>
+        </div>
+    </x-detail-order>
 @endsection
 
 @section('script')
     <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
+    <script>
+        function showPiutang(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("showModalPiutang")}}',
+                data: {
+                    '_token': '<?php echo csrf_token() ?>',
+                    'id': id,
+                },
+                success: function (v) {
+                    $('#modalHutang').html(v.data)
+                }
+            });
+        }
+        function showSalesOrder(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("showModalSalesOrder")}}',
+                data: {
+                    '_token': '<?php echo csrf_token() ?>',
+                    'id': id,
+                },
+                success: function (v) {
+                    $('#sales').html(v.sales_order)
+                    $('#detail_so').html(v.detail_sales_order)
+                }
+            });
+        }
+    </script>
 @endsection

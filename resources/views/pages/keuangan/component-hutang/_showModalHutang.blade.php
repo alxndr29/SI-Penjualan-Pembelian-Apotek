@@ -1,4 +1,4 @@
-<form method="POST" action="{{route('setStatusHutang',$purchase_order->first()->id)}}" >
+<form method="GET" action="{{route('setStatusHutang',$purchase_order->id)}}" >
     @csrf
     @method('PUT')
     <div class="modal-body">

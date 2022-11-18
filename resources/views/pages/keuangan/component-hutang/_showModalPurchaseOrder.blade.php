@@ -20,6 +20,10 @@
             <div class="mb-2">Tanggal Di Tambahkan</div>
             <div class="badge badge-info">{{$purchase_order->created_at}}</div>
         </div>
+        <div class="col-4">
+            <div class="mb-2">Status</div>
+            <div class="badge badge-{{$purchase_order->state == 'Lunas' ? 'success' : 'danger'}}">{{$purchase_order->state}} - {{$purchase_order->tanggal_pelunasan}}</div>
+        </div>
     </div>
 </div>
 

@@ -22,9 +22,10 @@ class KeuanganController extends Controller
     public function UpdateStatusHutang($id,Request $request)
     {
         $transaction = DB::table('purchase_order')
-            ->where('id', '=', $request->no_transaction)
+            ->where('id', '=', $id)
             ->update([
-                'tanggal_pelunasan' => $request->tanggal_pelunasan
+                'tanggal_pelunasan' => $request->tanggal_pelunasan,
+                'state' => 'Lunas'
             ]);
 
         return redirect()->route('hutang')->with(['success' => 'menambahkan data baru']);
@@ -48,7 +49,7 @@ class KeuanganController extends Controller
         $purchase_order = Purchase::find($request->id);
         return response()->json(array(
             'status' => 1,
-            'data' => view('pages.keuangan._showModalHutang',compact('purchase_order'))->render()
+            'data' => view('pages.keuangan.component-hutang._showModalHutang',compact('purchase_order'))->render()
         ), 200);
 
     }
@@ -56,10 +57,31 @@ class KeuanganController extends Controller
     {
         $purchase_order = Purchase::find($request->id);
         $detail_order = StockIN::where('purchase_order_id','=',$request->id)->get();
+
         return response()->json(array(
             'status' => 1,
-            'purchase_order' => view('pages.keuangan._showModalPurchaseOrder',compact('purchase_order'))->render(),
-            'detail_purchase' => view('pages.keuangan._showModalDetailPurchaseOrder',compact('detail_order'))->render()
+            'purchase_order' => view('pages.keuangan.component-hutang._showModalPurchaseOrder',compact('purchase_order'))->render(),
+            'detail_purchase' => view('pages.keuangan.component-hutang._showModalDetailPurchaseOrder',compact('detail_order'))->render()
+        ), 200);
+
+    }
+    public function showModalPiutang(Request $request)
+    {
+        $purchase_order = Purchase::find($request->id);
+        return response()->json(array(
+            'status' => 1,
+            'data' => view('pages.keuangan._showModalHutang',compact('purchase_order'))->render()
+        ), 200);
+
+    }
+    public function showModalSalesOrder(Request $request)
+    {
+        $sales_order = Purchase::find($request->id);
+        $detail_order = StockIN::where('purchase_order_id','=',$request->id)->get();
+        return response()->json(array(
+            'status' => 1,
+            '$sales_order' => view('pages.keuangan._showModalPurchaseOrder',compact('purchase_order'))->render(),
+            'detail_sales' => view('pages.keuangan._showModalDetailPurchaseOrder',compact('detail_order'))->render()
         ), 200);
 
     }

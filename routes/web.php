@@ -48,9 +48,13 @@ Route::prefix('keuangan')->middleware('auth')->group(function (){
     Route::get('hutang',[KeuanganController::class,'hutangView'])->name('hutang');
     Route::post('showModalHutang',[KeuanganController::class,'showModalHutang'])->name('showModalHutang');
     Route::post('showModalPurchaseOrder',[KeuanganController::class,'showModalPurchaseOrder'])->name('showModalPurchaseOrder');
-    Route::post('UpdateStatusHutang/{id}',[KeuanganController::class,'UpdateStatusHutang'])->name('setStatusHutang');
+    Route::get('UpdateStatusHutang/{id}',[KeuanganController::class,'UpdateStatusHutang'])->name('setStatusHutang');
 
     Route::get('piutang',[KeuanganController::class,'piutangView'])->name('piutang');
+    Route::post('showModalPiutang',[KeuanganController::class,'showModalPiutang'])->name('showModalPiutang');
+    Route::post('showModalSalesOrder',[KeuanganController::class,'showModalSalesOrder'])->name('showModalSalesOrder');
+    Route::get('UpdateStatusPiutang/{id}',[KeuanganController::class,'UpdateStatusPiutang'])->name('setStatusPiutang');
+
     Route::get('cashflow',[KeuanganController::class,'cashFlowView'])->name('cashflow');
 });
 Route::prefix('konfigurasi')->middleware('auth')->group(function () {
