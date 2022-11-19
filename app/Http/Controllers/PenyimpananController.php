@@ -19,9 +19,9 @@ class PenyimpananController extends Controller
         $stockProduct = DB::table('products as p')
             ->select(
                 'p.nama',
-                db::raw("(SELECT DOX.stock_aktual FROM detail_stock_opname AS DOX INNER JOIN stock_opname AS opn WHERE dox.product_id = p.id AND opn.bulan = '". $currentMonth ."') AS stok_awal"),
-                db::raw("(SELECT SUM(si.jumlah) FROM stock_in AS si INNER JOIN purchase_order AS po ON si.purchase_order_id = po.id WHERE si.product_id = p.id AND MONTH(po.transaction_date) = '". $currentMonth ."') AS stok_masuk"),
-                db::raw("(SELECT SUM(s_out.jumlah) FROM stock_out AS s_out INNER JOIN sales_order AS so ON s_out.sales_order_id = so.id WHERE s_out.product_id = p.id AND MONTH(so.transaction_date) = '". $currentMonth ."') AS stok_keluar"),
+                db::raw("(SELECT DOX.stock_aktual FROM detail_stock_opname AS DOX INNER JOIN stock_opname AS opn WHERE opn.state = 'Finish' AND dox.product_id = p.id AND opn.bulan = '". $currentMonth ."') AS stok_awal"),
+                db::raw("(SELECT SUM(si.jumlah) FROM stock_in AS si INNER JOIN purchase_order AS po ON si.purchase_order_id = po.id WHERE po.state = 'Lunas' AND si.product_id = p.id AND MONTH(po.transaction_date) = '". $currentMonth ."') AS stok_masuk"),
+                db::raw("(SELECT SUM(s_out.jumlah) FROM stock_out AS s_out INNER JOIN sales_order AS so ON s_out.sales_order_id = so.id WHERE so.state = 'Lunas' AND s_out.product_id = p.id AND MONTH(so.transaction_date) = '". $currentMonth ."') AS stok_keluar"),
                 db::raw('(SELECT si.harga FROM stock_in AS si WHERE si.product_id = p.id AND si.jumlah > 0 ORDER BY CASE WHEN p.product_type_id = 1 then si.created_at END ASC, CASE WHEN p.product_type_id = 2 THEN si.expired_date END ASC LIMIT 1) AS harga')
             )->get();
 

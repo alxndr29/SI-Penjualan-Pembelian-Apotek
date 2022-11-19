@@ -49,7 +49,8 @@
                                         <td>{{$hutang->created_at}}</td>
                                         <td>{{ \Carbon\Carbon::parse($hutang->tanggal_jatuh_tempo)->format('d M y') }}</td>
                                         <td> Rp. {{number_format($hutang->total,0,',','.') }}</td>
-                                        <td><span class="badge {{$hutang->state == 'Lunas' ? 'badge-success' : 'badge-danger'}}">{{$hutang->state}} ({{date('d-M-Y',strtotime($hutang->tanggal_pelunasan))}})</span> </td>
+                                        <td><span class="badge {{$hutang->state == 'Lunas' ? 'badge-success' : 'badge-danger'}}">{{$hutang->state}} {{ $hutang->state == 'Lunas' ? "(" . date('d-M-Y',strtotime($hutang->tanggal_pelunasan)) . ")" : "" }}
+                                            </span> </td>
                                         <td>
                                             <a class="btn btn-primary btn-xl me-2" {{$hutang->state == 'Lunas' ? 'hidden' : ''}} data-bs-toggle="modal"
                                                data-bs-target=".bd-example-modal-lg" onclick="showHutang({{$hutang->id}})">Set Status</a>

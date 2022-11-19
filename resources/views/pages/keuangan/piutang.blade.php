@@ -49,12 +49,12 @@
                                         <td>{{$items->no_bpjs}}</td>
                                         <td>{{ \Carbon\Carbon::parse($items->transaction_date)->format('d M y h:m:s') }}</td>
                                         <td> Rp. {{number_format($items->total,0,',','.') }}</td>
-                                        <td><span class="badge badge-success">Lunas ({{ \Carbon\Carbon::parse($items->tanggal_pelunasan)->format('d M y h:m:s') }})</span> </td>
+                                        <td><span class="badge {{$items->state == 'Lunas' ? 'badge-success' : 'badge-danger'}}">{{$items->state}} {{  $items->state == 'Lunas' ? "(" . date('d-M-Y',strtotime($items->tanggal_pelunasan))  . ")" : "" }}</span> </td>
                                         <td>
                                             <a class="btn btn-primary btn-xl me-2" {{$items->state == 'Lunas' ? 'hidden' : ''}} data-bs-toggle="modal"
-                                               data-bs-target=".bd-example-modal-lg" onclick="showPurchaseOrder({{$items->id}})">Set Status</a>
+                                               data-bs-target=".bd-example-modal-lg" onclick="showPiutang({{$items->id}})">Set Status</a>
 
-                                            <a class="btn btn-outline-info btn-xl me-2" data-bs-toggle="modal" onclick="showPurchaseOrder({{$items->id}})"
+                                            <a class="btn btn-outline-info btn-xl me-2" data-bs-toggle="modal" onclick="showSalesOrder({{$items->id}})"
                                                data-bs-target=".order">Detail Order</a>
                                         </td>
                                     </tr>
@@ -109,7 +109,7 @@
                     'id': id,
                 },
                 success: function (v) {
-                    $('#modalHutang').html(v.data)
+                    $('#modalPiutang').html(v.data)
                 }
             });
         }
@@ -123,7 +123,7 @@
                 },
                 success: function (v) {
                     $('#sales').html(v.sales_order)
-                    $('#detail_so').html(v.detail_sales_order)
+                    $('#detail_so').html(v.detail_sales)
                 }
             });
         }

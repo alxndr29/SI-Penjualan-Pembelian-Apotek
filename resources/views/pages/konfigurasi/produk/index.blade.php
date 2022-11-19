@@ -75,7 +75,7 @@
                                         <td class="text-center">{{$product->keuntungan}} %</td>
                                         <td class="text-center">{{$product->diskon}} %</td>
                                         <td class="text-center">
-                                            Rp. {{number_format($product->harga * 1.45,0,',','.') }}</td>
+                                            Rp. {{number_format($product->harga,0,',','.') }}</td>
                                         <td>
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                                   action="{{ route('daftar-produk.destroy', $product->id) }}"

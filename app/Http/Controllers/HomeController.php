@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\StockIN;
+use App\Models\StockOut;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,7 @@ class HomeController extends Controller
     public function dashboardView()
     {
         $products = DB::table('get_product')->get();
+        
         $productByExpiredDate = DB::table('stock_in as si')
             ->join('products as p','si.product_id','=','p.id')
             ->join('purchase_order as po','si.purchase_order_id','=','po.id')
@@ -39,6 +41,12 @@ class HomeController extends Controller
             ->where('si.expired_date','<',Carbon::now()) //
             ->select('p.nama', 'si.*','po.no_transaction as nomor_transaksi')
             ->get();
+        $jumlahProdukTerjual = DB::table('sales_order')
+            ->whereDate('transaction_date','=',Carbon::now()->toDateString())
+            ->count();
+        $produk_terjual = DB::table('sales_order')
+            ->whereDate('transaction_date','=',Carbon::now()->toDateString())
+            ->sum('total');
         return view('dashboard.index', compact('products','productByExpiredDate'));
     }
 }

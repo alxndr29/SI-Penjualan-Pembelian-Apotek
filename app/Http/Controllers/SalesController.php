@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\StockOut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
@@ -59,6 +60,7 @@ class SalesController extends Controller
 
     public function riwayat_transaksi()
     {
+        $stock_out = StockOut::where('created_at','=',Carbon::now()->toDateString())->get();
         return view('pages.transaksi.penjualan.transaksi-hari-ini');
     }
 
@@ -116,7 +118,7 @@ class SalesController extends Controller
                         $stok_in->jumlah = 0;
                         $stok_in->save();
                         $kebutuhan = $kebutuhan - $stok;
-                    } else { 
+                    } else {
 
                     }
                 }

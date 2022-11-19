@@ -57,9 +57,9 @@
 
                             </select>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 " id="expired-date">
                             <div class="col-form-label">Expired Date</div>
-                            <input class="datepicker-here form-control digits" id="txt-expired" type="text" data-language="en">
+                            <input class="datepicker-here form-control digits" id="txt-expired"  type="text" data-language="en">
                         </div>
                         <div class="col-lg-12 col-xl-12 col-xxl-8">
                             <label class="col-form-label">Jumlah</label>
@@ -361,6 +361,12 @@
                 $("#detail-produk-kategori").html(v.categories_name);
                 $("#detail-produk-satuan").html(v.uom_name);
                 $("#detail-produk-harga").html('Rp.' + addCommas(v.harga));
+                if(v.product_type_id != 1){
+                    $("#expired-date").addClass('d-none');
+                }
+                else{
+                    $("#expired-date").removeClass('d-none');
+                }
             }
         });
     }

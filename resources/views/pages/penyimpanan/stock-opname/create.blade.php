@@ -13,7 +13,7 @@
     <li class="breadcrumb-item">
         Penyimpanan
     </li>
-    <li class="breadcrumb-item">History Stock Opname</li>
+    <li class="breadcrumb-item"><a href="{{route('stock-opname.index')}}">Daftar Stock Opname</a></li>
     <li class="breadcrumb-item active">Mulai Stok Opname</li>
 @endsection
 

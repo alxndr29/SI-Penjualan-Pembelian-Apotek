@@ -48,8 +48,8 @@
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="mb-4">Total Pendapatan Bersih</h6>
-                        <h3 class="mb-4">Rp. 15.000.000</h3>
+                        <h6 class="mb-4">Jumlah Produk (Stok Menipis)</h6>
+                        <h3 class="mb-4">{{$products->}} Produk</h3>
                     </div>
                 </div>
             </div>
