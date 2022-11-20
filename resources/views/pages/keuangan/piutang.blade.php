@@ -82,7 +82,6 @@
                 <tr>
                     <th>No</th>
                     <th>Produk</th>
-                    <th>Expired Date</th>
                     <th>Jumlah</th>
                     <th>Diskon</th>
                     <th>Harga</th>

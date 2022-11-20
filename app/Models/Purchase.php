@@ -18,7 +18,7 @@ class Purchase extends Model
 
     public function employee()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'employe_id','id');
     }
 
     public function stock_in()

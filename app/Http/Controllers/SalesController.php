@@ -58,11 +58,7 @@ class SalesController extends Controller
         }
     }
 
-    public function riwayat_transaksi()
-    {
-        $stock_out = StockOut::where('created_at','=',Carbon::now()->toDateString())->get();
-        return view('pages.transaksi.penjualan.transaksi-hari-ini');
-    }
+
 
     public function create()
     {
@@ -159,8 +155,15 @@ class SalesController extends Controller
         //
     }
     //Custom Function
+    public function riwayat_transaksi()
+    {
+        $stock_out = StockOut::where('created_at','=',Carbon::now()->toDateString())->get();
+        return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out'));
+    }
+
     public function viewLaporanBulananPenjualan()
     {
-        return view('pages.transaksi.penjualan.laporan-bulanan');
+        $salesOrder = Sales::where('state','=','Lunas')->get();
+        return view('pages.transaksi.penjualan.laporan-bulanan',compact('salesOrder'));
     }
 }

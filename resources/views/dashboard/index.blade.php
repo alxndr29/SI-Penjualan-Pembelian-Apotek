@@ -24,7 +24,7 @@
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="mb-4">Total Produk</h6>
+                        <h6 class="mb-4">Jumlah Produk Di Miliki</h6>
                         <h3 class="mb-4">{{$products->count()}} Produk</h3>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="mb-4">Total Produk Terjual Hari Ini</h6>
-                        <h3 class="mb-4">614 Pesanan</h3>
+                        <h3 class="mb-4">{{$jumlahProdukTerjual}} Pesanan</h3>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="mb-4">Total Pendapatan Hari Ini</h6>
-                        <h3 class="mb-4">Rp 15.000.000</h3>
+                        <h3 class="mb-4"> Rp. {{number_format($pendapatan,0,',','.') }}</h3>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="mb-4">Jumlah Produk (Stok Menipis)</h6>
-                        <h3 class="mb-4">{{$products->}} Produk</h3>
+                        <h3 class="mb-4">{{$jumlahProdukStokHabis}} Produk</h3>
                     </div>
                 </div>
             </div>

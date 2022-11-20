@@ -33,7 +33,14 @@ class HomeController extends Controller
     public function dashboardView()
     {
         $products = DB::table('get_product')->get();
-        
+        $jumlahProdukStokHabis = 0;
+        foreach ($products as $product)
+        {
+            if ($product->stok_barang < $product->min_stock)
+            {
+                $jumlahProdukStokHabis++;
+            }
+        }
         $productByExpiredDate = DB::table('stock_in as si')
             ->join('products as p','si.product_id','=','p.id')
             ->join('purchase_order as po','si.purchase_order_id','=','po.id')
@@ -44,9 +51,9 @@ class HomeController extends Controller
         $jumlahProdukTerjual = DB::table('sales_order')
             ->whereDate('transaction_date','=',Carbon::now()->toDateString())
             ->count();
-        $produk_terjual = DB::table('sales_order')
+        $pendapatan = DB::table('sales_order')
             ->whereDate('transaction_date','=',Carbon::now()->toDateString())
             ->sum('total');
-        return view('dashboard.index', compact('products','productByExpiredDate'));
+        return view('dashboard.index', compact('products','productByExpiredDate','jumlahProdukTerjual','pendapatan','jumlahProdukStokHabis'));
     }
 }

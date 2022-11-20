@@ -30,18 +30,18 @@ class PurchasesController extends Controller
             $purchase->supplier_id = $request->get('supplier');
             $purchase->employe_id = 1;
             $purchase->no_transaction = '1234567';
-           
+
             $purchase->tanggal_pelunasan = null;
             $purchase->total = $request->get('total');
             if($request->get('metode-pembayaran') == "Cash"){
                 $purchase->state = 'Lunas';
-                $purchase->payment_method = 'Tunai'; 
+                $purchase->payment_method = 'Tunai';
             }else{
                 $purchase->state = 'Belum Lunas';
                 $purchase->payment_method = 'Kredit';
                 $purchase->tanggal_jatuh_tempo = $request->get('tanggal-jatuh-tempo');
             }
-            
+
             $purchase->save();
 
             foreach($request->get('data_produk') as $key => $value){
@@ -96,6 +96,8 @@ class PurchasesController extends Controller
 
     public function viewLaporanBulananPembelian()
     {
-        return view('pages.transaksi.pembelian.laporan-bulanan');
+        $purchaseOrder = Purchase::where('state','=','Lunas')->get();
+
+        return view('pages.transaksi.pembelian.laporan-bulanan',compact('purchaseOrder'));
     }
 }

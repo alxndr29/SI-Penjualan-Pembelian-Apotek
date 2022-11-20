@@ -66,18 +66,21 @@
                                     @php
                                         $i = 0;
                                     @endphp
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="text-primary fw-bold">PO-0001</td>
-                                        <td>PT A</td>
-                                        <td>20-10-2022 16:12:11</td>
-                                        <td>Rp. 150.000</td>
-                                        <td>Cash</td>
-                                        <td>User A</td>
-                                        <td><button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                                    data-bs-target=".bd-example-modal-lg">Detail Order
-                                            </button></td>
-                                    </tr>
+                                    @foreach($purchaseOrder as $item)
+                                        <tr>
+                                            <td>{{$i += 1}}</td>
+                                            <td class="text-primary fw-bold">PO-{{$item->no_transaction}}</td>
+                                            <td>{{$item->supplier->name}}</td>
+                                            <td>{{\Carbon\Carbon::parse($item->transaction_date)->format('d M y h:m:s')}}</td>
+                                            <td>Rp. {{number_format($item->total,0,',','.') }}</td>
+                                            <td><span class="badge badge-primary">{{$item->payment_method}}</span></td>
+                                            <td>{{$item->employee->name}}</td>
+                                            <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" onclick="showPurchaseOrder({{$item->id}})"
+                                                        data-bs-target=".bd-example-modal-lg">Detail Order
+                                                </button></td>
+                                        </tr>
+                                    @endforeach
+
                                 </table>
                             </div>
                         </div>
@@ -87,30 +90,30 @@
         </div>
 
     </div>
-    <x-modal-large title="Detail Transaksi" mode="">
-        <div class="d-flex justify-content-between mb-4 px-4">
-            <div>
-                <span>Nomor Transaksi</span>
-                <h5>PO-0001</h5>
-            </div>
-            <div>
-                <span>Supplier</span>
-                <h5>PT A</h5>
-            </div>
-            <div>
-                <span>Metode Pembayaran</span>
-                <h5>Kredit</h5>
-            </div>
+    <x-detail-order title="Detail Purchase Order" type="purchase">
+        <div id="purchase">
+
 
         </div>
-        <div class="row">
-            <div class="col-4">
+        <div class="table-responsive mt-4">
+            <table class="display" id="basic-2">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Produk</th>
+                    <th>Expired Date</th>
+                    <th>Jumlah</th>
+                    <th>Diskon</th>
+                    <th>Harga</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody id="detail_po">
 
-            </div>
-            <div class="col-4"></div>
-            <div class="col-4"></div>
+                </tbody>
+            </table>
         </div>
-    </x-modal-large>
+    </x-detail-order>
 @endsection
 
 @section('script')
@@ -123,4 +126,20 @@
     <script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
     <script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
     <script src="{{asset('assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
+    <script>
+        function showPurchaseOrder(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("showModalPurchaseOrder")}}',
+                data: {
+                    '_token': '<?php echo csrf_token() ?>',
+                    'id': id,
+                },
+                success: function (v) {
+                    $('#purchase').html(v.purchase_order)
+                    $('#detail_po').html(v.detail_purchase)
+                }
+            });
+        }
+    </script>
 @endsection

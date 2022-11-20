@@ -86,6 +86,7 @@
                     <th>Jumlah</th>
                     <th>Diskon</th>
                     <th>Harga</th>
+                    <th>Subtotal</th>
                 </tr>
                 </thead>
                 <tbody id="detail_po">

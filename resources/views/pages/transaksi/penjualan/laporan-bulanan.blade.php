@@ -58,7 +58,6 @@
                                         <th>Tanggal Transaksi</th>
                                         <th>Total Pembelian</th>
                                         <th>Metode Pembayaran</th>
-                                        <th>Pegawai</th>
                                         <th>Aksi</th>
                                     </tr>
                                     </thead>
@@ -66,18 +65,19 @@
                                     @php
                                         $i = 0;
                                     @endphp
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="text-danger fw-bold">SO-0001</td>
-                                        <td>Pelanggan Umum</td>
-                                        <td>20-10-2022 16:12:11</td>
-                                        <td>Rp. 150.000</td>
-                                        <td>Cash</td>
-                                        <td>User A</td>
-                                        <td><button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                                    data-bs-target=".bd-example-modal-lg">Detail Data
-                                            </button></td>
-                                    </tr>
+                                   @foreach($salesOrder as $item)
+                                       <tr>
+                                           <td>{{$i+= 1}}</td>
+                                           <td class="text-danger fw-bold">{{$item->no_transaction}}</td>
+                                           <td>{{$item->Customer->name}}</td>
+                                           <td>{{\Carbon\Carbon::parse($item->transaction_date)->format('d M y h:m:s')}}</td>
+                                           <td>Rp. {{number_format($item->total,0,',','.') }}</td>
+                                           <td><span class="badge badge-primary">{{$item->payment_method}}</span></td>
+                                           <td><button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                                       data-bs-target=".bd-example-modal-lg" onclick="showSalesOrder({{$item->id}})">Detail Data
+                                               </button></td>
+                                       </tr>
+                                   @endforeach
                                 </table>
                             </div>
                         </div>
@@ -85,7 +85,29 @@
                 </div>
             </div>
         </div>
+        <x-detail-order title="Detail Sales Order" type="sales">
+            <div id="sales">
 
+
+            </div>
+            <div class="table-responsive mt-4">
+                <table class="display" id="basic-2">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Produk</th>
+                        <th>Jumlah</th>
+                        <th>Diskon</th>
+                        <th>Harga</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody id="detail_so">
+
+                    </tbody>
+                </table>
+            </div>
+        </x-detail-order>
     </div>
 @endsection
 
@@ -99,4 +121,20 @@
     <script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
     <script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
     <script src="{{asset('assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
+    <script>
+        function showSalesOrder(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("showModalSalesOrder")}}',
+                data: {
+                    '_token': '<?php echo csrf_token() ?>',
+                    'id': id,
+                },
+                success: function (v) {
+                    $('#sales').html(v.sales_order)
+                    $('#detail_so').html(v.detail_sales)
+                }
+            });
+        }
+    </script>
 @endsection
