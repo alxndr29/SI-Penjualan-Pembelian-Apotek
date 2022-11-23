@@ -24,7 +24,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Barang Terjual</h6>
-                            <h3 class="mb-4">614 Produk</h3>
+                            <h3 class="mb-4">{{$total_barang_terjual}} Produk</h3>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Pendapatan</h6>
-                            <h3 class="mb-4">Rp. 156.000</h3>
+                            <h3 class="mb-4">Rp. {{number_format($total_pendapatan)}}</h3>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Keuntungan</h6>
-                            <h3 class="mb-4">Rp. 13.000</h3>
+                            <h3 class="mb-4">Rp. {{number_format($total_keuntungan)}}</h3>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Pembeli</h6>
-                            <h3 class="mb-4">614 Pesanan</h3>
+                            <h3 class="mb-4">{{$total_pembeli}} Pesanan</h3>
                         </div>
                     </div>
                 </div>

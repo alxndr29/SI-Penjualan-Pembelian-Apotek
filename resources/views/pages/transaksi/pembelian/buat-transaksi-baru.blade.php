@@ -59,7 +59,7 @@
                         </div>
                         <div class="col-12 " id="expired-date">
                             <div class="col-form-label">Expired Date</div>
-                            <input class="datepicker-here form-control digits" id="txt-expired"  type="text" data-language="en">
+                            <input class="datepicker-here form-control digits" id="txt-expired" type="text" data-language="en">
                         </div>
                         <div class="col-lg-12 col-xl-12 col-xxl-8">
                             <label class="col-form-label">Jumlah</label>
@@ -255,6 +255,7 @@
     var counter = 0;
     var double = false;
     var index_double = 0;
+    var total_akhir = 0;
     $(document).ready(function() {
         get_data();
         $("#select-product").change(function() {
@@ -321,12 +322,13 @@
                     'supplier': $("#select-supplier").val(),
                     'metode-pembayaran': $("#metode_pembelian").val(),
                     'tanggal-jatuh-tempo': $("#tanggal-jatuh-tempo").val(),
-                    'total': grand_total + ppn - total_disc
+                    'total': grand_total + ppn - total_disc,
+                    'total_akhir': total_akhir
                 },
                 success: function(data) {
                     console.log(data);
                     if (data.status == "ok") {
-                        alert('mantap');
+                        location.reload();
                     }
                 },
                 error: function(data) {
@@ -361,10 +363,9 @@
                 $("#detail-produk-kategori").html(v.categories_name);
                 $("#detail-produk-satuan").html(v.uom_name);
                 $("#detail-produk-harga").html('Rp.' + addCommas(v.harga));
-                if(v.product_type_id != 1){
+                if (v.product_type_id != 1) {
                     $("#expired-date").addClass('d-none');
-                }
-                else{
+                } else {
                     $("#expired-date").removeClass('d-none');
                 }
             }
@@ -418,7 +419,7 @@
         $("#total-harga-barang").html('Rp. ' + addCommas(total_harga_barang));
         $("#total-potongan-diskon").html('Rp. ' + addCommas(total_disc));
         $("#grand-total").html('Rp. ' + addCommas(grand_total + ppn - total_disc));
-
+        total_akhir = grand_total + ppn - total_disc;
         total_harga_barang = 0;
         grand_total = 0;
         ppn = 0;

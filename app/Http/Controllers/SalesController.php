@@ -94,30 +94,30 @@ class SalesController extends Controller
                     'keuntungan' => 0,
                     'diskon' => $value['diskon'],
                     'harga' => $value['harga'],
-                    'keuntungan' => $value['keuntungan']
+                    'keuntungan' => $value['keuntungan'],
+                    'created_at' => Carbon::now,
+                    'updated_at' => Carbon::now
                 ]);
-                if($value['product_type_id'] == "1"){
+                if ($value['product_type_id'] == "1") {
                     $stok_in = StockIN::where('product_id', $value['id'])->orderBy('created_at', 'asc')->get();
-                }else{
+                } else {
                     $stok_in = StockIN::where('product_id', $value['id'])->orderBy('expired_date', 'asc')->get();
-                } 
+                }
                 $kebutuhan = (int) $value['qty'];
                 foreach ($stok_in as $key => $value2) {
                     $stok = (int) $value2->jumlah;
                     if ($stok != 0 && ($stok >= $kebutuhan)) {
-                        $stok_in = StockIN::where('product_id', '=', $value['id'])->where('id','=',$value2->id)->first();
-                        $stok_in->jumlah = $stok-$kebutuhan;
+                        $stok_in = StockIN::where('product_id', '=', $value['id'])->where('id', '=', $value2->id)->first();
+                        $stok_in->jumlah = $stok - $kebutuhan;
                         $stok_in->save();
-                        $kebutuhan = $stok-$kebutuhan;
+                        $kebutuhan = $stok - $kebutuhan;
                         break;
                     } else if ($stok != 0 && ($stok < $kebutuhan)) {
                         $stok_in = StockIN::where('product_id', '=', $value['id'])->where('id', '=', $value2->id)->first();
                         $stok_in->jumlah = 0;
                         $stok_in->save();
                         $kebutuhan = $kebutuhan - $stok;
-                    } else {
-
-                    }
+                    } else { }
                 }
             }
             return response()->json(
@@ -158,13 +158,25 @@ class SalesController extends Controller
     //Custom Function
     public function riwayat_transaksi()
     {
-        $stock_out = StockOut::where('created_at','=',Carbon::now()->toDateString())->get();
-        return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out'));
+        $total_barang_terjual = StockOut::whereDate('created_at', Carbon::today())->sum('jumlah');
+        $total_pendapatan = Sales::whereDate('created_at', Carbon::today())->sum('total');
+        $total_keuntungan = 0;
+        $total_pembeli = Sales::whereDate('created_at', Carbon::today())->count();
+        // $stock_out = StockOut::whereDate('created_at', Carbon::today())
+        // ->join('products','products.id','=','stock_out.product_id')
+        // ->select()
+        // ->get();
+        $stock_out = 0;
+        return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out','total_barang_terjual','total_pendapatan','total_keuntungan','total_pembeli'));
     }
 
-    public function viewLaporanBulananPenjualan()
+    public function viewLaporanBulananPenjualan($tglawal = null, $tglakhir = null)
     {
-        $salesOrder = Sales::where('state','=','Lunas')->get();
-        return view('pages.transaksi.penjualan.laporan-bulanan',compact('salesOrder'));
+        if ($tglawal != null && $tglakhir != null) {
+            $salesOrder = Sales::where('state', '=', 'Lunas')->whereBetWeen('created_at', [$tglawal, $tglakhir])->get();
+        } else {
+            $salesOrder = Sales::where('state', '=', 'Lunas')->get();
+        }
+        return view('pages.transaksi.penjualan.laporan-bulanan', compact('salesOrder','tglawal','tglakhir'));
     }
 }

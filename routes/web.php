@@ -30,16 +30,16 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::prefix('penjualan')->group(function () {
         Route::resource('transaksi-penjualan', SalesController::class);
         Route::get('riwayat-transaksi',[SalesController::class,'riwayat_transaksi'])->name('riwayat-penjualan');
-        Route::get('laporan-transaksi',[SalesController::class,'viewLaporanBulananPenjualan'])->name('laporan-penjualan');
+        Route::get('laporan-transaksi/{tglawal?}/{tglakhir?}',[SalesController::class,'viewLaporanBulananPenjualan'])->name('laporan-penjualan');
         Route::get('ambil-data-ajax-produk', [SalesController::class,'ambil_data_ajax_produk'])->name('ambil-data-ajax-produk');
     });
     Route::prefix('pembelian')->group(function () {
         Route::resource('transaksi-pembelian', PurchasesController::class);
-        Route::get('laporan-transaksi',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian');
+        Route::get('laporan-transaksi/{tglawal?}/{tglakhir?}',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian');
     });
 });
 Route::prefix('penyimpanan')->middleware('auth')->group(function (){
-    Route::get('stok-barang',[PenyimpananController::class,'stokBarangView'])->name('stok-barang');
+    Route::get('stok-barang/{month?}',[PenyimpananController::class,'stokBarangView'])->name('stok-barang');
     Route::get('barang-masuk',[PenyimpananController::class,'barangMasukView'])->name('barang-masuk');
     Route::get('barang-keluar',[PenyimpananController::class,'barangKeluarView'])->name('barang-keluar');
     Route::resource('stock-opname',StockOpnameController::class);

@@ -362,10 +362,10 @@
         $("#total-potongan-diskon").html('Rp. ' + addCommas(total_disc));
         $("#grand-total").html('Rp. ' + addCommas(grand_total + ppn - total_disc));
 
-        total_harga_barang = 0;
-        grand_total = 0;
-        ppn = 0;
-        total_disc = 0;
+        // total_harga_barang = 0;
+        // grand_total = 0;
+        // ppn = 0;
+        // total_disc = 0;
     }
 
     $("body").on("click", "#hapus-produk-jual", function(e) {

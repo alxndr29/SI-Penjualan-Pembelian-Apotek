@@ -8,14 +8,14 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\StockIN;
-
+use Illuminate\Support\Carbon;
 class PurchasesController extends Controller
 {
     public function index()
     {
         $product = ProductCategory::all();
         $supplier = Supplier::all();
-        return view('pages.transaksi.pembelian.buat-transaksi-baru',compact('supplier'));
+        return view('pages.transaksi.pembelian.buat-transaksi-baru', compact('supplier'));
     }
 
     public function create()
@@ -23,6 +23,7 @@ class PurchasesController extends Controller
 
     public function store(Request $request)
     {
+        // return $request->get('data_produk');
         // return $request->get('metode-pembayaran');
         DB::beginTransaction();
         try {
@@ -30,13 +31,14 @@ class PurchasesController extends Controller
             $purchase->supplier_id = $request->get('supplier');
             $purchase->employe_id = 1;
             $purchase->no_transaction = '1234567';
+            $purchase->transaction_date = date('Y-m-d');
 
             $purchase->tanggal_pelunasan = null;
-            $purchase->total = $request->get('total');
-            if($request->get('metode-pembayaran') == "Cash"){
+            $purchase->total = $request->get('total_akhir');
+            if ($request->get('metode-pembayaran') == "Cash") {
                 $purchase->state = 'Lunas';
                 $purchase->payment_method = 'Tunai';
-            }else{
+            } else {
                 $purchase->state = 'Belum Lunas';
                 $purchase->payment_method = 'Kredit';
                 $purchase->tanggal_jatuh_tempo = $request->get('tanggal-jatuh-tempo');
@@ -44,12 +46,12 @@ class PurchasesController extends Controller
 
             $purchase->save();
 
-            foreach($request->get('data_produk') as $key => $value){
+            foreach ($request->get('data_produk') as $key => $value) {
                 $stock_in = new StockIN();
                 $stock_in->purchase_order_id = $purchase->id;
                 $stock_in->product_id = $value['id'];
-                $stock_in->expired_date = $value['expired'];
-                $stock_in->jumlah = $value['expired'];
+                $stock_in->expired_date = Carbon::parse($value['expired'])->format('Y-m-d');
+                $stock_in->jumlah = $value['qty_pembelian'];
                 $stock_in->diskon = $value['diskon_pembelian'];
                 $stock_in->harga = $value['harga_pembelian'];
                 $stock_in->save();
@@ -94,10 +96,13 @@ class PurchasesController extends Controller
 
     // Custom Function
 
-    public function viewLaporanBulananPembelian()
+    public function viewLaporanBulananPembelian($tglawal = null, $tglakhir = null)
     {
-        $purchaseOrder = Purchase::where('state','=','Lunas')->get();
-
-        return view('pages.transaksi.pembelian.laporan-bulanan',compact('purchaseOrder'));
+        if ($tglawal != null && $tglakhir != null) {
+            $purchaseOrder = Purchase::where('state', '=', 'Lunas')->whereBetWeen('created_at', [$tglawal, $tglakhir])->get();
+        } else {
+            $purchaseOrder = Purchase::where('state', '=', 'Lunas')->get();
+        }
+        return view('pages.transaksi.pembelian.laporan-bulanan', compact('purchaseOrder', 'tglawal', 'tglakhir'));
     }
 }
