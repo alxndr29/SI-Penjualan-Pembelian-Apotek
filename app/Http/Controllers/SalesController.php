@@ -96,13 +96,14 @@ class SalesController extends Controller
                     'harga' => $value['harga'],
                     'keuntungan' => $value['keuntungan']
                 ]);
-                $stok_in = StockIN::where('product_id', $value['id'])->orderBy('expired_date', 'asc')->get();
+                if($value['product_type_id'] == "1"){
+                    $stok_in = StockIN::where('product_id', $value['id'])->orderBy('created_at', 'asc')->get();
+                }else{
+                    $stok_in = StockIN::where('product_id', $value['id'])->orderBy('expired_date', 'asc')->get();
+                } 
                 $kebutuhan = (int) $value['qty'];
                 foreach ($stok_in as $key => $value2) {
                     $stok = (int) $value2->jumlah;
-                    // return $kebutuhan-$stok;
-                    //  return "Pengurangan"." ".$stok." dan ".$kebutuhan." adalah :". $stok-$kebutuhan;
-                    // return $stok - $kebutuhan;
                     if ($stok != 0 && ($stok >= $kebutuhan)) {
                         $stok_in = StockIN::where('product_id', '=', $value['id'])->where('id','=',$value2->id)->first();
                         $stok_in->jumlah = $stok-$kebutuhan;
