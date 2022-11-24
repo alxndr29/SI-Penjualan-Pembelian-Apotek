@@ -29,6 +29,7 @@
                                 <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Waktu</th>
                                     <th>No.Transaksi</th>
                                     <th>Produk</th>
                                     <th>Supplier</th>
@@ -44,6 +45,7 @@
                                 @foreach($stockIn as $item)
                                     <tr>
                                         <td>{{$i++}}</td>
+                                        <td>{{\Carbon\Carbon::parse($item->created_at)->format('d M y h:m:s')}}</td>
                                         <td class="text-primary fw-bolder" >PO-{{$item->purchase_order->no_transaction}}</td>
                                         <td>{{$item->product->nama}}</td>
                                         <td>{{$item->purchase_order->supplier->name}}</td>

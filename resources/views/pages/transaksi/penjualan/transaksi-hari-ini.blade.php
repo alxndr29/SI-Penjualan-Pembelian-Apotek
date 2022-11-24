@@ -24,15 +24,24 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Barang Terjual</h6>
+<<<<<<< Updated upstream
                             <h3 class="mb-4">{{$total_barang_terjual}} Produk</h3>
+=======
+                            <h3 class="mb-4">{{$totalBarangTerjual}} Produk</h3>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="card">
                         <div class="card-body">
+<<<<<<< Updated upstream
                             <h6 class="mb-4">Total Pendapatan</h6>
                             <h3 class="mb-4">Rp. {{number_format($total_pendapatan)}}</h3>
+=======
+                            <h6 class="mb-4">Total Pendapatan / Omset</h6>
+                            <h3 class="mb-4"> Rp. {{number_format($totalPendapatan,0,',','.') }} <h6 class="text-success">+ PPN {{number_format($totalPendapatan * 10 /100,0,',','.') }}</h6></h3>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -40,7 +49,11 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Keuntungan</h6>
+<<<<<<< Updated upstream
                             <h3 class="mb-4">Rp. {{number_format($total_keuntungan)}}</h3>
+=======
+                            <h3 class="mb-4"> Rp. {{number_format($totalKeuntungan,0,',','.') }}</h3>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -48,7 +61,11 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Pembeli</h6>
+<<<<<<< Updated upstream
                             <h3 class="mb-4">{{$total_pembeli}} Pesanan</h3>
+=======
+                            <h3 class="mb-4">{{$totalPembeli}} Pembeli</h3>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -63,22 +80,35 @@
                                     <th>No</th>
                                     <th>No.Transaksi</th>
                                     <th>Produk</th>
-                                    <th>Pelanggan</th>
-                                    <th>Jenis & Kategori</th>
+                                    <th>HPP</th>
                                     <th>Jumlah Stok Dikeluarkan</th>
-                                    <th>Harga</th>
+                                    <th>Total Keuntungan</th>
+                                    <th>Total Potongan Diskon</th>
+                                    <th>Grand Total</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="fw-bold text-danger">SO-0001</td>
-                                    <td>Paramex A</td>
-                                    <td>Pelanggan Umum</td>
-                                    <td><span class="fw-bold badge badge-info">Obat-Obatan</span> - Vitamin C</td>
-                                    <td>15 Strip</td>
-                                    <td>Rp. 150.000</td>
-                                </tr>
+                                @php
+                                    $i = 1
+                                @endphp
+                                @foreach($stock_out as $item)
+                                    @php
+                                        $totalKeuntungan = $item->harga * $item->jumlah * $item->keuntungan / 100;
+                                        $totalDiskon = $item->harga * $item->jumlah * $item->diskon / 100;
+                                    @endphp
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td class="fw-bold text-danger">SO-{{$item->SalesOrder->no_transaction}}</td>
+                                        <td>{{$item->Product->nama}}</td>
+                                        <td>Rp. {{number_format($item->harga,0,',','.') }}</td>
+                                        <td>{{$item->jumlah}} Strip</td>
+                                        <td class="text-success">Rp. {{number_format($totalKeuntungan,0,',','.') ." (". $item->keuntungan."%)"}}</td>
+                                        <td class="text-danger">- Rp. {{number_format($totalDiskon,0,',','.')." (". $item->diskon."%)"}}</td>
+                                        <td>Rp. {{number_format($item->harga * $item->jumlah + $totalKeuntungan - $totalDiskon,0,',','.') }}</td>
+                                    </tr>
+                                @endforeach
+
                                 {{--                      @php--}}
                                 {{--                          $i = 1;--}}
                                 {{--                      @endphp--}}

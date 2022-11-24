@@ -28,7 +28,7 @@
                                 <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No.Transaksi</th>
+                                    <th>Waktu dan Jam</th>
                                     <th>Produk</th>
                                     <th>Jenis & Kategori</th>
                                     <th>Customer</th>
@@ -43,6 +43,7 @@
                                 @foreach($stockOut as $item)
                                     <tr>
                                         <td>{{$i++}} </td>
+                                        <td>{{\Carbon\Carbon::parse($item->created_at)->format('d M y h:m:s')}}</td>
                                         <td class="text-danger fw-bolder" >{{$item->SalesOrder->no_transaction}}</td>
                                         <td>{{$item->product->nama}}</td>
                                         <td><span class="fw-bold badge badge-info">{{$item->Product->Type->name}}</span> - {{$item->Product->Category->name}}</td>

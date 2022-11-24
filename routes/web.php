@@ -32,10 +32,16 @@ Route::prefix('transaksi')->middleware('auth')->group(function () {
         Route::get('riwayat-transaksi',[SalesController::class,'riwayat_transaksi'])->name('riwayat-penjualan');
         Route::get('laporan-transaksi/{tglawal?}/{tglakhir?}',[SalesController::class,'viewLaporanBulananPenjualan'])->name('laporan-penjualan');
         Route::get('ambil-data-ajax-produk', [SalesController::class,'ambil_data_ajax_produk'])->name('ambil-data-ajax-produk');
+
     });
     Route::prefix('pembelian')->group(function () {
         Route::resource('transaksi-pembelian', PurchasesController::class);
+<<<<<<< Updated upstream
         Route::get('laporan-transaksi/{tglawal?}/{tglakhir?}',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian');
+=======
+        Route::get('laporan-transaksi',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian');
+        Route::get('storeWithModal',[PurchasesController::class,'storeWithModal'])->name('storeSupplierWithModal');
+>>>>>>> Stashed changes
     });
 });
 Route::prefix('penyimpanan')->middleware('auth')->group(function (){

@@ -1,7 +1,7 @@
 @props(['title'])
-<div class="modal fade bd-example-modal-lg modal-{{$title}}"  tabindex="9999" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade bd-example-modal-lg modal-{{\Illuminate\Support\Str::slug($title)}}"  tabindex="9999" role="dialog" aria-labelledby="myLargeModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-{{\Illuminate\Support\Str::slug($title) == 'penyimpanan-barang' ? 'xl' : 'lg'}}">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myLargeModalLabel">{{ $title  }}</h4>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -31,6 +32,24 @@ class SupplierController extends Controller
         ]);
 
         return redirect()->route('supplier.index')->with(['success' => 'menambahkan data baru']);
+
+    }
+    public function storeWithModal(Request $request)
+    {
+        //without redirect to new page
+        $supplier = Supplier::create([
+            'name' => $request->input('name'),
+            'address' => $request->input('alamat'),
+            'telephone' => $request->input('telfon'),
+            'bank_address' => $request->input('rekening'),
+            'description' => $request->input('description'),
+            'status' => true,
+        ]);
+
+        return \response()->json([
+            'status' => 'OK',
+            'data' => $supplier
+        ]);
 
     }
 

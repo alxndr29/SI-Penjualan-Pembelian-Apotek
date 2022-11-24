@@ -158,6 +158,7 @@ class SalesController extends Controller
     //Custom Function
     public function riwayat_transaksi()
     {
+<<<<<<< Updated upstream
         $total_barang_terjual = StockOut::whereDate('created_at', Carbon::today())->sum('jumlah');
         $total_pendapatan = Sales::whereDate('created_at', Carbon::today())->sum('total');
         $total_keuntungan = 0;
@@ -168,6 +169,22 @@ class SalesController extends Controller
         // ->get();
         $stock_out = 0;
         return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out','total_barang_terjual','total_pendapatan','total_keuntungan','total_pembeli'));
+=======
+        $stock_out = StockOut::with('SalesOrder.Customer','Product')->
+        where('created_at','>=',Carbon::now()->toDateString())
+            ->get();
+//        dd($stock_out);
+        $totalBarangTerjual = $stock_out->count();
+
+        $totalPembeli = $stock_out->groupBy('sales_order_id')->count();
+
+        $totalKeuntungan = 0;
+        $totalPendapatan = StockOut::selectRaw('SUM(harga*jumlah) as pendapatan')->pluck('pendapatan')->first();
+        $stock_out->each(function ($value) use (&$totalKeuntungan,$totalPendapatan) {
+            $totalKeuntungan += ($value->harga * $value->keuntungan / 100 * $value->jumlah) - ($value->harga * $value->diskon / 100 * $value->jumlah);
+        });
+        return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out','totalPendapatan','totalKeuntungan','totalPembeli','totalBarangTerjual'));
+>>>>>>> Stashed changes
     }
 
     public function viewLaporanBulananPenjualan($tglawal = null, $tglakhir = null)
