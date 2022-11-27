@@ -19,7 +19,17 @@ class SalesController extends Controller
     {
         $products = DB::table('get_product')->get();
         $customers = Customer::all();
-        return view('pages.transaksi.penjualan.buat-transaksi-baru', compact('products', 'customers'));
+        $currentMonth = Carbon::now()->month;
+        $stockProduct = DB::table('products as p')
+            ->select(
+                'p.nama',
+                db::raw("(SELECT DOX.stock_aktual FROM detail_stock_opname AS DOX INNER JOIN stock_opname AS opn WHERE opn.state = 'Finish' AND dox.product_id = p.id AND opn.bulan = '". $currentMonth ."') AS stok_awal"),
+                db::raw("(SELECT SUM(si.jumlah) FROM stock_in AS si INNER JOIN purchase_order AS po ON si.purchase_order_id = po.id WHERE po.state = 'Lunas' AND si.product_id = p.id AND MONTH(po.transaction_date) = '". $currentMonth ."') AS stok_masuk"),
+                db::raw("(SELECT SUM(s_out.jumlah) FROM stock_out AS s_out INNER JOIN sales_order AS so ON s_out.sales_order_id = so.id WHERE so.state = 'Lunas' AND s_out.product_id = p.id AND MONTH(so.transaction_date) = '". $currentMonth ."') AS stok_keluar"),
+                db::raw('(SELECT si.harga FROM stock_in AS si WHERE si.product_id = p.id AND si.jumlah > 0 ORDER BY CASE WHEN p.product_type_id = 1 then si.created_at END ASC, CASE WHEN p.product_type_id = 2 THEN si.expired_date END ASC LIMIT 1) AS harga')
+            )->get();
+
+        return view('pages.transaksi.penjualan.buat-transaksi-baru', compact('products', 'customers','stockProduct'));
     }
 
     public function ambil_data_ajax_produk()
@@ -39,7 +49,6 @@ class SalesController extends Controller
                 )
                 //->where(DB::raw('stock_in.id in (select max(id) from stock_in group by product_id)'))
                 ->groupBy('products.id')
-
                 ->get();
 
             return response()->json(
@@ -57,7 +66,6 @@ class SalesController extends Controller
             );
         }
     }
-
 
 
     public function create()
@@ -78,7 +86,7 @@ class SalesController extends Controller
             $sales->payment_method = $request->get('metode-pembayaran');
             if ($request->get('metode-pembayaran') == "Cash") {
                 $sales->no_bpjs = "Tidak Ada";
-                $sales->no_bpjs = "Lunass";
+                $sales->state = "Lunas";
             } else {
                 $sales->no_bpjs = $request->get('nomor-bpjs');
                 $sales->state = "Belum Lunas";
@@ -86,7 +94,7 @@ class SalesController extends Controller
             $sales->total = $request->get('total');
             $sales->save();
 
-            foreach ($request->get('data_produk') as  $value) {
+            foreach ($request->get('data_produk') as $value) {
                 DB::table('stock_out')->insert([
                     'sales_order_id' => $sales->id,
                     'product_id' => $value['id'],
@@ -95,17 +103,17 @@ class SalesController extends Controller
                     'diskon' => $value['diskon'],
                     'harga' => $value['harga'],
                     'keuntungan' => $value['keuntungan'],
-                    'created_at' => Carbon::now,
-                    'updated_at' => Carbon::now
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
                 ]);
                 if ($value['product_type_id'] == "1") {
                     $stok_in = StockIN::where('product_id', $value['id'])->orderBy('created_at', 'asc')->get();
                 } else {
                     $stok_in = StockIN::where('product_id', $value['id'])->orderBy('expired_date', 'asc')->get();
                 }
-                $kebutuhan = (int) $value['qty'];
+                $kebutuhan = (int)$value['qty'];
                 foreach ($stok_in as $key => $value2) {
-                    $stok = (int) $value2->jumlah;
+                    $stok = (int)$value2->jumlah;
                     if ($stok != 0 && ($stok >= $kebutuhan)) {
                         $stok_in = StockIN::where('product_id', '=', $value['id'])->where('id', '=', $value2->id)->first();
                         $stok_in->jumlah = $stok - $kebutuhan;
@@ -117,7 +125,8 @@ class SalesController extends Controller
                         $stok_in->jumlah = 0;
                         $stok_in->save();
                         $kebutuhan = $kebutuhan - $stok;
-                    } else { }
+                    } else {
+                    }
                 }
             }
             return response()->json(
@@ -155,23 +164,25 @@ class SalesController extends Controller
     {
         //
     }
+
     //Custom Function
     public function riwayat_transaksi()
     {
-<<<<<<< Updated upstream
-        $total_barang_terjual = StockOut::whereDate('created_at', Carbon::today())->sum('jumlah');
-        $total_pendapatan = Sales::whereDate('created_at', Carbon::today())->sum('total');
-        $total_keuntungan = 0;
-        $total_pembeli = Sales::whereDate('created_at', Carbon::today())->count();
-        // $stock_out = StockOut::whereDate('created_at', Carbon::today())
-        // ->join('products','products.id','=','stock_out.product_id')
-        // ->select()
-        // ->get();
-        $stock_out = 0;
-        return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out','total_barang_terjual','total_pendapatan','total_keuntungan','total_pembeli'));
-=======
-        $stock_out = StockOut::with('SalesOrder.Customer','Product')->
-        where('created_at','>=',Carbon::now()->toDateString())
+//        $total_barang_terjual = StockOut::whereDate('created_at', Carbon::today())->sum('jumlah');
+//<<<<<<< Updated upstream
+
+//        $total_pendapatan = Sales::whereDate('created_at', Carbon::today())->sum('total');
+//        $total_keuntungan = 0;
+//        $total_pembeli = Sales::whereDate('created_at', Carbon::today())->count();
+//        // $stock_out = StockOut::whereDate('created_at', Carbon::today())
+//        // ->join('products','products.id','=','stock_out.product_id')
+//        // ->select()
+//        // ->get();
+//        $stock_out = 0;
+//        return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out','total_barang_terjual','total_pendapatan','total_keuntungan','total_pembeli'));
+//=======
+        $stock_out = StockOut::with('SalesOrder.Customer', 'Product')->
+        where('created_at', '>=', Carbon::now()->toDateString())
             ->get();
 //        dd($stock_out);
         $totalBarangTerjual = $stock_out->count();
@@ -180,11 +191,10 @@ class SalesController extends Controller
 
         $totalKeuntungan = 0;
         $totalPendapatan = StockOut::selectRaw('SUM(harga*jumlah) as pendapatan')->pluck('pendapatan')->first();
-        $stock_out->each(function ($value) use (&$totalKeuntungan,$totalPendapatan) {
+        $stock_out->each(function ($value) use (&$totalKeuntungan, $totalPendapatan) {
             $totalKeuntungan += ($value->harga * $value->keuntungan / 100 * $value->jumlah) - ($value->harga * $value->diskon / 100 * $value->jumlah);
         });
-        return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out','totalPendapatan','totalKeuntungan','totalPembeli','totalBarangTerjual'));
->>>>>>> Stashed changes
+        return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out', 'totalPendapatan', 'totalKeuntungan', 'totalPembeli', 'totalBarangTerjual'));
     }
 
     public function viewLaporanBulananPenjualan($tglawal = null, $tglakhir = null)
@@ -194,6 +204,6 @@ class SalesController extends Controller
         } else {
             $salesOrder = Sales::where('state', '=', 'Lunas')->get();
         }
-        return view('pages.transaksi.penjualan.laporan-bulanan', compact('salesOrder','tglawal','tglakhir'));
+        return view('pages.transaksi.penjualan.laporan-bulanan', compact('salesOrder', 'tglawal', 'tglakhir'));
     }
 }

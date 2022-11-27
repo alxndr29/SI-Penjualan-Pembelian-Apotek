@@ -33,13 +33,13 @@
                             <div class="col-4">
                                 <label class="form-label" for="exampleFormControlSelect9">Tanggal Jatuh Tempo</label>
                                 <div class="input-group">
-                                    <input class="datepicker-here form-control digits" type="date" v-model="date" id="tglawal">
+                                    <input class=" form-control digits" type="date" v-model="date" id="tglawal">
                                 </div>
                             </div>
                             <div class="col-4">
                                 <label class="form-label" for="exampleFormControlSelect9">Tanggal Jatuh Tempo</label>
                                 <div class="input-group">
-                                    <input class="datepicker-here form-control digits" type="date" v-model="date" id="tglakhir">
+                                    <input class=" form-control digits" type="date" v-model="date" id="tglakhir">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -125,9 +125,6 @@
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
 
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
 <script type="text/javascript">
     function showSalesOrder(id) {
         $.ajax({

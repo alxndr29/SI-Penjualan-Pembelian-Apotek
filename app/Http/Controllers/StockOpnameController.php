@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StockOpname;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,6 +23,28 @@ class StockOpnameController extends Controller
 
     public function store(Request $request)
     {
+        $stock_opname = StockOpname::create([
+            'no_opname' => Carbon::parse($request->tanggal_mulai)->format('m'),
+            'bulan' => Carbon::parse($request->tanggal_mulai)->format('m'),
+            'tanggal_mulai' => $request->tanggal_mulai_pemeriksaan,
+            'tanggal_berakhir' => $request->tanggal_berakhir_pemeriksaan,
+            'operator' => \Auth::id(),
+            'state' => 'Finish'
+        ]);
+
+        $detail_stock_opnames = $request->data_products['id'];
+        dd($detail_stock_opnames);
+//        dd($request->data_products);
+//        $detail_stock_opnames_record = [];
+//        foreach ($detail_stock_opnames as $item)
+//        {
+//            if(!empty($item)){
+//                $detail_stock_opnames_record[] = [
+//                    'stock_opname_id' => $stock_opname->id,
+//                ];
+//            }
+//        }
+
     }
 
     public function show($id)

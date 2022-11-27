@@ -34,6 +34,7 @@
                                     <th>Customer</th>
                                     <th>Jumlah Stok Dikeluarkan</th>
                                     <th>Harga</th>
+                                    <th>Grand Total</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -49,7 +50,7 @@
                                         <td><span class="fw-bold badge badge-info">{{$item->Product->Type->name}}</span> - {{$item->Product->Category->name}}</td>
                                         <td>{{$item->SalesOrder->Customer->name}}</td>
                                         <td>{{$item->jumlah}} {{$item->Product->UOM->name}}</td>
-                                        <td>Rp. {{$item->harga}}</td>
+                                        <td>Rp.{{number_format($item->harga * $item->jumlah,0,',','.') }}</td>
                                     </tr>
 
                                 @endforeach

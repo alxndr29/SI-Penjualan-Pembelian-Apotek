@@ -93,11 +93,17 @@
             </div>
             <div class="row gy-2">
                 <div class="col-12">
-                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100">Lihat Penyimpanan
+                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100"
+                            data-bs-toggle="modal"
+                            data-bs-target=".modal-penyimpanan-barang"
+                    >Lihat Penyimpanan
                     </button>
                 </div>
                 <div class="col-12">
-                    <a href="{{route('pelanggan.index')}}" target="_blank" class=" btn btn-light txt-dark btn-md me-3 w-100">Tambah Pelanggan</a>
+                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100"
+                            data-bs-toggle="modal"
+                            data-bs-target=".modal-tambah-data-pelanggan"
+                    >Tambah Pelanggan</button>
                 </div>
                 <!-- <div class="col-6">
                         <button type="button" class="btn btn-outline-danger txt-dark btn-md me-3 w-100">Draft</button>
@@ -195,11 +201,121 @@
         </div>
     </div>
 </div>
-<x-modal-large title="Data Pelanggan">
+<x-modal-large title="Tambah Data Pelanggan">
+    <form method="POST" action="{{route('pelanggan.store')}}">
+        @csrf
+        <div class="modal-body">
+            <div class="row gy-4">
+                <div class="col-12">
+                    <label class="form-label" for="exampleFormControlInput1">Name</label>
+                    <input class="form-control form-control-lg" id="exampleFormControlInput1 "
+                           autofocus="true" name="name"
+                           placeholder="Masukan Nama Pelanggan" >
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="telfon">No.Telfon</label>
+                    <input class="form-control form-control-lg" id="telfon"
+                           autofocus="true" name="telfon"
+                           placeholder="Masukan Nomor Telfon" >
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="alamat">Alamat Pelanggan</label>
+                    <textarea class="form-control form-control-lg" id="alamat" name="alamat"
+                              rows="3" placeholder="Masukan Alamat Pelanggan"></textarea>
+                </div>
 
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Simpan</button>
+        </div>
+    </form>
 </x-modal-large>
-<x-modal-large title="Stok Barang">
+<x-modal-large title="Penyimpanan Barang">
+    <div class="table-responsive">
+        <table class="display" id="basic-2">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Produk</th>
+                <th>Stok Awal</th>
+                <th>Stok Masuk</th>
+                <th>Total Persediaan</th>
+                <th>Stok Keluar</th>
+                <th>Harga</th>
+                <th>Total Penjualan</th>
+                <th>Stok Akhir</th>
+                <th>Asset (Rp)</th>
+            </tr>
+            </thead>
+            <tbody>
+            @php
+                $i = 1;
+            @endphp
+            @foreach($stockProduct as $items)
+                <tr>
+                    <td>{{$i++}}</td>
+                    <td><a href="" class="fw-bold text-primary">{{$items->nama}}</a></td>
+                    <td>{{$items->stok_awal ?? '0'}}</td>
+                    <td>{{$items->stok_masuk ?? '0'}}</td>
+                    <td>{{$items->stok_masuk + $items->stok_awal}}</td>
+                    <td class="text-danger fw-bold">{{$items->stok_keluar ?? '0'}}</td>
+                    <td>Rp. {{number_format($items->harga,0,',','.') }}</td>
+                    <td class="fw-bold text-success">Rp.{{number_format($items->harga * $items->stok_keluar,0,',','.') }}</td>
+                    <td>{{$items->stok_awal + $items->stok_masuk - $items->stok_keluar }}</td>
+                    <td class="fw-bold">Rp. {{number_format(($items->stok_awal + $items->stok_masuk - $items->stok_keluar) * $items->harga,0,',','.') }}</td>
+                </tr>
+            @endforeach
+            {{--                                @for($i = 1; $i<100; $i++)--}}
+            {{--                                    <tr>--}}
+            {{--                                        <td>{{$i}}</td>--}}
+            {{--                                        <td><a href="" class="fw-bold text-primary">Paramex {{$i}}</a></td>--}}
+            {{--                                        <td>{{rand(50,512)}}</td>--}}
+            {{--                                        <td>{{rand(50,512)}}</td>--}}
+            {{--                                        <td>{{rand(50,512)}}</td>--}}
+            {{--                                        <td class="text-danger fw-bold">{{rand(10,20)}}</td>--}}
+            {{--                                        <td>Rp. {{number_format(rand(20000,50000),0,',','.') }}</td>--}}
+            {{--                                        <td class="fw-bold text-success">Rp.{{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
+            {{--                                        <td>{{rand(50,512)}}</td>--}}
+            {{--                                        <td class="fw-bold">Rp. {{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
+            {{--                                    </tr>--}}
+            {{--                                @endfor--}}
+        </table>
+    </div>
+</x-modal-large>
+<x-modal-large title="Pelanggan">
+    <form method="POST" action="{{route('pelanggan.store')}}">
+        @csrf
+        <div class="modal-body">
+            <div class="row gy-4">
+                <div class="col-12">
+                    <label class="form-label" for="exampleFormControlInput1">Name</label>
+                    <input class="form-control form-control-lg" id="exampleFormControlInput1 "
+                           autofocus="true" name="name"
+                           placeholder="Masukan Nama Pelanggan" >
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="telfon">No.Telfon</label>
+                    <input class="form-control form-control-lg" id="telfon"
+                           autofocus="true" name="telfon"
+                           placeholder="Masukan Nomor Telfon" >
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="alamat">Alamat Pelanggan</label>
+                    <textarea class="form-control form-control-lg" id="alamat" name="alamat"
+                              rows="3" placeholder="Masukan Alamat Pelanggan"></textarea>
+                </div>
 
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Simpan</button>
+        </div>
+    </form>
 </x-modal-large>
 @endsection
 

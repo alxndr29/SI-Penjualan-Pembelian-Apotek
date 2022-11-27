@@ -8,20 +8,16 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\StockIN;
-<<<<<<< Updated upstream
+
 use Illuminate\Support\Carbon;
-=======
-use Carbon\Carbon;
->>>>>>> Stashed changes
+
 class PurchasesController extends Controller
 {
     public function index()
     {
         $product = ProductCategory::all();
         $supplier = Supplier::all();
-<<<<<<< Updated upstream
-        return view('pages.transaksi.pembelian.buat-transaksi-baru', compact('supplier'));
-=======
+
         $currentMonth = Carbon::now()->month;
         $stockProduct = DB::table('products as p')
             ->select(
@@ -33,7 +29,6 @@ class PurchasesController extends Controller
             )->get();
 
         return view('pages.transaksi.pembelian.buat-transaksi-baru',compact('supplier','stockProduct'));
->>>>>>> Stashed changes
     }
 
     public function create()

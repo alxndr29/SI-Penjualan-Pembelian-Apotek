@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Waktu pembuatan: 25 Okt 2022 pada 12.26
--- Versi server: 5.7.33
--- Versi PHP: 8.1.11
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 27 Nov 2022 pada 16.04
+-- Versi server: 10.4.21-MariaDB
+-- Versi PHP: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `customers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` longtext COLLATE utf8mb4_unicode_ci,
-  `telephone` smallint(6) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Menyimpan nama pelanggan',
+  `address` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Menyimpan alamat pelanggan',
+  `telephone` smallint(6) DEFAULT NULL COMMENT 'Menyimpan nomor telfon pelanggan',
+  `status` tinyint(1) NOT NULL COMMENT 'Menyimpan status pelanggan aktif / tidak aktif',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -42,8 +42,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `address`, `telephone`, `status`, `created_at`, `updated_at`) VALUES
-(3, 'Alexander Evan', 'Jln. Pesona Surya Milenia', NULL, 1, NULL, '2022-10-25 03:32:40'),
-(4, 'Gusti Bagus Wahyu', 'Jln. Rungkut Mejoyo Selatan V No. 3', 5555, 1, NULL, NULL);
+(1, 'Pelanggan Umum', NULL, NULL, 1, '2022-11-20 02:19:05', '2022-11-20 02:19:07'),
+(3, 'Alexander Evan', 'Jln. Pesona Surya Milenia', NULL, 1, '2022-11-20 02:19:09', '2022-10-25 03:32:40'),
+(4, 'Gusti Bagus Wahyu', 'Jln. Rungkut Mejoyo Selatan V No. 3', 5555, 1, '2022-11-20 02:19:07', '2022-11-20 02:19:08');
 
 -- --------------------------------------------------------
 
@@ -55,12 +56,19 @@ CREATE TABLE `detail_stock_opname` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `stock_opname_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
-  `stock_computer` datetime NOT NULL,
+  `stock_computer` int(11) NOT NULL DEFAULT 0,
   `stock_aktual` int(11) NOT NULL,
   `stock_selisih` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `detail_stock_opname`
+--
+
+INSERT INTO `detail_stock_opname` (`id`, `stock_opname_id`, `product_id`, `stock_computer`, `stock_aktual`, `stock_selisih`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 15, 20, 5, '2022-11-10 11:11:56', '2022-11-10 11:11:56');
 
 -- --------------------------------------------------------
 
@@ -75,8 +83,22 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `get_cashflow`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `get_cashflow` (
+`bulan` varchar(50)
+,`pemasukan` double
+,`pengeluaran` double
+,`piutang` double
+,`hutang` double
+);
 
 -- --------------------------------------------------------
 
@@ -90,13 +112,17 @@ CREATE TABLE `get_product` (
 ,`product_category_id` bigint(20) unsigned
 ,`product_uom_id` bigint(20) unsigned
 ,`nama` varchar(255)
+,`min_stock` double
 ,`diskon` double
+,`keuntungan` double
 ,`created_at` timestamp
 ,`updated_at` timestamp
 ,`category` varchar(255)
-,`type` varchar(255)
 ,`uom` varchar(255)
-,`harga` bigint(11)
+,`type` varchar(255)
+,`harga` int(11)
+,`expired_date` date
+,`stok_barang` decimal(32,0)
 );
 
 -- --------------------------------------------------------
@@ -135,6 +161,35 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `months`
+--
+
+CREATE TABLE `months` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `months`
+--
+
+INSERT INTO `months` (`id`, `name`) VALUES
+(1, 'Januari'),
+(2, 'Februari'),
+(3, 'Maret'),
+(4, 'April'),
+(5, 'Mei'),
+(6, 'Juni'),
+(7, 'Juli'),
+(8, 'Agustus'),
+(9, 'September'),
+(10, 'Oktober'),
+(11, 'November'),
+(12, 'Desember');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `password_resets`
 --
 
@@ -168,8 +223,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_type_id`, `product_category_id`, `product_uom_id`, `nama`, `min_stock`, `diskon`, `keuntungan`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 'Flucodin 500Mg', 50, 5, 1000, NULL, NULL),
-(2, 2, 2, 2, 'Paracetamol 1000Mg', 40, 10, 100, NULL, NULL);
+(1, 1, 1, 1, 'Flucodin 500Mg', 50, 5, 1000, '2022-11-18 13:18:29', '2022-11-18 13:18:30'),
+(2, 2, 2, 2, 'Paracetamol 1000Mg', 40, 10, 100, '2022-11-18 13:18:29', '2022-11-18 13:18:30');
 
 -- --------------------------------------------------------
 
@@ -179,11 +234,11 @@ INSERT INTO `products` (`id`, `product_type_id`, `product_category_id`, `product
 
 CREATE TABLE `product_categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `product_type_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `product_type_id` bigint(20) UNSIGNED NOT NULL COMMENT 'Menyimpan Jenis Produk Seperti Obat-obatan atau Peralatan Medis',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nama Kategori',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Deskripsi Kategori',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT 'Tanggal ditambahkan ',
+  `updated_at` timestamp NULL DEFAULT NULL COMMENT 'Tanggal dirubah'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -224,8 +279,8 @@ INSERT INTO `product_types` (`id`, `name`, `description`, `created_at`, `updated
 
 CREATE TABLE `product_uom` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Nama Satuan barang seperti table, strip dan pcs',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Deskripsi satuan barang',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -235,8 +290,8 @@ CREATE TABLE `product_uom` (
 --
 
 INSERT INTO `product_uom` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Uom A', 'Description of Uom A', NULL, NULL),
-(2, 'Uom B', 'Description of Uom B', NULL, NULL);
+(1, 'Tablet', 'Description of Uom A', NULL, NULL),
+(2, 'Strip', 'Description of Uom B', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -251,8 +306,8 @@ CREATE TABLE `purchase_order` (
   `no_transaction` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `transaction_date` datetime NOT NULL,
   `payment_method` enum('Tunai','Kredit') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tanggal_jatuh_tempo` datetime NOT NULL,
-  `tanggal_pelunasan` datetime NOT NULL,
+  `tanggal_jatuh_tempo` date DEFAULT NULL,
+  `tanggal_pelunasan` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total` double NOT NULL,
   `state` enum('Lunas','Belum Lunas','Draft') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -264,8 +319,8 @@ CREATE TABLE `purchase_order` (
 --
 
 INSERT INTO `purchase_order` (`id`, `supplier_id`, `employe_id`, `no_transaction`, `transaction_date`, `payment_method`, `tanggal_jatuh_tempo`, `tanggal_pelunasan`, `total`, `state`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '1', '2022-10-25 11:25:39', 'Tunai', '2022-10-25 11:25:39', '2022-10-25 11:25:39', 10000, 'Lunas', NULL, NULL),
-(2, 1, 1, '2', '2022-10-25 11:26:11', 'Tunai', '2022-10-25 11:26:11', '2022-10-25 11:26:11', 50000, 'Lunas', NULL, NULL);
+(1, 1, 1, '1', '2022-11-25 11:25:39', 'Kredit', '2022-10-25', '2022-11-26', 10000, 'Lunas', '2022-11-01 11:19:59', '2022-11-01 11:19:59'),
+(2, 1, 1, '2', '2022-11-25 11:26:11', 'Kredit', '2022-10-25', '2022-11-17', 50000, 'Lunas', '2022-11-01 11:20:00', '2022-11-01 11:20:00');
 
 -- --------------------------------------------------------
 
@@ -283,9 +338,17 @@ CREATE TABLE `sales_order` (
   `no_bpjs` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total` double NOT NULL,
   `state` enum('Lunas','Belum Lunas') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tanggal_pelunasan` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `sales_order`
+--
+
+INSERT INTO `sales_order` (`id`, `customer_id`, `employee_id`, `no_transaction`, `transaction_date`, `payment_method`, `no_bpjs`, `total`, `state`, `tanggal_pelunasan`, `created_at`, `updated_at`) VALUES
+(12, 1, 2, '1', '2022-11-27 14:52:44', 'Cash', 'Tidak Ada', 74250, 'Lunas', NULL, '2022-11-27 06:52:44', '2022-11-27 06:52:44');
 
 -- --------------------------------------------------------
 
@@ -297,7 +360,7 @@ CREATE TABLE `stock_in` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `purchase_order_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
-  `expired_date` datetime NOT NULL,
+  `expired_date` date DEFAULT NULL,
   `jumlah` int(11) NOT NULL,
   `diskon` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
@@ -310,9 +373,9 @@ CREATE TABLE `stock_in` (
 --
 
 INSERT INTO `stock_in` (`id`, `purchase_order_id`, `product_id`, `expired_date`, `jumlah`, `diskon`, `harga`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2022-10-25 11:28:00', 70, 5, 6000, NULL, NULL),
-(2, 1, 2, '2022-10-25 11:28:00', 90, 5, 8000, NULL, NULL),
-(3, 2, 2, '2022-10-25 11:28:00', 10, 5, 9000, NULL, NULL);
+(1, 1, 1, '2022-11-16', 55, 5, 6000, '2022-11-19 13:34:14', '2022-11-27 06:52:44'),
+(2, 1, 2, '2022-12-25', 1, 5, 7500, '2022-11-10 12:23:29', '2022-11-10 12:23:32'),
+(3, 2, 2, '2022-11-16', 7, 5, 9000, '2022-10-10 12:23:28', '2022-11-27 06:52:44');
 
 -- --------------------------------------------------------
 
@@ -328,8 +391,16 @@ CREATE TABLE `stock_opname` (
   `tanggal_berakhir` date NOT NULL,
   `operator` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `state` enum('Draft','Finish') COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `stock_opname`
+--
+
+INSERT INTO `stock_opname` (`id`, `no_opname`, `bulan`, `tanggal_mulai`, `tanggal_berakhir`, `operator`, `created_at`, `updated_at`, `state`) VALUES
+(1, '1', 12, '2022-11-10', '2022-11-10', 'bAGUS', '2022-11-10 07:32:37', '2022-11-10 07:32:38', 'Draft');
 
 -- --------------------------------------------------------
 
@@ -349,6 +420,14 @@ CREATE TABLE `stock_out` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `stock_out`
+--
+
+INSERT INTO `stock_out` (`id`, `sales_order_id`, `product_id`, `jumlah`, `keuntungan`, `diskon`, `harga`, `created_at`, `updated_at`) VALUES
+(5, 12, 1, 5, 1000, 5, 6000, '2022-11-27 06:52:44', '2022-11-27 06:52:44'),
+(6, 12, 2, 5, 100, 10, 9000, '2022-11-27 06:52:44', '2022-11-27 06:52:44');
+
 -- --------------------------------------------------------
 
 --
@@ -357,12 +436,12 @@ CREATE TABLE `stock_out` (
 
 CREATE TABLE `suppliers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` longtext COLLATE utf8mb4_unicode_ci,
-  `telephone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bank_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(1) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Menyimpan nama supplier',
+  `address` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Menyimpan alamat supplier',
+  `telephone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Menyimpan nomor telfon supplier',
+  `bank_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Menyimpan nomor rekening supplier',
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Menyimpan keterangan atau deskripsi tambahan untuk supplier',
+  `status` tinyint(1) NOT NULL COMMENT 'Menandakan supplier ini masih aktif mengirim barang atau tidak',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -396,7 +475,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Username A', 'usera@usera.com', '2022-10-25 11:24:34', '123', '123', NULL, NULL);
+(1, 'Username A', 'usera@usera.com', '2022-10-25 11:24:34', '123', '123', NULL, NULL),
+(2, 'bagus', 'qwe@gmail.com', NULL, '$2y$10$fPOwjReqqwpYpCajq8Pqwe9e8m3Eibt.n.VHBTfXhdk2LhXm8ccwq', NULL, '2022-10-25 07:12:42', '2022-10-25 07:12:42');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `get_cashflow`
+--
+DROP TABLE IF EXISTS `get_cashflow`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `get_cashflow`  AS SELECT `m`.`name` AS `bulan`, (select sum(`so`.`total`) from `sales_order` `so` where month(`so`.`transaction_date`) = `m`.`id` and `so`.`state` = 'Lunas') AS `pemasukan`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where month(`po`.`transaction_date`) = `m`.`id` and `po`.`state` = 'Lunas') AS `pengeluaran`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where month(`po`.`transaction_date`) = `m`.`id` and `po`.`state` = 'Belum Lunas') AS `piutang`, (select sum(`so`.`total`) from `sales_order` `so` where month(`so`.`transaction_date`) = `m`.`id` and `so`.`state` = 'Belum Lunas') AS `hutang` FROM `months` AS `m` ;
 
 -- --------------------------------------------------------
 
@@ -405,7 +494,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 DROP TABLE IF EXISTS `get_product`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `get_product`  AS SELECT `p`.`id` AS `id`, `p`.`product_type_id` AS `product_type_id`, `p`.`product_category_id` AS `product_category_id`, `p`.`product_uom_id` AS `product_uom_id`, `p`.`nama` AS `nama`, `p`.`diskon` AS `diskon`, `p`.`created_at` AS `created_at`, `p`.`updated_at` AS `updated_at`, `c`.`name` AS `category`, `t`.`name` AS `type`, `u`.`name` AS `uom`, (select `s`.`harga` from `stock_in` `s` where ((`s`.`product_id` = `p`.`id`) and (`s`.`jumlah` > 0)) order by (`s`.`expired_date` and `s`.`created_at`) desc limit 1) AS `harga` FROM (((`products` `p` join `product_categories` `c` on((`p`.`product_category_id` = `c`.`id`))) join `product_types` `t` on((`p`.`product_type_id` = `t`.`id`))) join `product_uom` `u` on((`p`.`product_uom_id` = `u`.`id`)))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `get_product`  AS SELECT `p`.`id` AS `id`, `p`.`product_type_id` AS `product_type_id`, `p`.`product_category_id` AS `product_category_id`, `p`.`product_uom_id` AS `product_uom_id`, `p`.`nama` AS `nama`, `p`.`min_stock` AS `min_stock`, `p`.`diskon` AS `diskon`, `p`.`keuntungan` AS `keuntungan`, `p`.`created_at` AS `created_at`, `p`.`updated_at` AS `updated_at`, `c`.`name` AS `category`, `u`.`name` AS `uom`, `t`.`name` AS `type`, (select `si`.`harga` from `stock_in` `si` where `si`.`product_id` = `p`.`id` and `si`.`jumlah` > 0 order by case when `p`.`product_type_id` = 1 then `si`.`expired_date` end,case when `p`.`product_type_id` = 2 then `si`.`created_at` end limit 1) AS `harga`, (select `si`.`expired_date` from `stock_in` `si` where `si`.`product_id` = `p`.`id` and `si`.`jumlah` > 0 order by `si`.`expired_date` limit 1) AS `expired_date`, (select sum(`si`.`jumlah`) from `stock_in` `si` where `si`.`product_id` = `p`.`id`) AS `stok_barang` FROM (((`products` `p` join `product_categories` `c` on(`p`.`product_category_id` = `c`.`id`)) join `product_uom` `u` on(`p`.`product_uom_id` = `u`.`id`)) join `product_types` `t` on(`p`.`product_type_id` = `t`.`id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -436,6 +525,12 @@ ALTER TABLE `failed_jobs`
 -- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `months`
+--
+ALTER TABLE `months`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -537,7 +632,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT untuk tabel `detail_stock_opname`
 --
 ALTER TABLE `detail_stock_opname`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -550,6 +645,12 @@ ALTER TABLE `failed_jobs`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT untuk tabel `months`
+--
+ALTER TABLE `months`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
@@ -579,31 +680,31 @@ ALTER TABLE `product_uom`
 -- AUTO_INCREMENT untuk tabel `purchase_order`
 --
 ALTER TABLE `purchase_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `sales_order`
 --
 ALTER TABLE `sales_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `stock_in`
 --
 ALTER TABLE `stock_in`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `stock_opname`
 --
 ALTER TABLE `stock_opname`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `stock_out`
 --
 ALTER TABLE `stock_out`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `suppliers`
@@ -615,7 +716,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

@@ -462,7 +462,7 @@
                 $("#detail-produk-jenis").html(v.types_name);
                 $("#detail-produk-kategori").html(v.categories_name);
                 $("#detail-produk-satuan").html(v.uom_name);
-                $("#detail-produk-harga").html('Rp.' + addCommas(v.harga));
+                $("#detail-produk-harga").html(addCommas(v.harga));
                 if (v.product_type_id != 1) {
                     $("#expired-date").addClass('d-none');
                 } else {

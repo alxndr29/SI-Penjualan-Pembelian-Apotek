@@ -24,24 +24,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Barang Terjual</h6>
-<<<<<<< Updated upstream
-                            <h3 class="mb-4">{{$total_barang_terjual}} Produk</h3>
-=======
                             <h3 class="mb-4">{{$totalBarangTerjual}} Produk</h3>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="card">
                         <div class="card-body">
-<<<<<<< Updated upstream
-                            <h6 class="mb-4">Total Pendapatan</h6>
-                            <h3 class="mb-4">Rp. {{number_format($total_pendapatan)}}</h3>
-=======
                             <h6 class="mb-4">Total Pendapatan / Omset</h6>
                             <h3 class="mb-4"> Rp. {{number_format($totalPendapatan,0,',','.') }} <h6 class="text-success">+ PPN {{number_format($totalPendapatan * 10 /100,0,',','.') }}</h6></h3>
->>>>>>> Stashed changes
+
                         </div>
                     </div>
                 </div>
@@ -49,11 +41,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Keuntungan</h6>
-<<<<<<< Updated upstream
-                            <h3 class="mb-4">Rp. {{number_format($total_keuntungan)}}</h3>
-=======
                             <h3 class="mb-4"> Rp. {{number_format($totalKeuntungan,0,',','.') }}</h3>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -61,11 +49,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4">Total Pembeli</h6>
-<<<<<<< Updated upstream
-                            <h3 class="mb-4">{{$total_pembeli}} Pesanan</h3>
-=======
                             <h3 class="mb-4">{{$totalPembeli}} Pembeli</h3>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
