@@ -93,17 +93,11 @@
             </div>
             <div class="row gy-2">
                 <div class="col-12">
-                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100"
-                            data-bs-toggle="modal"
-                            data-bs-target=".modal-penyimpanan-barang"
-                    >Lihat Penyimpanan
+                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100" data-bs-toggle="modal" data-bs-target=".modal-penyimpanan-barang">Lihat Penyimpanan
                     </button>
                 </div>
                 <div class="col-12">
-                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100"
-                            data-bs-toggle="modal"
-                            data-bs-target=".modal-tambah-data-pelanggan"
-                    >Tambah Pelanggan</button>
+                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100" data-bs-toggle="modal" data-bs-target=".modal-tambah-data-pelanggan">Tambah Pelanggan</button>
                 </div>
                 <!-- <div class="col-6">
                         <button type="button" class="btn btn-outline-danger txt-dark btn-md me-3 w-100">Draft</button>
@@ -208,20 +202,15 @@
             <div class="row gy-4">
                 <div class="col-12">
                     <label class="form-label" for="exampleFormControlInput1">Name</label>
-                    <input class="form-control form-control-lg" id="exampleFormControlInput1 "
-                           autofocus="true" name="name"
-                           placeholder="Masukan Nama Pelanggan" >
+                    <input class="form-control form-control-lg" id="exampleFormControlInput1 " autofocus="true" name="name" placeholder="Masukan Nama Pelanggan">
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="telfon">No.Telfon</label>
-                    <input class="form-control form-control-lg" id="telfon"
-                           autofocus="true" name="telfon"
-                           placeholder="Masukan Nomor Telfon" >
+                    <input class="form-control form-control-lg" id="telfon" autofocus="true" name="telfon" placeholder="Masukan Nomor Telfon">
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="alamat">Alamat Pelanggan</label>
-                    <textarea class="form-control form-control-lg" id="alamat" name="alamat"
-                              rows="3" placeholder="Masukan Alamat Pelanggan"></textarea>
+                    <textarea class="form-control form-control-lg" id="alamat" name="alamat" rows="3" placeholder="Masukan Alamat Pelanggan"></textarea>
                 </div>
 
             </div>
@@ -237,24 +226,24 @@
     <div class="table-responsive">
         <table class="display" id="basic-2">
             <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Produk</th>
-                <th>Stok Awal</th>
-                <th>Stok Masuk</th>
-                <th>Total Persediaan</th>
-                <th>Stok Keluar</th>
-                <th>Harga</th>
-                <th>Total Penjualan</th>
-                <th>Stok Akhir</th>
-                <th>Asset (Rp)</th>
-            </tr>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Produk</th>
+                    <th>Stok Awal</th>
+                    <th>Stok Masuk</th>
+                    <th>Total Persediaan</th>
+                    <th>Stok Keluar</th>
+                    <th>Harga</th>
+                    <th>Total Penjualan</th>
+                    <th>Stok Akhir</th>
+                    <th>Asset (Rp)</th>
+                </tr>
             </thead>
             <tbody>
-            @php
+                @php
                 $i = 1;
-            @endphp
-            @foreach($stockProduct as $items)
+                @endphp
+                @foreach($stockProduct as $items)
                 <tr>
                     <td>{{$i++}}</td>
                     <td><a href="" class="fw-bold text-primary">{{$items->nama}}</a></td>
@@ -267,21 +256,21 @@
                     <td>{{$items->stok_awal + $items->stok_masuk - $items->stok_keluar }}</td>
                     <td class="fw-bold">Rp. {{number_format(($items->stok_awal + $items->stok_masuk - $items->stok_keluar) * $items->harga,0,',','.') }}</td>
                 </tr>
-            @endforeach
-            {{--                                @for($i = 1; $i<100; $i++)--}}
-            {{--                                    <tr>--}}
-            {{--                                        <td>{{$i}}</td>--}}
-            {{--                                        <td><a href="" class="fw-bold text-primary">Paramex {{$i}}</a></td>--}}
-            {{--                                        <td>{{rand(50,512)}}</td>--}}
-            {{--                                        <td>{{rand(50,512)}}</td>--}}
-            {{--                                        <td>{{rand(50,512)}}</td>--}}
-            {{--                                        <td class="text-danger fw-bold">{{rand(10,20)}}</td>--}}
-            {{--                                        <td>Rp. {{number_format(rand(20000,50000),0,',','.') }}</td>--}}
-            {{--                                        <td class="fw-bold text-success">Rp.{{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
-            {{--                                        <td>{{rand(50,512)}}</td>--}}
-            {{--                                        <td class="fw-bold">Rp. {{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
-            {{--                                    </tr>--}}
-            {{--                                @endfor--}}
+                @endforeach
+                {{-- @for($i = 1; $i<100; $i++)--}}
+                {{-- <tr>--}}
+                {{-- <td>{{$i}}</td>--}}
+                {{-- <td><a href="" class="fw-bold text-primary">Paramex {{$i}}</a></td>--}}
+                {{-- <td>{{rand(50,512)}}</td>--}}
+                {{-- <td>{{rand(50,512)}}</td>--}}
+                {{-- <td>{{rand(50,512)}}</td>--}}
+                {{-- <td class="text-danger fw-bold">{{rand(10,20)}}</td>--}}
+                {{-- <td>Rp. {{number_format(rand(20000,50000),0,',','.') }}</td>--}}
+                {{-- <td class="fw-bold text-success">Rp.{{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
+                {{-- <td>{{rand(50,512)}}</td>--}}
+                {{-- <td class="fw-bold">Rp. {{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
+                {{-- </tr>--}}
+                {{-- @endfor--}}
         </table>
     </div>
 </x-modal-large>
@@ -292,20 +281,15 @@
             <div class="row gy-4">
                 <div class="col-12">
                     <label class="form-label" for="exampleFormControlInput1">Name</label>
-                    <input class="form-control form-control-lg" id="exampleFormControlInput1 "
-                           autofocus="true" name="name"
-                           placeholder="Masukan Nama Pelanggan" >
+                    <input class="form-control form-control-lg" id="exampleFormControlInput1 " autofocus="true" name="name" placeholder="Masukan Nama Pelanggan">
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="telfon">No.Telfon</label>
-                    <input class="form-control form-control-lg" id="telfon"
-                           autofocus="true" name="telfon"
-                           placeholder="Masukan Nomor Telfon" >
+                    <input class="form-control form-control-lg" id="telfon" autofocus="true" name="telfon" placeholder="Masukan Nomor Telfon">
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="alamat">Alamat Pelanggan</label>
-                    <textarea class="form-control form-control-lg" id="alamat" name="alamat"
-                              rows="3" placeholder="Masukan Alamat Pelanggan"></textarea>
+                    <textarea class="form-control form-control-lg" id="alamat" name="alamat" rows="3" placeholder="Masukan Alamat Pelanggan"></textarea>
                 </div>
 
             </div>
@@ -400,7 +384,8 @@
                 success: function(data) {
                     console.log(data);
                     if (data.status == "ok") {
-                        alert('mantap');
+                        location.reload();
+                        // alert('mantap');
                     }
                 },
                 error: function(data) {
@@ -456,10 +441,10 @@
                 '<tr>' +
                 '<td>' + (i += 1) + '</td>' +
                 '<td>' + v.nama + '</td>' +
-                '<td>Rp.' + addCommas(v.harga) + '</td>' +
+                '<td>Rp.' + addCommas(v.harga + (v.harga * v.keuntungan / 100)) + '</td>' +
                 '<td>' + v.qty + '</td>' +
                 '<td>' + v.diskon + '</td>' +
-                '<td>Rp. ' + addCommas((v.harga * v.qty) - (v.harga * v.qty * v.diskon / 100)) + '</td>' +
+                '<td>Rp. ' + addCommas((v.harga * v.qty) + (v.harga * v.qty * v.keuntungan / 100) - ((v.harga * v.qty * v.keuntungan / 100) * v.qty * v.diskon / 100)) + '</td>' +
                 '<td>' +
                 '<button id="hapus-produk-jual" data-id="' + v.id + '"class="btn btn-outline-secondary txt-secondary btn-sm" type="button" data-bs-original-title="">' +
                 'Remove' +
@@ -467,10 +452,9 @@
                 '</td>' +
                 '</tr>'
             );
-            total_harga_barang += v.harga * v.qty;
-            grand_total += v.harga * v.qty;
-
-            total_disc += (v.harga * v.qty * v.diskon / 100);
+            total_harga_barang += v.harga * v.qty + (v.harga * v.qty * v.keuntungan / 100);
+            grand_total += v.harga * v.qty + (v.harga * v.qty * v.keuntungan / 100);
+            total_disc += ((v.harga * v.qty * v.keuntungan / 100) * v.qty * v.diskon / 100);
             ppn = (total_harga_barang - total_disc) * 0.10;
         });
         $("#ppn").html('Rp. ' + addCommas(ppn));
