@@ -70,11 +70,12 @@
                                     <td>{{$item->operator}}</td>
                                     <td><span class="badge badge-{{$item->state == 'Draft' ? 'warning' : 'success'}}">{{$item->state}}</span></td>
                                     <td>
+                                        @if ($item->state == "Draft")
                                         <a href="{{ route('stock-opname.edit',$item->id) }}" class="btn btn-info btn-sm" type="submit">
                                             Lanjutkan Pemeriksaaan
                                         </a>
+                                        @endif
                                         <a href="" class="btn btn-outline-primary btn-sm me-2">Detail Barang</a>
-
                                     </td>
                                 </tr>
 

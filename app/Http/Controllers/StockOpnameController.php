@@ -39,11 +39,11 @@ class StockOpnameController extends Controller
                     'state' => 'Draft'
                 ]);
                 foreach ($request->get('data_products') as $key => $value) {
-                    $stock_komputer = StockIN::where('product_id', $key)->sum('jumlah');
+                    $stock_komputer = StockIN::where('product_id', $key);
                     DB::table('detail_stock_opname')->insert([
                         'stock_opname_id' => $stock_opname->id,
                         'product_id' => $key,
-                        'stock_computer' => $stock_komputer,
+                        'stock_computer' => $stock_komputer->sum('jumlah'),
                         'stock_aktual' => $value,
                         'stock_selisih' => $value - $stock_komputer->sum('jumlah'),
                         'created_at' => date('Y-m-d'),
