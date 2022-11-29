@@ -107,9 +107,9 @@ class SalesController extends Controller
                     'updated_at' => Carbon::now()
                 ]);
                 if ($value['product_type_id'] == "1") {
-                    $stok_in = StockIN::where('product_id', $value['id'])->orderBy('created_at', 'asc')->get();
-                } else {
                     $stok_in = StockIN::where('product_id', $value['id'])->orderBy('expired_date', 'asc')->get();
+                } else {
+                    $stok_in = StockIN::where('product_id', $value['id'])->orderBy('created_at', 'asc')->get();
                 }
                 $kebutuhan = (int)$value['qty'];
                 foreach ($stok_in as $key => $value2) {

@@ -20,7 +20,8 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <form action="{{route('stock-opname.store')}}">
+            <form action="{{route('stock-opname.store')}}" method="post">
+                @csrf
                 <div class="col-sm-12">
                     <div class="card p-4">
                         <div class="row">
@@ -34,12 +35,12 @@
                                 <label class="form-label" for="exampleFormControlSelect9">Tanggal Berakhir
                                     Pemeriksaan</label>
                                 <div class="input-group">
-                                    <input class="datepicker-here form-control digits" type="date" name="tanggal_awal_pemeriksaan">
+                                    <input class="datepicker-here form-control digits" type="date" name="tanggal_akhir_pemeriksaan">
                                 </div>
                             </div>
                             <div class="col-6 d-flex justify-content-end">
-                                <button class="btn btn-lg btn-outline-dark mt-4 me-2">Simpan sebagai draft</button>
-                                <button class="btn btn-lg btn-primary mt-4" type="submit">Simpan Data</button>
+                                <button class="btn btn-lg btn-outline-dark mt-4 me-2" type="submit" value="draft" name="tombol">Simpan sebagai draft</button>
+                                <button class="btn btn-lg btn-primary mt-4" type="submit" name="tombol">Simpan Data</button>
                             </div>
                         </div>
                     </div>
@@ -66,7 +67,7 @@
                                     @endphp
                                     @foreach($products as $product)
                                         <tr>
-{{--                                            <td type="hidden" name="data_products[]">{{$product->id}}</td>--}}
+                                            {{-- <td type="hidden" name="data_products[]">{{$product->id}}</td>--}}
                                             <td>{{$i += 1}}</td>
                                             <td>{{$product->nama}}</td>
                                             <td><span class="fw-bold badge badge-info">{{$product->type}}</span> - {{$product->category}}</td>
@@ -75,7 +76,7 @@
                                             <td>
                                                 <div class="input-group">
                                                     <input class="form-control" type="number" min="0" value="{{$product->stok_barang}}" placeholder="Masukan Jumlah Stok Aktual"
-                                                           id="stok_aktual" name="data_products['stock_aktual']">
+                                                           id="stok_aktual" name="data_products[{{$product->id}}]">
                                                     <span class="input-group-text" id="detail-produk-satuan">{{$product->uom}}</span>
                                                 </div>
                                             </td>
