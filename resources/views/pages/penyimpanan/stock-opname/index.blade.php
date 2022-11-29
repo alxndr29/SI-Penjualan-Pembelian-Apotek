@@ -75,7 +75,7 @@
                                             Lanjutkan Pemeriksaaan
                                         </a>
                                         @endif
-                                        <a href="" class="btn btn-outline-primary btn-sm me-2">Detail Barang</a>
+                                        <button class="btn btn-outline-primary btn-sm me-2" onClick="modalOpname({{$item->id}})">Detail Barang</button>
                                     </td>
                                 </tr>
 
@@ -115,12 +115,68 @@
 <x-detail-order title="Daftar Barang Pemeriksaan" type="opname">
 
 </x-detail-order>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Stok Opname ID</th>
+                            <th scope="col">Product ID</th>
+                            <th scope="col">Product Nama</th>
+                            <th scope="col">Stock Computer</th>
+                            <th scope="col">Stock Aktual</th>
+                            <th scope="col">Stock Selisih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('script')
 <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
-<script>
+<script type="text/javascript">
+    // A $( document ).ready() block.
+    $(document).ready(function() {
 
+
+    });
+
+    function modalOpname(id) {
+        alert(id);
+        $("#exampleModal").modal('show');
+    }
 </script>
 @endsection

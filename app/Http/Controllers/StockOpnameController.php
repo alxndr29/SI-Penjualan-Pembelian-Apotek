@@ -71,31 +71,46 @@ class StockOpnameController extends Controller
                         'updated_at' => date('Y-m-d')
                     ]);
                     $selisih = $value - $stock_komputer->sum('jumlah');
+                    // return $selisih;
                     if ($value != $stock_komputer->sum('jumlah')) {
                         $data = $stock_komputer->first();
-                        $result = [];
+                        $result;
                         if ($data->product_type_id == 1) {
-                            $result = $stock_komputer->orderBy('expired_date', 'asc')->get();
+                            // array_push($result, StockIN::where('product_id', $key)->orderBy('expired_date', 'asc')->get());
+                            $result = StockIN::where('product_id', $key)->orderBy('expired_date', 'asc')->get();
                         } else {
-                            $result = $stock_komputer->orderBy('created_at', 'asc')->get();
+                            // array_push($result, StockIN::where('product_id', $key)->orderBy('created_at', 'asc')->get());
+                            $result = StockIN::where('product_id', $key)->orderBy('created_at', 'asc')->get();
                         }
-                        // return $result;
+                        // return ($result);
                         foreach ($result as $key => $value2) {
                             if ($selisih < 0) {
                                 $stok = (int) $value2->jumlah;
                                 if ($stok != 0 && ($stok >= $selisih)) {
                                     $stok_in = StockIN::where('id', '=', $value2->id)->first();
-                                    // dd($stok_in);
-                                    $stok_in->jumlah = ($stok + $selisih);
-                                    $stok_in->save();
-                                    $selisih = $stok + $selisih;
-                                    break;
+                                    // $stok_in->jumlah = ($stok + $selisih);
+                                    if(($stok+$selisih < 0)){
+                                        $stok_in->jumlah = 0;
+                                        $stok_in->save();
+                                        $selisih = $stok + $selisih;
+                                    }else{
+                                        // break;
+                                        $stok_in->jumlah = $stok+$selisih;
+                                        $stok_in->save();
+                                        $selisih = $stok + $selisih;
+                                        break;
+                                    }
+                                    // return $selisih;
+                                    // return 'sini';
                                 } else if ($stok != 0 && ($stok < $selisih)) {
                                     $stok_in = StockIN::where('product_id', '=', $value2['id'])->where('id', '=', $value2->id)->first();
                                     $stok_in->jumlah = 0;
                                     $stok_in->save();
-                                    $selisih = $selisih + $stok;
-                                } else { }
+                                    $selisih = $selisih - $stok;
+                                } else {
+
+                                 }
+                                
                             } else if ($selisih > 0) {
                                 $stok = (int) $value2->jumlah;
                                 if ($stok != 0 && ($stok >= $selisih)) {
@@ -115,6 +130,7 @@ class StockOpnameController extends Controller
                              }
                         }
                     }
+                    // return $selisih;
                 }
             }
             DB::commit();
@@ -127,7 +143,9 @@ class StockOpnameController extends Controller
     }
 
     public function show($id)
-    { }
+    { 
+        
+    }
 
     public function edit($id)
     {
