@@ -89,13 +89,13 @@ class StockOpnameController extends Controller
                                 if ($stok != 0 && ($stok >= $selisih)) {
                                     $stok_in = StockIN::where('id', '=', $value2->id)->first();
                                     // $stok_in->jumlah = ($stok + $selisih);
-                                    if(($stok+$selisih < 0)){
+                                    if (($stok + $selisih < 0)) {
                                         $stok_in->jumlah = 0;
                                         $stok_in->save();
                                         $selisih = $stok + $selisih;
-                                    }else{
+                                    } else {
                                         // break;
-                                        $stok_in->jumlah = $stok+$selisih;
+                                        $stok_in->jumlah = $stok + $selisih;
                                         $stok_in->save();
                                         $selisih = $stok + $selisih;
                                         break;
@@ -107,10 +107,7 @@ class StockOpnameController extends Controller
                                     $stok_in->jumlah = 0;
                                     $stok_in->save();
                                     $selisih = $selisih - $stok;
-                                } else {
-
-                                 }
-                                
+                                } else { }
                             } else if ($selisih > 0) {
                                 $stok = (int) $value2->jumlah;
                                 if ($stok != 0 && ($stok >= $selisih)) {
@@ -125,9 +122,7 @@ class StockOpnameController extends Controller
                                     $stok_in->save();
                                     $selisih = $selisih + $stok;
                                 } else { }
-                             } else { 
-
-                             }
+                            } else { }
                         }
                     }
                     // return $selisih;
@@ -143,8 +138,17 @@ class StockOpnameController extends Controller
     }
 
     public function show($id)
-    { 
-        
+    {
+        try {
+            return StockOpname::join('detail_stock_opname', 'stock_opname.id', '=', 'detail_stock_opname.stock_opname_id')
+                ->join('products', 'products.id', 'detail_stock_opname.product_id')
+                ->select('products.nama', 'detail_stock_opname.*')
+                ->groupBy('products.id')
+                ->where('stock_opname.id', $id)
+                ->get();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function edit($id)

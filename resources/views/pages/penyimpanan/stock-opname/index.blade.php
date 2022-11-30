@@ -116,12 +116,6 @@
 
 </x-detail-order>
 
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-</button>
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -145,16 +139,8 @@
                             <th scope="col">Stock Selisih</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
+                    <tbody id="isi-tabel">
+                        
                     </tbody>
                 </table>
             </div>
@@ -170,13 +156,36 @@
 <script type="text/javascript">
     // A $( document ).ready() block.
     $(document).ready(function() {
-
-
+       
     });
 
     function modalOpname(id) {
-        alert(id);
-        $("#exampleModal").modal('show');
+        $.ajax({
+            url: "{{url('penyimpanan/stock-opname')}}/" + id,
+            type: 'GET',
+            success: function(response) {
+                console.log(response);
+                $("#isi-tabel").empty();
+                $.each(response, function(index,value){
+                    $("#isi-tabel").append(
+                        '<tr>' +
+                            '<th scope="row">'+(index+1)+'</th>' +
+                            '<td>'+value.stock_opname_id+'</td>' +
+                            '<td>'+value.product_id+'</td>' +
+                            '<td>'+value.nama+'</td>'+
+                            '<td>'+value.stock_computer+'</td>' +
+                            '<td>'+value.stock_aktual+'</td>' +
+                            '<td>'+value.stock_selisih+'</td>' +
+                        '</tr>'
+                    );
+                });
+                $("#exampleModal").modal('show');
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+        
     }
 </script>
 @endsection
