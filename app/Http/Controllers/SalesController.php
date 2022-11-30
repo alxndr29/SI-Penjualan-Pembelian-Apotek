@@ -200,7 +200,8 @@ class SalesController extends Controller
     public function viewLaporanBulananPenjualan($tglawal = null, $tglakhir = null)
     {
         if ($tglawal != null && $tglakhir != null) {
-            $salesOrder = Sales::where('state', '=', 'Lunas')->whereBetWeen('created_at', [$tglawal, $tglakhir])->get();
+            // $salesOrder = Sales::where('state', '=', 'Lunas')->whereBetWeen('created_at', [$tglawal, $tglakhir])->get();
+            $salesOrder = Sales::where('state', '=', 'Lunas')->where('created_at','>=', $tglawal)->where('created_at','<=', $tglakhir)->get();
         } else {
             $salesOrder = Sales::where('state', '=', 'Lunas')->get();
         }

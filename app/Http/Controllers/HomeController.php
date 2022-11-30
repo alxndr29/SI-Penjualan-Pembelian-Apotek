@@ -48,11 +48,12 @@ class HomeController extends Controller
             ->where('si.expired_date','<',Carbon::now()) //
             ->select('p.nama', 'si.*','po.no_transaction as nomor_transaksi')
             ->get();
-        $jumlahProdukTerjual = DB::table('sales_order')
-            ->whereDate('transaction_date','=',Carbon::now()->toDateString())
-            ->count();
+        $jumlahProdukTerjual = DB::table('sales_order')->join('stock_out','stock_out.sales_order_id','=','sales_order.id')
+            ->whereDate('sales_order.transaction_date','=',Carbon::now()->toDateString())
+            ->sum('stock_out.jumlah');
         $pendapatan = DB::table('sales_order')
             ->whereDate('transaction_date','=',Carbon::now()->toDateString())
+            ->where('state','Lunas')
             ->sum('total');
         return view('dashboard.index', compact('products','productByExpiredDate','jumlahProdukTerjual','pendapatan','jumlahProdukStokHabis'));
     }
