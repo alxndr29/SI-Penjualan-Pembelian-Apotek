@@ -16,10 +16,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
+    //    public function __construct()
+    //    {
+    //        $this->middleware('auth');
+    //    }
 
     /**
      * Show the application dashboard.
@@ -34,27 +34,26 @@ class HomeController extends Controller
     {
         $products = DB::table('get_product')->get();
         $jumlahProdukStokHabis = 0;
-        foreach ($products as $product)
-        {
-            if ($product->stok_barang < $product->min_stock)
-            {
+        foreach ($products as $product) {
+            if ($product->stok_barang < $product->min_stock) {
                 $jumlahProdukStokHabis++;
             }
         }
         $productByExpiredDate = DB::table('stock_in as si')
-            ->join('products as p','si.product_id','=','p.id')
-            ->join('purchase_order as po','si.purchase_order_id','=','po.id')
-            ->where('si.jumlah','>',0)
-            ->where('si.expired_date','<',Carbon::now()) //
-            ->select('p.nama', 'si.*','po.no_transaction as nomor_transaksi')
+            ->join('products as p', 'si.product_id', '=', 'p.id')
+            ->join('purchase_order as po', 'si.purchase_order_id', '=', 'po.id')
+            ->where('si.jumlah', '>', 0)
+            ->where('si.expired_date', '<', Carbon::now()) //
+            ->where('p.product_type_id', 1)
+            ->select('p.nama', 'si.*', 'po.no_transaction as nomor_transaksi')
             ->get();
-        $jumlahProdukTerjual = DB::table('sales_order')->join('stock_out','stock_out.sales_order_id','=','sales_order.id')
-            ->whereDate('sales_order.transaction_date','=',Carbon::now()->toDateString())
+        $jumlahProdukTerjual = DB::table('sales_order')->join('stock_out', 'stock_out.sales_order_id', '=', 'sales_order.id')
+            ->whereDate('sales_order.transaction_date', '=', Carbon::now()->toDateString())
             ->sum('stock_out.jumlah');
         $pendapatan = DB::table('sales_order')
-            ->whereDate('transaction_date','=',Carbon::now()->toDateString())
-            ->where('state','Lunas')
+            ->whereDate('transaction_date', '=', Carbon::now()->toDateString())
+            ->where('state', 'Lunas')
             ->sum('total');
-        return view('dashboard.index', compact('products','productByExpiredDate','jumlahProdukTerjual','pendapatan','jumlahProdukStokHabis'));
+        return view('dashboard.index', compact('products', 'productByExpiredDate', 'jumlahProdukTerjual', 'pendapatan', 'jumlahProdukStokHabis'));
     }
 }

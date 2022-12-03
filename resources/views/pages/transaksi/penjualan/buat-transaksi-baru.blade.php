@@ -353,8 +353,8 @@
                                 daftar_produk_jual[counter].product_category_id = v.product_category_id;
                                 daftar_produk_jual[counter].product_type_id = v.product_type_id;
                                 daftar_produk_jual[counter].product_uom_id = v.product_uom_id;
-                                daftar_produk_jual[counter].types_name = v.types_name;
-                                daftar_produk_jual[counter].uom_name = v.uom_name;
+                                // daftar_produk_jual[counter].types_name = v.types_name;
+                                // daftar_produk_jual[counter].uom_name = v.uom_name;
                                 daftar_produk_jual[counter].updated_at = v.updated_at;
                                 daftar_produk_jual[counter].qty = jmlh;
                                 counter++;

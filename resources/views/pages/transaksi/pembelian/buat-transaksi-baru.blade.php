@@ -64,13 +64,13 @@
                         <div class="col-lg-12 col-xl-12 col-xxl-8">
                             <label class="col-form-label">Jumlah</label>
                             <div class="input-group">
-                                <input class="form-control" type="number" id="txt-jumlah" placeholder="0"><span class="input-group-text">Tablet</span>
+                                <input class="form-control" type="number" id="txt-jumlah" value="1" min="1"placeholder="0"><span class="input-group-text">Tablet</span>
                             </div>
                         </div>
                         <div class="col-lg-12 col-xl-12 col-xxl-4">
                             <label class="col-form-label">Diskon Pembelian</label>
                             <div class="input-group">
-                                <input class="form-control" type="number" placeholder="1" id="txt-diskon"><span class="input-group-text">%</span>
+                                <input class="form-control" type="number" placeholder="1" value="1" min="0"id="txt-diskon"><span class="input-group-text">%</span>
                             </div>
                         </div>
                         <div class="col-lg-12 col-xl-12 col-xxl-12">
@@ -389,8 +389,8 @@
                         daftar_produk_beli[counter].product_category_id = v.product_category_id;
                         daftar_produk_beli[counter].product_type_id = v.product_type_id;
                         daftar_produk_beli[counter].product_uom_id = v.product_uom_id;
-                        daftar_produk_beli[counter].types_name = v.types_name;
-                        daftar_produk_beli[counter].uom_name = v.uom_name;
+                        // daftar_produk_beli[counter].types_name = v.types_name;
+                        // daftar_produk_beli[counter].uom_name = v.uom_name;
                         daftar_produk_beli[counter].updated_at = v.updated_at;
 
                         daftar_produk_beli[counter].qty_pembelian = $("#txt-jumlah").val();
@@ -498,7 +498,7 @@
                 '<tr>' +
                 '<td>' + (i += 1) + '</td>' +
                 '<td>' + v.nama + '</td>' +
-                '<td>Rp.' + v.expired + '</td>' +
+                '<td>' + v.expired + '</td>' +
                 '<td>' + v.harga_pembelian + '</td>' +
                 '<td>' + v.qty_pembelian + '</td>' +
                 '<td>' + v.diskon_pembelian + '</td>' +

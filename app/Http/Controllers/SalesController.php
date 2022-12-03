@@ -35,22 +35,22 @@ class SalesController extends Controller
     public function ambil_data_ajax_produk()
     {
         try {
-            $data = Product::join('product_uom', 'product_uom.id', '=', 'products.product_uom_id')
-                ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
-                ->join('product_types', 'product_types.id', '=', 'products.product_type_id')
-                ->leftJoin('stock_in', 'stock_in.product_id', '=', 'products.id')
-                ->select(
-                    'products.*',
-                    'product_uom.name as uom_name',
-                    'product_categories.name as categories_name',
-                    'product_types.name as types_name',
-                    DB::raw('sum(stock_in.jumlah) as jumlah_stok'),
-                    DB::raw('max(stock_in.harga) as harga')
-                )
-                //->where(DB::raw('stock_in.id in (select max(id) from stock_in group by product_id)'))
-                ->groupBy('products.id')
-                ->get();
-
+            // $data = Product::join('product_uom', 'product_uom.id', '=', 'products.product_uom_id')
+            //     ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+            //     ->join('product_types', 'product_types.id', '=', 'products.product_type_id')
+            //     ->leftJoin('stock_in', 'stock_in.product_id', '=', 'products.id')
+            //     ->select(
+            //         'products.*',
+            //         'product_uom.name as uom_name',
+            //         'product_categories.name as categories_name',
+            //         'product_types.name as types_name',
+            //         DB::raw('sum(stock_in.jumlah) as jumlah_stok'),
+            //         DB::raw('max(stock_in.harga) as harga')
+            //     )
+            //     //->where(DB::raw('stock_in.id in (select max(id) from stock_in group by product_id)'))
+            //     ->groupBy('products.id')
+            //     ->get();
+            $data = DB::table('get_product_penjualanpembelian')->get();
             return response()->json(
                 [
                     'produk' => $data,
