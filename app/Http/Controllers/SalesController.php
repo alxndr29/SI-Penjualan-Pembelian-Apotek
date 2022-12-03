@@ -190,9 +190,9 @@ class SalesController extends Controller
         $totalPembeli = $stock_out->groupBy('sales_order_id')->count();
 
         $totalKeuntungan = 0;
-        $totalPendapatan = StockOut::selectRaw('SUM(harga*jumlah) as pendapatan')->pluck('pendapatan')->first();
+        $totalPendapatan = StockOut::selectRaw('SUM(harga*jumlah) as pendapatan')->where('created_at', '>=', Carbon::now()->toDateString())->pluck('pendapatan')->first();
         $stock_out->each(function ($value) use (&$totalKeuntungan, $totalPendapatan) {
-            $totalKeuntungan += ($value->harga * $value->keuntungan / 100 * $value->jumlah) - ($value->harga * $value->diskon / 100 * $value->jumlah);
+            $totalKeuntungan += (($value->harga * $value->keuntungan / 100) * $value->jumlah) - (($value->harga * $value->diskon / 100) * $value->jumlah);
         });
         return view('pages.transaksi.penjualan.transaksi-hari-ini', compact('stock_out', 'totalPendapatan', 'totalKeuntungan', 'totalPembeli', 'totalBarangTerjual'));
     }
@@ -200,8 +200,8 @@ class SalesController extends Controller
     public function viewLaporanBulananPenjualan($tglawal = null, $tglakhir = null)
     {
         if ($tglawal != null && $tglakhir != null) {
-            // $salesOrder = Sales::where('state', '=', 'Lunas')->whereBetWeen('created_at', [$tglawal, $tglakhir])->get();
-            $salesOrder = Sales::where('state', '=', 'Lunas')->where('created_at','>=', $tglawal)->where('created_at','<=', $tglakhir)->get();
+              $salesOrder = Sales::where('state', '=', 'Lunas')->whereBetween(DB::raw('DATE(transaction_date)'), [$tglawal,$tglakhir])->get();
+           // $salesOrder = Sales::where('state', '=', 'Lunas')->where('created_at','>=', $tglawal)->where('created_at','<=', $tglakhir)->get();
         } else {
             $salesOrder = Sales::where('state', '=', 'Lunas')->get();
         }
