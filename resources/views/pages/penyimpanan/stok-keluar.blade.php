@@ -51,7 +51,7 @@
                                     <td>{{$item->SalesOrder->Customer->name}}</td>
                                     <td>{{$item->jumlah}} {{$item->Product->UOM->name}}</td>
                                     <td>Rp.{{number_format($item->harga * $item->jumlah,0,',','.') }}</td>
-                                    <td>Blm Tau</td>
+                                    <td>Rp. {{number_format( ($item->harga * $item->jumlah) + ($item->harga * $item->jumlah * $item->Product->keuntungan / 100) - ($item->harga * $item->jumlah * $item->Product->diskon / 100) )}}</td>
                                 </tr>
 
                                 @endforeach
