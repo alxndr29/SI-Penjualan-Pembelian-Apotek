@@ -60,6 +60,19 @@ class PurchasesController extends Controller
             $purchase->save();
 
             foreach ($request->get('data_produk') as $key => $value) {
+                $tmp1 = StockIN::where('product_id', $value['id']);
+                $avg = $tmp1->select(DB::raw('sum(total_stok * harga) as jmlhharga, sum(total_stok) as jmlh'))->first();
+                $tmp2 = StockIN::where('product_id', $value['id']);
+                $stk = $tmp2->orderBy('id', 'desc')->first();
+                // if($stk){
+                //     return 'a';
+                // }else{
+                //     return 'b';
+                // }
+                // return $stk->jumlah + $value['qty_pembelian'];
+                // return $value['harga_pembelian'] * $value['qty_pembelian'];
+                // return $avg->jmlh + $value['qty_pembelian'];
+                // return ($avg->jmlhharga + ($value['harga_pembelian'] * $value['qty_pembelian'])) / ($avg->jmlh + $value['qty_pembelian']);
                 $stock_in = new StockIN();
                 $stock_in->purchase_order_id = $purchase->id;
                 $stock_in->product_id = $value['id'];
@@ -67,6 +80,12 @@ class PurchasesController extends Controller
                 $stock_in->jumlah = $value['qty_pembelian'];
                 $stock_in->diskon = $value['diskon_pembelian'];
                 $stock_in->harga = $value['harga_pembelian'];
+                $stock_in->harga_ratarata = ($avg->jmlhharga + ($value['harga_pembelian'] * $value['qty_pembelian'])) / ($avg->jmlh + $value['qty_pembelian']);
+                if ($stk) {
+                    $stock_in->total_stok = $stk->jumlah + $value['qty_pembelian'];
+                } else {
+                    $stock_in->total_stok = $value['qty_pembelian'];
+                }
                 $stock_in->save();
             }
             DB::commit();
@@ -114,7 +133,7 @@ class PurchasesController extends Controller
         // return Carbon::parse($tglawal);
         if ($tglawal != null && $tglakhir != null) {
             // $purchaseOrder = Purchase::where('state', '=', 'Lunas')->whereDate('created_at', '>=', $tglawal)->whereDate('created_at', '<=', $tglakhir)->get();
-            $purchaseOrder = Purchase::where('state', '=', 'Lunas')->whereBetween(DB::raw('DATE(transaction_date)'), [$tglawal,$tglakhir])->get();
+            $purchaseOrder = Purchase::where('state', '=', 'Lunas')->whereBetween(DB::raw('DATE(transaction_date)'), [$tglawal, $tglakhir])->get();
         } else {
             $purchaseOrder = Purchase::where('state', '=', 'Lunas')->get();
         }

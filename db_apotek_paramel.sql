@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 03, 2022 at 02:00 AM
--- Server version: 5.7.33
--- PHP Version: 8.1.3
+-- Waktu pembuatan: 11 Des 2022 pada 14.25
+-- Versi server: 5.7.33
+-- Versi PHP: 8.1.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Struktur dari tabel `customers`
 --
 
 CREATE TABLE `customers` (
@@ -38,7 +38,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `customers`
+-- Dumping data untuk tabel `customers`
 --
 
 INSERT INTO `customers` (`id`, `name`, `address`, `telephone`, `status`, `created_at`, `updated_at`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `customers` (`id`, `name`, `address`, `telephone`, `status`, `create
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_stock_opname`
+-- Struktur dari tabel `detail_stock_opname`
 --
 
 CREATE TABLE `detail_stock_opname` (
@@ -63,20 +63,10 @@ CREATE TABLE `detail_stock_opname` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `detail_stock_opname`
---
-
-INSERT INTO `detail_stock_opname` (`id`, `stock_opname_id`, `product_id`, `stock_computer`, `stock_aktual`, `stock_selisih`, `created_at`, `updated_at`) VALUES
-(138, 122, 2, 10, 11, 1, '2022-11-28 16:00:00', '2022-11-28 16:00:00'),
-(139, 122, 4, 20, 21, 1, '2022-11-28 16:00:00', '2022-11-28 16:00:00'),
-(140, 123, 2, 10, 4, -6, '2022-11-28 16:00:00', '2022-11-28 16:00:00'),
-(141, 123, 4, 20, 9, -11, '2022-11-28 16:00:00', '2022-11-28 16:00:00');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Struktur dari tabel `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -92,8 +82,8 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `get_cashflow`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `get_cashflow`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `get_cashflow` (
 `bulan` varchar(50)
@@ -106,8 +96,8 @@ CREATE TABLE `get_cashflow` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `get_product`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `get_product`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `get_product` (
 `id` bigint(20) unsigned
@@ -131,8 +121,8 @@ CREATE TABLE `get_product` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `get_product_penjualanpembelian`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `get_product_penjualanpembelian`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `get_product_penjualanpembelian` (
 `types_name` varchar(255)
@@ -157,7 +147,7 @@ CREATE TABLE `get_product_penjualanpembelian` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -167,7 +157,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -190,7 +180,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `months`
+-- Struktur dari tabel `months`
 --
 
 CREATE TABLE `months` (
@@ -199,7 +189,7 @@ CREATE TABLE `months` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `months`
+-- Dumping data untuk tabel `months`
 --
 
 INSERT INTO `months` (`id`, `name`) VALUES
@@ -219,7 +209,7 @@ INSERT INTO `months` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Struktur dari tabel `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -231,7 +221,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Struktur dari tabel `products`
 --
 
 CREATE TABLE `products` (
@@ -248,7 +238,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `products`
+-- Dumping data untuk tabel `products`
 --
 
 INSERT INTO `products` (`id`, `product_type_id`, `product_category_id`, `product_uom_id`, `nama`, `min_stock`, `diskon`, `keuntungan`, `created_at`, `updated_at`) VALUES
@@ -258,7 +248,7 @@ INSERT INTO `products` (`id`, `product_type_id`, `product_category_id`, `product
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_categories`
+-- Struktur dari tabel `product_categories`
 --
 
 CREATE TABLE `product_categories` (
@@ -271,7 +261,7 @@ CREATE TABLE `product_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `product_categories`
+-- Dumping data untuk tabel `product_categories`
 --
 
 INSERT INTO `product_categories` (`id`, `product_type_id`, `name`, `description`, `created_at`, `updated_at`) VALUES
@@ -281,7 +271,7 @@ INSERT INTO `product_categories` (`id`, `product_type_id`, `name`, `description`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_types`
+-- Struktur dari tabel `product_types`
 --
 
 CREATE TABLE `product_types` (
@@ -293,7 +283,7 @@ CREATE TABLE `product_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `product_types`
+-- Dumping data untuk tabel `product_types`
 --
 
 INSERT INTO `product_types` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
@@ -303,7 +293,7 @@ INSERT INTO `product_types` (`id`, `name`, `description`, `created_at`, `updated
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_uom`
+-- Struktur dari tabel `product_uom`
 --
 
 CREATE TABLE `product_uom` (
@@ -315,7 +305,7 @@ CREATE TABLE `product_uom` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `product_uom`
+-- Dumping data untuk tabel `product_uom`
 --
 
 INSERT INTO `product_uom` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
@@ -325,7 +315,7 @@ INSERT INTO `product_uom` (`id`, `name`, `description`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
--- Table structure for table `purchase_order`
+-- Struktur dari tabel `purchase_order`
 --
 
 CREATE TABLE `purchase_order` (
@@ -344,18 +334,31 @@ CREATE TABLE `purchase_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `purchase_order`
+-- Dumping data untuk tabel `purchase_order`
 --
 
 INSERT INTO `purchase_order` (`id`, `supplier_id`, `employe_id`, `no_transaction`, `transaction_date`, `payment_method`, `tanggal_jatuh_tempo`, `tanggal_pelunasan`, `total`, `state`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, '1', '2022-11-25 11:25:39', 'Kredit', '2022-10-25', '2022-11-26', 10000, 'Lunas', '2022-11-01 11:19:59', '2022-11-01 11:19:59'),
 (2, 1, 1, '2', '2022-11-25 11:26:11', 'Kredit', '2022-10-25', '2022-11-17', 50000, 'Lunas', '2022-11-01 11:20:00', '2022-11-01 11:20:00'),
-(3, 1, 1, '1234567', '2022-12-01 00:00:00', 'Tunai', NULL, NULL, 4389, 'Lunas', '2022-12-01 06:22:33', '2022-12-01 06:22:33');
+(3, 1, 1, '1234567', '2022-12-01 00:00:00', 'Tunai', NULL, NULL, 4389, 'Lunas', '2022-12-01 06:22:33', '2022-12-01 06:22:33'),
+(35, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 11000, 'Lunas', '2022-12-11 05:52:09', '2022-12-11 05:52:09'),
+(36, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 110000, 'Lunas', '2022-12-11 05:55:56', '2022-12-11 05:55:56'),
+(40, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 110000, 'Lunas', '2022-12-11 05:59:10', '2022-12-11 05:59:10'),
+(41, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 165000, 'Lunas', '2022-12-11 06:00:18', '2022-12-11 06:00:18'),
+(42, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 247500, 'Lunas', '2022-12-11 06:01:08', '2022-12-11 06:01:08'),
+(43, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 68750, 'Lunas', '2022-12-11 06:01:51', '2022-12-11 06:01:51'),
+(44, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 68750, 'Lunas', '2022-12-11 06:04:15', '2022-12-11 06:04:15'),
+(45, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 108900, 'Lunas', '2022-12-11 06:07:50', '2022-12-11 06:07:50'),
+(46, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 245025, 'Lunas', '2022-12-11 06:08:48', '2022-12-11 06:08:48'),
+(55, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 245025, 'Lunas', '2022-12-11 06:14:56', '2022-12-11 06:14:56'),
+(56, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 68062.5, 'Lunas', '2022-12-11 06:16:18', '2022-12-11 06:16:18'),
+(57, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 108900, 'Lunas', '2022-12-11 06:17:36', '2022-12-11 06:17:36'),
+(58, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 218350, 'Lunas', '2022-12-11 06:18:07', '2022-12-11 06:18:07');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sales_order`
+-- Struktur dari tabel `sales_order`
 --
 
 CREATE TABLE `sales_order` (
@@ -374,19 +377,23 @@ CREATE TABLE `sales_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `sales_order`
+-- Dumping data untuk tabel `sales_order`
 --
 
 INSERT INTO `sales_order` (`id`, `customer_id`, `employee_id`, `no_transaction`, `transaction_date`, `payment_method`, `no_bpjs`, `total`, `state`, `tanggal_pelunasan`, `created_at`, `updated_at`) VALUES
 (12, 1, 2, '1', '2022-11-27 14:52:44', 'Cash', 'Tidak Ada', 74250, 'Lunas', NULL, '2022-11-27 06:52:44', '2022-11-27 06:52:44'),
 (13, 1, 1, '1', '2022-11-29 13:44:55', 'Cash', 'Tidak Ada', 173965, 'Lunas', NULL, '2022-11-29 05:44:55', '2022-11-29 05:44:55'),
 (14, 1, 1, '1', '2022-11-29 23:06:57', 'Cash', 'Tidak Ada', 47532.20769, 'Lunas', NULL, '2022-11-29 15:06:57', '2022-11-29 15:06:57'),
-(15, 1, 1, '1', '2022-12-01 14:19:49', 'Cash', 'Tidak Ada', 22773.331459999994, 'Lunas', NULL, '2022-12-01 06:19:49', '2022-12-01 06:19:49');
+(15, 1, 1, '1', '2022-12-01 14:19:49', 'Cash', 'Tidak Ada', 22773.331459999994, 'Lunas', NULL, '2022-12-01 06:19:49', '2022-12-01 06:19:49'),
+(16, 1, 1, '1', '2022-12-11 13:59:34', 'Cash', 'Tidak Ada', 110000, 'Lunas', NULL, '2022-12-11 05:59:34', '2022-12-11 05:59:34'),
+(17, 3, 1, '1', '2022-12-11 14:03:37', 'Cash', 'Tidak Ada', 123750, 'Lunas', NULL, '2022-12-11 06:03:37', '2022-12-11 06:03:37'),
+(18, 1, 1, '1', '2022-12-11 14:08:15', 'Cash', 'Tidak Ada', 110000, 'Lunas', NULL, '2022-12-11 06:08:15', '2022-12-11 06:08:15'),
+(19, 1, 1, '1', '2022-12-11 14:15:51', 'Cash', 'Tidak Ada', 123750, 'Lunas', NULL, '2022-12-11 06:15:51', '2022-12-11 06:15:51');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock_in`
+-- Struktur dari tabel `stock_in`
 --
 
 CREATE TABLE `stock_in` (
@@ -398,25 +405,27 @@ CREATE TABLE `stock_in` (
   `diskon` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `harga_ratarata` double NOT NULL,
+  `total_stok` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `stock_in`
+-- Dumping data untuk tabel `stock_in`
 --
 
-INSERT INTO `stock_in` (`id`, `purchase_order_id`, `product_id`, `expired_date`, `jumlah`, `diskon`, `harga`, `created_at`, `updated_at`) VALUES
-(2, 1, 2, '2022-12-25', 10, 5, 7500, '2022-11-10 12:23:29', '2022-11-29 15:08:55'),
-(3, 2, 2, '2022-11-16', 8, 5, 9000, '2022-10-10 12:23:28', '2022-12-01 06:19:49'),
-(7, 1, 4, '2022-11-29', 2, 1, 1, '2022-11-29 23:03:02', '2022-12-01 06:19:49'),
-(8, 1, 4, '2022-12-29', 5, 1, 1, '2022-11-30 23:03:09', '2022-11-29 15:08:55'),
-(9, 3, 2, '2022-12-01', 1, 1, 1000, '2022-12-01 06:22:33', '2022-12-01 06:22:33'),
-(10, 3, 4, '2022-12-08', 3, 0, 1000, '2022-12-01 06:22:33', '2022-12-01 06:22:33');
+INSERT INTO `stock_in` (`id`, `purchase_order_id`, `product_id`, `expired_date`, `jumlah`, `diskon`, `harga`, `created_at`, `updated_at`, `harga_ratarata`, `total_stok`) VALUES
+(18, 45, 2, '2022-12-11', 0, 1, 10000, '2022-12-11 06:07:50', '2022-12-11 06:08:15', 10000, 10),
+(20, 55, 2, '2022-12-11', 10, 1, 15000, '2022-12-11 06:14:56', '2022-12-11 06:15:51', 13000, 15),
+(21, 56, 2, '2022-12-11', 5, 1, 12500, '2022-12-11 06:16:18', '2022-12-11 06:16:18', 12916.666666667, 15),
+(22, 57, 4, '2022-12-11', 10, 1, 10000, '2022-12-11 06:17:36', '2022-12-11 06:17:36', 10000, 10),
+(23, 58, 4, '2022-12-11', 10, 1, 15000, '2022-12-11 06:18:07', '2022-12-11 06:18:07', 12500, 20),
+(24, 58, 2, '2022-12-11', 5, 0, 10000, '2022-12-11 06:18:07', '2022-12-11 06:18:07', 12500, 10);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock_opname`
+-- Struktur dari tabel `stock_opname`
 --
 
 CREATE TABLE `stock_opname` (
@@ -431,18 +440,10 @@ CREATE TABLE `stock_opname` (
   `state` enum('Draft','Finish') COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `stock_opname`
---
-
-INSERT INTO `stock_opname` (`id`, `no_opname`, `bulan`, `tanggal_mulai`, `tanggal_berakhir`, `operator`, `created_at`, `updated_at`, `state`) VALUES
-(122, '11', 11, '2022-11-30', '2022-12-01', '1', '2022-11-29 15:08:14', '2022-11-29 15:08:14', 'Finish'),
-(123, '11', 11, '2022-11-30', '2022-12-01', '1', '2022-11-29 15:08:55', '2022-11-29 15:08:55', 'Finish');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock_out`
+-- Struktur dari tabel `stock_out`
 --
 
 CREATE TABLE `stock_out` (
@@ -458,19 +459,19 @@ CREATE TABLE `stock_out` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `stock_out`
+-- Dumping data untuk tabel `stock_out`
 --
 
 INSERT INTO `stock_out` (`id`, `sales_order_id`, `product_id`, `jumlah`, `keuntungan`, `diskon`, `harga`, `created_at`, `updated_at`) VALUES
-(1, 14, 2, 6, 100, 10, 9000, '2022-11-29 15:06:57', '2022-11-29 15:06:57'),
-(2, 14, 4, 11, 1, 1, 1, '2022-11-29 15:06:57', '2022-11-29 15:06:57'),
-(3, 15, 2, 2, 100, 10, 9000, '2022-12-01 06:19:49', '2022-12-01 06:19:49'),
-(4, 15, 4, 3, 1, 1, 1, '2022-12-01 06:19:49', '2022-12-01 06:19:49');
+(1, 16, 2, 10, 100, 10, 10000, '2022-12-11 05:59:34', '2022-12-11 05:59:34'),
+(2, 17, 2, 5, 100, 10, 15000, '2022-12-11 06:03:37', '2022-12-11 06:03:37'),
+(3, 18, 2, 10, 100, 10, 10000, '2022-12-11 06:08:15', '2022-12-11 06:08:15'),
+(4, 19, 2, 5, 100, 10, 15000, '2022-12-11 06:15:51', '2022-12-11 06:15:51');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `suppliers`
+-- Struktur dari tabel `suppliers`
 --
 
 CREATE TABLE `suppliers` (
@@ -486,7 +487,7 @@ CREATE TABLE `suppliers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `suppliers`
+-- Dumping data untuk tabel `suppliers`
 --
 
 INSERT INTO `suppliers` (`id`, `name`, `address`, `telephone`, `bank_address`, `description`, `status`, `created_at`, `updated_at`) VALUES
@@ -495,7 +496,7 @@ INSERT INTO `suppliers` (`id`, `name`, `address`, `telephone`, `bank_address`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -510,7 +511,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -520,16 +521,16 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 -- --------------------------------------------------------
 
 --
--- Structure for view `get_cashflow`
+-- Struktur untuk view `get_cashflow`
 --
 DROP TABLE IF EXISTS `get_cashflow`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `get_cashflow`  AS SELECT `m`.`name` AS `bulan`, (select sum(`so`.`total`) from `sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Lunas'))) AS `pemasukan`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Lunas'))) AS `pengeluaran`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Belum Lunas'))) AS `piutang`, (select sum(`so`.`total`) from `sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Belum Lunas'))) AS `hutang` FROM `months` AS `m``m`  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `get_cashflow`  AS SELECT `m`.`name` AS `bulan`, (select sum(`so`.`total`) from `sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Lunas'))) AS `pemasukan`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Lunas'))) AS `pengeluaran`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Belum Lunas'))) AS `piutang`, (select sum(`so`.`total`) from `sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Belum Lunas'))) AS `hutang` FROM `months` AS `m`  ;
 
 -- --------------------------------------------------------
 
 --
--- Structure for view `get_product`
+-- Struktur untuk view `get_product`
 --
 DROP TABLE IF EXISTS `get_product`;
 
@@ -538,7 +539,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `get_product_penjualanpembelian`
+-- Struktur untuk view `get_product_penjualanpembelian`
 --
 DROP TABLE IF EXISTS `get_product_penjualanpembelian`;
 
@@ -549,13 +550,13 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indexes for table `customers`
+-- Indeks untuk tabel `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `detail_stock_opname`
+-- Indeks untuk tabel `detail_stock_opname`
 --
 ALTER TABLE `detail_stock_opname`
   ADD PRIMARY KEY (`id`),
@@ -563,32 +564,32 @@ ALTER TABLE `detail_stock_opname`
   ADD KEY `detail_stock_opname_product_id_foreign` (`product_id`);
 
 --
--- Indexes for table `failed_jobs`
+-- Indeks untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `months`
+-- Indeks untuk tabel `months`
 --
 ALTER TABLE `months`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Indeks untuk tabel `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `products`
+-- Indeks untuk tabel `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
@@ -597,26 +598,26 @@ ALTER TABLE `products`
   ADD KEY `products_product_uom_id_foreign` (`product_uom_id`);
 
 --
--- Indexes for table `product_categories`
+-- Indeks untuk tabel `product_categories`
 --
 ALTER TABLE `product_categories`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_categories_product_type_id_foreign` (`product_type_id`);
 
 --
--- Indexes for table `product_types`
+-- Indeks untuk tabel `product_types`
 --
 ALTER TABLE `product_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `product_uom`
+-- Indeks untuk tabel `product_uom`
 --
 ALTER TABLE `product_uom`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `purchase_order`
+-- Indeks untuk tabel `purchase_order`
 --
 ALTER TABLE `purchase_order`
   ADD PRIMARY KEY (`id`),
@@ -624,7 +625,7 @@ ALTER TABLE `purchase_order`
   ADD KEY `purchase_order_employe_id_foreign` (`employe_id`);
 
 --
--- Indexes for table `sales_order`
+-- Indeks untuk tabel `sales_order`
 --
 ALTER TABLE `sales_order`
   ADD PRIMARY KEY (`id`),
@@ -632,7 +633,7 @@ ALTER TABLE `sales_order`
   ADD KEY `sales_order_employee_id_foreign` (`employee_id`);
 
 --
--- Indexes for table `stock_in`
+-- Indeks untuk tabel `stock_in`
 --
 ALTER TABLE `stock_in`
   ADD PRIMARY KEY (`id`),
@@ -640,13 +641,13 @@ ALTER TABLE `stock_in`
   ADD KEY `stock_in_product_id_foreign` (`product_id`);
 
 --
--- Indexes for table `stock_opname`
+-- Indeks untuk tabel `stock_opname`
 --
 ALTER TABLE `stock_opname`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `stock_out`
+-- Indeks untuk tabel `stock_out`
 --
 ALTER TABLE `stock_out`
   ADD PRIMARY KEY (`id`),
@@ -654,131 +655,131 @@ ALTER TABLE `stock_out`
   ADD KEY `stock_out_product_id_foreign` (`product_id`);
 
 --
--- Indexes for table `suppliers`
+-- Indeks untuk tabel `suppliers`
 --
 ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT untuk tabel `customers`
 --
 ALTER TABLE `customers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `detail_stock_opname`
+-- AUTO_INCREMENT untuk tabel `detail_stock_opname`
 --
 ALTER TABLE `detail_stock_opname`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `months`
+-- AUTO_INCREMENT untuk tabel `months`
 --
 ALTER TABLE `months`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `product_categories`
+-- AUTO_INCREMENT untuk tabel `product_categories`
 --
 ALTER TABLE `product_categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `product_types`
+-- AUTO_INCREMENT untuk tabel `product_types`
 --
 ALTER TABLE `product_types`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `product_uom`
+-- AUTO_INCREMENT untuk tabel `product_uom`
 --
 ALTER TABLE `product_uom`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `purchase_order`
+-- AUTO_INCREMENT untuk tabel `purchase_order`
 --
 ALTER TABLE `purchase_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
--- AUTO_INCREMENT for table `sales_order`
+-- AUTO_INCREMENT untuk tabel `sales_order`
 --
 ALTER TABLE `sales_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `stock_in`
+-- AUTO_INCREMENT untuk tabel `stock_in`
 --
 ALTER TABLE `stock_in`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `stock_opname`
+-- AUTO_INCREMENT untuk tabel `stock_opname`
 --
 ALTER TABLE `stock_opname`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `stock_out`
+-- AUTO_INCREMENT untuk tabel `stock_out`
 --
 ALTER TABLE `stock_out`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `suppliers`
+-- AUTO_INCREMENT untuk tabel `suppliers`
 --
 ALTER TABLE `suppliers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `detail_stock_opname`
+-- Ketidakleluasaan untuk tabel `detail_stock_opname`
 --
 ALTER TABLE `detail_stock_opname`
   ADD CONSTRAINT `detail_stock_opname_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `detail_stock_opname_stock_opname_id_foreign` FOREIGN KEY (`stock_opname_id`) REFERENCES `stock_opname` (`id`);
 
 --
--- Constraints for table `products`
+-- Ketidakleluasaan untuk tabel `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_product_category_id_foreign` FOREIGN KEY (`product_category_id`) REFERENCES `product_categories` (`id`),
@@ -786,34 +787,34 @@ ALTER TABLE `products`
   ADD CONSTRAINT `products_product_uom_id_foreign` FOREIGN KEY (`product_uom_id`) REFERENCES `product_uom` (`id`);
 
 --
--- Constraints for table `product_categories`
+-- Ketidakleluasaan untuk tabel `product_categories`
 --
 ALTER TABLE `product_categories`
   ADD CONSTRAINT `product_categories_product_type_id_foreign` FOREIGN KEY (`product_type_id`) REFERENCES `product_types` (`id`);
 
 --
--- Constraints for table `purchase_order`
+-- Ketidakleluasaan untuk tabel `purchase_order`
 --
 ALTER TABLE `purchase_order`
   ADD CONSTRAINT `purchase_order_employe_id_foreign` FOREIGN KEY (`employe_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `purchase_order_supplier_id_foreign` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`);
 
 --
--- Constraints for table `sales_order`
+-- Ketidakleluasaan untuk tabel `sales_order`
 --
 ALTER TABLE `sales_order`
   ADD CONSTRAINT `sales_order_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   ADD CONSTRAINT `sales_order_employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `stock_in`
+-- Ketidakleluasaan untuk tabel `stock_in`
 --
 ALTER TABLE `stock_in`
   ADD CONSTRAINT `stock_in_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `stock_in_purchase_order_id_foreign` FOREIGN KEY (`purchase_order_id`) REFERENCES `purchase_order` (`id`);
 
 --
--- Constraints for table `stock_out`
+-- Ketidakleluasaan untuk tabel `stock_out`
 --
 ALTER TABLE `stock_out`
   ADD CONSTRAINT `stock_out_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
