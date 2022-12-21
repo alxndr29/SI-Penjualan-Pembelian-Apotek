@@ -75,13 +75,15 @@ class SalesController extends Controller
 
     public function store(Request $request)
     {
+        DB::beginTransaction();
         //
         // return $request->all();
+        $maxId = Sales::max('id') + 1;
         try {
             $sales = new Sales();
             $sales->customer_id = $request->get('pelanggan');
             $sales->employee_id = Auth::user()->id;
-            $sales->no_transaction = 1;
+            $sales->no_transaction = 'INV//-SALES-' . $maxId . '-' . date('Y-m-d');
             $sales->transaction_date = Carbon::now();
             $sales->payment_method = $request->get('metode-pembayaran');
             if ($request->get('metode-pembayaran') == "Cash") {
@@ -129,6 +131,7 @@ class SalesController extends Controller
                     }
                 }
             }
+            DB::commit();
             return response()->json(
                 [
                     'status' => 'ok',
@@ -136,6 +139,7 @@ class SalesController extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            DB::rollback();
             return response()->json(
                 [
                     'error' => $e->getMessage(),

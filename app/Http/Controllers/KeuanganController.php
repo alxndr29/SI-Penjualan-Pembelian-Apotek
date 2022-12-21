@@ -75,6 +75,7 @@ class KeuanganController extends Controller
             'status' => 1,
             'purchase_order' => view('pages.keuangan.component-hutang._showModalPurchaseOrder',compact('purchase_order'))->render(),
             'detail_purchase' => view('pages.keuangan.component-hutang._showModalDetailPurchaseOrder',compact('detail_order'))->render()
+            // 'detail_purchase' =>  $detail_order
         ), 200);
 
     }

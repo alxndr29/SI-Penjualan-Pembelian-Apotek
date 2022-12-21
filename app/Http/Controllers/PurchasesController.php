@@ -39,11 +39,12 @@ class PurchasesController extends Controller
         // return $request->get('data_produk');
         // return $request->get('metode-pembayaran');
         DB::beginTransaction();
+        $maxId = Purchase::max('id') + 1;
         try {
             $purchase = new Purchase();
             $purchase->supplier_id = $request->get('supplier');
             $purchase->employe_id = 1;
-            $purchase->no_transaction = '1234567';
+            $purchase->no_transaction = 'INV//-PURCHASE-' . $maxId .'-'. date('Y-m-d');
             $purchase->transaction_date = date('Y-m-d');
 
             $purchase->tanggal_pelunasan = null;

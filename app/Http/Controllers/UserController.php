@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
+use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index()
@@ -19,12 +19,12 @@ class UserController extends Controller
     public function store(Request $request)
     {
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'name' => $request->get('nama'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password'))
         ]);
 
-        return redirect()->route('kategori-produk.index')->with(['success' => 'menambahkan data baru']);
+        return redirect()->route('user.index')->with(['success' => 'menambahkan data baru']);
 
     }
 
@@ -36,7 +36,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('pages.konfigurasi.kategori.edit', compact('user'));
+        return view('pages.konfigurasi.user.edit', compact('user'));
     }
 
     public function update(Request $request, $id)
@@ -52,8 +52,12 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $productCategory = productCategory::find($id);
-        $productCategory->delete();
-        return redirect()->route('kategori-produk.index')->with(['success' => 'menghapus data']);
+        // return $id;
+        // $productCategory = productCategory::find($id);
+        // $productCategory->delete();
+        // return redirect()->route('kategori-produk.index')->with(['success' => 'menghapus data']);
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('user.index')->with(['success' => 'menghapus data']);
     }
 }

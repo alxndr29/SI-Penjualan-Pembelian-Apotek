@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     protected $fillable = ['nama','min_stock','diskon','keuntungan','product_type_id','product_uom_id','product_category_id'];
-
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
     public function Type()
     {
         return $this->belongsTo(ProductType::class,'product_type_id');

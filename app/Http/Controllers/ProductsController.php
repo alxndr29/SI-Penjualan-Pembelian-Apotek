@@ -105,6 +105,8 @@ class ProductsController extends Controller
 
     public function destroy($id)
     {
-
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->route('daftar-produk.index')->with(['success' => 'Merubah Data']);
     }
 }

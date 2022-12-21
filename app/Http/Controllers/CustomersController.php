@@ -52,7 +52,11 @@ class CustomersController extends Controller
         return redirect()->route('pelanggan.index')->with(['success' => 'merubah data']);
     }
 
-    public function destroy(Customer $customer)
+    public function destroy($id)
     {
+        // return $id;
+        $customer = Customer::find($id);
+        $customer->delete();
+        return redirect()->route('pelanggan.index')->with(['success' => 'merubah data']);
     }
 }

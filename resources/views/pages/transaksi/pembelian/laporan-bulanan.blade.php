@@ -146,6 +146,7 @@
             success: function(v) {
                 $('#purchase').html(v.purchase_order)
                 $('#detail_po').html(v.detail_purchase)
+                console.log(v.detail_purchase);
             }
         });
     }

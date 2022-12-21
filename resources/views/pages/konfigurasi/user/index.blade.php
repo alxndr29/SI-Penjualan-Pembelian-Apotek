@@ -96,13 +96,13 @@
                     <div class="col-12">
                         <label class="form-label" for="exampleFormControlInput1">Nama Pegawai</label>
                         <input class="form-control form-control-lg" id="exampleFormControlInput1 "
-                               autofocus="true" name="name"
+                               autofocus="true" name="nama"
                                placeholder="Masukan Nama Pegawai" >
                     </div>
                     <div class="col-12">
-                        <label class="form-label" for="exampleFormControlInput1">Username</label>
+                        <label class="form-label" for="exampleFormControlInput1">Email</label>
                         <input class="form-control form-control-lg" id="exampleFormControlInput1 "
-                               autofocus="true" name="name"
+                               autofocus="true" name="email"
                                placeholder="Masukan Nama Produk" >
                     </div>
                     <div class="col-12">
