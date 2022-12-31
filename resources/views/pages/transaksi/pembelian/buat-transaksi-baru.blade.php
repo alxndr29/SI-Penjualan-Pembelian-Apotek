@@ -64,13 +64,13 @@
                         <div class="col-lg-12 col-xl-12 col-xxl-8">
                             <label class="col-form-label">Jumlah</label>
                             <div class="input-group">
-                                <input class="form-control" type="number" id="txt-jumlah" value="1" min="1"placeholder="0"><span class="input-group-text">Tablet</span>
+                                <input class="form-control" type="number" id="txt-jumlah" value="1" min="1" placeholder="0"><span class="input-group-text">Tablet</span>
                             </div>
                         </div>
                         <div class="col-lg-12 col-xl-12 col-xxl-4">
                             <label class="col-form-label">Diskon Pembelian</label>
                             <div class="input-group">
-                                <input class="form-control" type="number" placeholder="1" value="1" min="0"id="txt-diskon"><span class="input-group-text">%</span>
+                                <input class="form-control" type="number" placeholder="1" value="1" min="0" id="txt-diskon"><span class="input-group-text">%</span>
                             </div>
                         </div>
                         <div class="col-lg-12 col-xl-12 col-xxl-12">
@@ -119,17 +119,11 @@
             </div>
             <div class="row gy-2 mb-3">
                 <div class="col-12">
-                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100"
-                            data-bs-toggle="modal"
-                            data-bs-target=".modal-penyimpanan-barang"
-                    >Lihat Penyimpanan
+                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100" data-bs-toggle="modal" data-bs-target=".modal-penyimpanan-barang">Lihat Penyimpanan
                     </button>
                 </div>
                 <div class="col-12">
-                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100"
-                            data-bs-toggle="modal"
-                            data-bs-target=".modal-tambah-data-supplier"
-                    >Tambah Supplier</button>
+                    <button type="button" class="btn btn-light txt-dark btn-md me-3 w-100" data-bs-toggle="modal" data-bs-target=".modal-tambah-data-supplier">Tambah Supplier</button>
                 </div>
                 <div class="col-12">
                     <button class="btn btn-outline-warning txt-dark btn-md me-3 w-100">Cancel</button>
@@ -241,71 +235,62 @@
     </div>
 </div>
 <x-modal-large title="Tambah Data Supplier">
-    <form method="POST">
+    <form method="POST" action="{{route('supplier.store')}}">
         @csrf
         <div class="modal-body">
             <div class="row gy-4">
                 <div class="col-12">
                     <label class="form-label" for="exampleFormControlInput1">Name</label>
-                    <input class="form-control form-control-lg" id="exampleFormControlInput1 "
-                           autofocus="true" name="name"
-                           placeholder="Masukan Nama Supplier" >
+                    <input class="form-control form-control-lg" id="exampleFormControlInput1 " autofocus="true" name="name" placeholder="Masukan Nama Supplier">
                 </div>
                 <div class="col-6">
                     <label class="form-label" for="Alamat">Alamat</label>
-                    <input class="form-control form-control-lg" id="Alamat "
-                           autofocus="true" name="alamat"
-                           placeholder="Masukan Alamat Supplier">
+                    <input class="form-control form-control-lg" id="Alamat " autofocus="true" name="alamat" placeholder="Masukan Alamat Supplier">
                 </div>
                 <div class="col-6">
                     <label class="form-label" for="telfon">No.Telfon</label>
-                    <input class="form-control form-control-lg" id="telfon"
-                           autofocus="true" name="telfon"
-                           placeholder="Masukan Nomor Telfon Supplier" >
+                    <input class="form-control form-control-lg" id="telfon" autofocus="true" name="telfon" placeholder="Masukan Nomor Telfon Supplier">
                 </div>
 
                 <div class="col-6">
                     <label class="form-label" for="rekening">Nomor Pembayaran / Nomor Rekening</label>
-                    <input class="form-control form-control-lg" id="rekening "
-                           autofocus="true" name="rekening"
-                           placeholder="Masukan Nomor Pembayaran / Rekening" >
+                    <input class="form-control form-control-lg" id="rekening " autofocus="true" name="rekening" placeholder="Masukan Nomor Pembayaran / Rekening">
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="Deskripsi">Deskripsi</label>
-                    <textarea class="form-control form-control-lg" id="Deskripsi" name="description"
-                              rows="3"></textarea>
+                    <textarea class="form-control form-control-lg" id="Deskripsi" name="description" rows="3"></textarea>
                 </div>
             </div>
         </div>
-        </div>
+
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
             <button class="btn btn-primary" type="submit">Simpan</button>
         </div>
-    </form
+    </form>
 </x-modal-large>
 <x-modal-large title="Penyimpanan Barang">
     <div class="table-responsive">
         <table class="display" id="basic-2">
             <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Produk</th>
-                <th>Stok Awal</th>
-                <th>Stok Masuk</th>
-                <th>Total Persediaan</th>
-                <th>Stok Keluar</th>
-                <th>Harga</th>
-                <th>Total Penjualan</th>
-                <th>Stok Akhir</th>
-                <th>Asset (Rp)</th>
-            </tr>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Produk</th>
+                    <th>Stok Awal</th>
+                    <th>Stok Masuk</th>
+                    <th>Total Persediaan</th>
+                    <th>Stok Keluar</th>
+                    <th>Harga</th>
+                    <th>Total Penjualan</th>
+                    <th>Stok Akhir</th>
+                    <th>Asset (Rp)</th>
+                </tr>
             </thead>
             <tbody>
-            @php
+                @php
                 $i = 1;
-            @endphp
-            @foreach($stockProduct as $items)
+                @endphp
+                @foreach($stockProduct as $items)
                 <tr>
                     <td>{{$i++}}</td>
                     <td><a href="" class="fw-bold text-primary">{{$items->nama}}</a></td>
@@ -318,21 +303,21 @@
                     <td>{{$items->stok_awal + $items->stok_masuk - $items->stok_keluar }}</td>
                     <td class="fw-bold">Rp. {{number_format(($items->stok_awal + $items->stok_masuk - $items->stok_keluar) * $items->harga,0,',','.') }}</td>
                 </tr>
-            @endforeach
-            {{--                                @for($i = 1; $i<100; $i++)--}}
-            {{--                                    <tr>--}}
-            {{--                                        <td>{{$i}}</td>--}}
-            {{--                                        <td><a href="" class="fw-bold text-primary">Paramex {{$i}}</a></td>--}}
-            {{--                                        <td>{{rand(50,512)}}</td>--}}
-            {{--                                        <td>{{rand(50,512)}}</td>--}}
-            {{--                                        <td>{{rand(50,512)}}</td>--}}
-            {{--                                        <td class="text-danger fw-bold">{{rand(10,20)}}</td>--}}
-            {{--                                        <td>Rp. {{number_format(rand(20000,50000),0,',','.') }}</td>--}}
-            {{--                                        <td class="fw-bold text-success">Rp.{{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
-            {{--                                        <td>{{rand(50,512)}}</td>--}}
-            {{--                                        <td class="fw-bold">Rp. {{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
-            {{--                                    </tr>--}}
-            {{--                                @endfor--}}
+                @endforeach
+                {{-- @for($i = 1; $i<100; $i++)--}}
+                {{-- <tr>--}}
+                {{-- <td>{{$i}}</td>--}}
+                {{-- <td><a href="" class="fw-bold text-primary">Paramex {{$i}}</a></td>--}}
+                {{-- <td>{{rand(50,512)}}</td>--}}
+                {{-- <td>{{rand(50,512)}}</td>--}}
+                {{-- <td>{{rand(50,512)}}</td>--}}
+                {{-- <td class="text-danger fw-bold">{{rand(10,20)}}</td>--}}
+                {{-- <td>Rp. {{number_format(rand(20000,50000),0,',','.') }}</td>--}}
+                {{-- <td class="fw-bold text-success">Rp.{{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
+                {{-- <td>{{rand(50,512)}}</td>--}}
+                {{-- <td class="fw-bold">Rp. {{number_format($i * rand(20000,50000),0,',','.') }}</td>--}}
+                {{-- </tr>--}}
+                {{-- @endfor--}}
         </table>
     </div>
 </x-modal-large>
@@ -539,8 +524,7 @@
         show_data();
     });
 
-    function tambahDataSupplier ()
-    {
+    function tambahDataSupplier() {
         $.ajax({
             type: "POST",
             url: "{{route('storeSupplierWithModal')}}",

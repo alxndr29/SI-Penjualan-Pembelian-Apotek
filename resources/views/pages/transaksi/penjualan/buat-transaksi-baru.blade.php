@@ -291,9 +291,7 @@
                     <label class="form-label" for="alamat">Alamat Pelanggan</label>
                     <textarea class="form-control form-control-lg" id="alamat" name="alamat" rows="3" placeholder="Masukan Alamat Pelanggan"></textarea>
                 </div>
-
             </div>
-        </div>
         </div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
