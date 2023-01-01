@@ -81,7 +81,7 @@
                                         <td class="text-primary fw-bold">PO-{{$item->no_transaction}}</td>
                                         <td>{{$item->supplier->name}}</td>
                                         <td>{{\Carbon\Carbon::parse($item->transaction_date)->format('d M y h:m:s')}}</td>
-                                        <td>Rp. {{number_format($item->total,0,',','.') }}</td>
+                                        <td style="text-align:right;">{{number_format($item->total,0,',','.') }}</td>
                                         <td><span class="badge badge-primary">{{$item->payment_method}}</span></td>
                                         <td>{{$item->employee->name}}</td>
                                         <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" onclick="showPurchaseOrder({{$item->id}})" data-bs-target=".bd-example-modal-lg">Detail Order

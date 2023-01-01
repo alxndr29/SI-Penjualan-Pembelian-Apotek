@@ -75,10 +75,10 @@
                                     <td>{{$items->stok_masuk ?? '0'}}</td>
                                     <td>{{$items->stok_masuk + $items->stok_awal}}</td>
                                     <td class="text-danger fw-bold">{{$items->stok_keluar ?? '0'}}</td>
-                                    <td>Rp. {{number_format($items->harga,0,',','.') }}</td>
-                                    <td class="fw-bold text-success">Rp.{{number_format($items->harga * $items->stok_keluar,0,',','.') }}</td>
+                                    <td style="text-align:right">{{number_format($items->harga,0,',','.') }}</td>
+                                    <td class="fw-bold text-success" style="text-align:right">{{number_format($items->harga * $items->stok_keluar,0,',','.') }}</td>
                                     <td>{{$items->stok_awal + $items->stok_masuk - $items->stok_keluar }}</td>
-                                    <td class="fw-bold">Rp. {{number_format(($items->stok_awal + $items->stok_masuk - $items->stok_keluar) * $items->harga,0,',','.') }}</td>
+                                    <td class="fw-bold" style="text-align:right">{{number_format(($items->stok_awal + $items->stok_masuk - $items->stok_keluar) * $items->harga,0,',','.') }}</td>
                                 </tr>
                                 @endforeach
                                 {{-- @for($i = 1; $i<100; $i++)--}}

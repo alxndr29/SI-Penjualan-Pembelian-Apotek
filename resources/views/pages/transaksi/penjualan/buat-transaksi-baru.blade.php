@@ -215,7 +215,6 @@
 
             </div>
         </div>
-        </div>
         <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
             <button class="btn btn-primary" type="submit">Simpan</button>
@@ -251,10 +250,10 @@
                     <td>{{$items->stok_masuk ?? '0'}}</td>
                     <td>{{$items->stok_masuk + $items->stok_awal}}</td>
                     <td class="text-danger fw-bold">{{$items->stok_keluar ?? '0'}}</td>
-                    <td>Rp. {{number_format($items->harga,0,',','.') }}</td>
+                    <td style="text-align:right;">{{number_format($items->harga,0,',','.') }}</td>
                     <td class="fw-bold text-success">Rp.{{number_format($items->harga * $items->stok_keluar,0,',','.') }}</td>
                     <td>{{$items->stok_awal + $items->stok_masuk - $items->stok_keluar }}</td>
-                    <td class="fw-bold">Rp. {{number_format(($items->stok_awal + $items->stok_masuk - $items->stok_keluar) * $items->harga,0,',','.') }}</td>
+                    <td class="fw-bold" style="text-align:right;">{{number_format(($items->stok_awal + $items->stok_masuk - $items->stok_keluar) * $items->harga,0,',','.') }}</td>
                 </tr>
                 @endforeach
                 {{-- @for($i = 1; $i<100; $i++)--}}
@@ -439,10 +438,10 @@
                 '<tr>' +
                 '<td>' + (i += 1) + '</td>' +
                 '<td>' + v.nama + '</td>' +
-                '<td>Rp.' + addCommas(v.harga + (v.harga * v.keuntungan / 100)) + '</td>' +
+                '<td style="text-align:right;">' + addCommas(v.harga + (v.harga * v.keuntungan / 100)) + '</td>' +
                 '<td>' + v.qty + '</td>' +
                 '<td>' + v.diskon + '</td>' +
-                '<td>Rp. ' + addCommas((v.harga * v.qty) + (v.harga * v.qty * v.keuntungan / 100) - ((v.harga * v.qty * v.keuntungan / 100) * v.qty * v.diskon / 100)) + '</td>' +
+                '<td style="text-align:right;">' + addCommas((v.harga * v.qty) + (v.harga * v.qty * v.keuntungan / 100) - ((v.harga * v.qty * v.keuntungan / 100) * v.qty * v.diskon / 100)) + '</td>' +
                 '<td>' +
                 '<button id="hapus-produk-jual" data-id="' + v.id + '"class="btn btn-outline-secondary txt-secondary btn-sm" type="button" data-bs-original-title="">' +
                 'Remove' +

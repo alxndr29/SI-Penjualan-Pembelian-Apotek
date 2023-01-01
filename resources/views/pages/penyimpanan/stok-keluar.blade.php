@@ -50,8 +50,8 @@
                                     <td><span class="fw-bold badge badge-info">{{$item->Product->Type->name}}</span> - {{$item->Product->Category->name}}</td>
                                     <td>{{$item->SalesOrder->Customer->name}}</td>
                                     <td>{{$item->jumlah}} {{$item->Product->UOM->name}}</td>
-                                    <td>Rp.{{number_format($item->harga * $item->jumlah,0,',','.') }}</td>
-                                    <td>Rp. {{number_format( ($item->harga * $item->jumlah) + ($item->harga * $item->jumlah * $item->Product->keuntungan / 100) - ($item->harga * $item->jumlah * $item->Product->diskon / 100) )}}</td>
+                                    <td style="text-align:right;">{{number_format($item->harga * $item->jumlah,0,',','.') }}</td>
+                                    <td style="text-align:right;">{{number_format( ($item->harga * $item->jumlah) + ($item->harga * $item->jumlah * $item->Product->keuntungan / 100) - ($item->harga * $item->jumlah * $item->Product->diskon / 100) )}}</td>
                                 </tr>
 
                                 @endforeach

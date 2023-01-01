@@ -79,7 +79,7 @@
                                         <td class="text-danger fw-bold">{{$item->no_transaction}}</td>
                                         <td>{{$item->Customer->name}}</td>
                                         <td>{{\Carbon\Carbon::parse($item->transaction_date)->format('d M y h:m:s')}}</td>
-                                        <td>Rp. {{number_format($item->total,0,',','.') }}</td>
+                                        <td style="text-align:right;">{{number_format($item->total,0,',','.') }}</td>
                                         <td><span class="badge badge-primary">{{$item->payment_method}}</span></td>
                                         <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg" onclick="showSalesOrder({{$item->id}})">Detail Data
                                             </button></td>

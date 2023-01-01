@@ -108,7 +108,7 @@
 
                         <div class="d-flex justify-content-between mt-3">
                             <div>
-                                <p class="fw-light">Harga Jual</p>
+                                <p class="fw-light">Harga</p>
                             </div>
                             <div>
                                 <p class="fw-bolder" id="detail-produk-harga">-</p>
@@ -447,7 +447,8 @@
                 $("#detail-produk-jenis").html(v.types_name);
                 $("#detail-produk-kategori").html(v.categories_name);
                 $("#detail-produk-satuan").html(v.uom_name);
-                $("#detail-produk-harga").html(addCommas(v.harga));
+                $("#detail-produk-harga").html('Rp.' + addCommas(v.harga));
+                $("#txt-harga").val(v.harga);
                 if (v.product_type_id != 1) {
                     $("#expired-date").addClass('d-none');
                 } else {
@@ -484,10 +485,10 @@
                 '<td>' + (i += 1) + '</td>' +
                 '<td>' + v.nama + '</td>' +
                 '<td>' + v.expired + '</td>' +
-                '<td>' + v.harga_pembelian + '</td>' +
+                '<td style="text-align:right;">' + addCommas(v.harga_pembelian) + '</td>' +
                 '<td>' + v.qty_pembelian + '</td>' +
                 '<td>' + v.diskon_pembelian + '</td>' +
-                '<td>' + addCommas((v.harga_pembelian * v.qty_pembelian) - (v.harga_pembelian * v.qty_pembelian * v.diskon_pembelian / 100)) + '</td>' +
+                '<td style="text-align:right;">' + addCommas((v.harga_pembelian * v.qty_pembelian) - (v.harga_pembelian * v.qty_pembelian * v.diskon_pembelian / 100)) + '</td>' +
                 '<td>' +
                 '<button id="hapus-produk-jual" data-id="' + (i - 1) + '"class="btn btn-outline-secondary txt-secondary btn-sm" type="button" data-bs-original-title="">' +
                 'Remove' +
