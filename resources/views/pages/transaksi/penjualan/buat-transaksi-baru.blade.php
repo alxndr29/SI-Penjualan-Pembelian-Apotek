@@ -335,9 +335,18 @@
                 } else {
                     $.each(data_produk, function(i, v) {
                         if (v.id == $("#select-product").val()) {
+                            console.log(v.expired_date);
+                            var specific_date = new Date(v.expired_date);
+                            var current_date = new Date();
+                            console.log(specific_date.getTime());
+                            console.log(current_date.getTime());
+                            console.log(v.types_name);
                             if (jmlh > parseInt(v.jumlah_stok)) {
                                 alert('Stok tidak mencukupi. Sisa stok: ' + v.jumlah_stok);
-                            } else {
+                            // } else if (current_date >= specific_date) {
+                            //     alert('produk tdk dapat dijual. Tanggal Expired ' + v.expired_date)
+                            // } 
+                            else {
                                 daftar_produk_jual[counter] = {};
                                 daftar_produk_jual[counter].categories_name = v.categories_name;
                                 daftar_produk_jual[counter].created_at = v.created_at;
