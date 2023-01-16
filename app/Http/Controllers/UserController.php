@@ -21,7 +21,8 @@ class UserController extends Controller
         User::create([
             'name' => $request->get('nama'),
             'email' => $request->get('email'),
-            'password' => bcrypt($request->get('password'))
+            'password' => bcrypt($request->get('password')),
+            'role' => $request->get('role')
         ]);
 
         return redirect()->route('user.index')->with(['success' => 'menambahkan data baru']);
@@ -41,13 +42,22 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $productCategory = productCategory::find($id);
-        $productCategory->update([
-            'product_type_id' => $request->input('jenis'),
-            'name' => $request->input('name'),
-            'description' => $request->input('description')
-        ]);
-        return redirect()->route('kategori-produk.index')->with(['success' => 'merubah data menjadi ' . $request->input('name')]);
+        // $productCategory = productCategory::find($id);
+        // $productCategory->update([
+        //     'product_type_id' => $request->input('jenis'),
+        //     'name' => $request->input('name'),
+        //     'description' => $request->input('description')
+        // ]);
+        $user = User::find($id);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        if($request->get('password')){
+            $user->password = bcrypt($request->get('password'));
+        }
+    
+        $user->role = $request->get('role');
+        $user->save();
+        return redirect()->route('user.index')->with(['success' => 'ubah data']);
     }
 
     public function destroy($id)

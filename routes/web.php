@@ -29,24 +29,23 @@ Route::get('dashboard', [\App\Http\Controllers\HomeController::class, 'dashboard
 Route::prefix('transaksi')->middleware('auth')->group(function () {
     Route::prefix('penjualan')->group(function () {
         Route::resource('transaksi-penjualan', SalesController::class);
-        Route::get('riwayat-transaksi',[SalesController::class,'riwayat_transaksi'])->name('riwayat-penjualan');
-        Route::get('laporan-transaksi/{tglawal?}/{tglakhir?}',[SalesController::class,'viewLaporanBulananPenjualan'])->name('laporan-penjualan');
+        Route::get('riwayat-transaksi',[SalesController::class,'riwayat_transaksi'])->name('riwayat-penjualan')->middleware(['admin']);;
+        Route::get('laporan-transaksi/{tglawal?}/{tglakhir?}',[SalesController::class,'viewLaporanBulananPenjualan'])->name('laporan-penjualan')->middleware(['admin']);;
         Route::get('ambil-data-ajax-produk', [SalesController::class,'ambil_data_ajax_produk'])->name('ambil-data-ajax-produk');
 
     });
     Route::prefix('pembelian')->group(function () {
         Route::resource('transaksi-pembelian', PurchasesController::class);
-
-        Route::get('laporan-transaksi/{tglawal?}/{tglakhir?}',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian');
-        Route::get('laporan-transaksi',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian');
+        Route::get('laporan-transaksi/{tglawal?}/{tglakhir?}',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian')->middleware(['admin']);;
+        Route::get('laporan-transaksi',[PurchasesController::class,'viewLaporanBulananPembelian'])->name('laporan-pembelian')->middleware(['admin']);;
         Route::get('storeWithModal',[PurchasesController::class,'storeWithModal'])->name('storeSupplierWithModal');
     });
 });
 Route::prefix('penyimpanan')->middleware('auth')->group(function (){
-    Route::get('stok-barang/{month?}',[PenyimpananController::class,'stokBarangView'])->name('stok-barang');
+    Route::get('stok-barang/{month?}',[PenyimpananController::class,'stokBarangView'])->name('stok-barang')->middleware(['admin']);
     Route::get('barang-masuk',[PenyimpananController::class,'barangMasukView'])->name('barang-masuk');
     Route::get('barang-keluar',[PenyimpananController::class,'barangKeluarView'])->name('barang-keluar');
-    Route::resource('stock-opname',StockOpnameController::class);
+    Route::resource('stock-opname',StockOpnameController::class)->middleware(['admin']);
 });
 Route::prefix('keuangan')->middleware('auth')->group(function (){
     Route::get('hutang',[KeuanganController::class,'hutangView'])->name('hutang');
@@ -61,7 +60,7 @@ Route::prefix('keuangan')->middleware('auth')->group(function (){
 
     Route::get('cashflow',[KeuanganController::class,'cashFlowView'])->name('cashflow');
 });
-Route::prefix('konfigurasi')->middleware('auth')->group(function () {
+Route::prefix('konfigurasi')->middleware(['auth','admin'])->group(function () {
     Route::prefix('produk')->group(function () {
         Route::resource('daftar-produk', ProductsController::class);
         Route::resource('jenis-produk', ProductTypesController::class);
