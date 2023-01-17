@@ -44,10 +44,10 @@
                                 <select class="form-control form-control-lg" name="role">
                                     @if ($user->role == "Admin")
                                     <option value="Admin" selected>Admin</option>
-                                    <option value="User">User</option>
+                                    <option value="Pegawai">Pegawai</option>
                                     @else
                                     <option value="Admin">Admin</option>
-                                    <option value="User" selected>User</option>
+                                    <option value="Pegawai" selected>Pegawai</option>
                                     @endif
                                 </select>
                             </div>

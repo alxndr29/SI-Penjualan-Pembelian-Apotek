@@ -18,14 +18,20 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        User::create([
-            'name' => $request->get('nama'),
-            'email' => $request->get('email'),
-            'password' => bcrypt($request->get('password')),
-            'role' => $request->get('role')
-        ]);
+        // return $request->all();
+        try{
+            User::create([
+                'name' => $request->get('nama'),
+                'email' => $request->get('email'),
+                'password' => bcrypt($request->get('password')),
+                'role' => $request->get('role')
+            ]);
 
-        return redirect()->route('user.index')->with(['success' => 'menambahkan data baru']);
+            return redirect()->route('user.index')->with(['success' => 'menambahkan data baru']);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+        
 
     }
 

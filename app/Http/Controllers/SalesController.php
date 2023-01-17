@@ -100,12 +100,10 @@ class SalesController extends Controller
                 $harga_ppn = ($value['harga'] * 0.11 + $value['harga']);
                 $hargaperitem = ($harga_ppn * $value['keuntungan'] / 100) + $harga_ppn;
                 $potongan = $hargaperitem - ($hargaperitem * $value['diskon'] / 100);
-
                 $penjualan = $value['qty'] * $hargaperitem;
                 $totalpotongan =  $value['qty'] * $potongan;
 
                 $hpp =  $value['qty'] * $value['harga'];
-
                 $hasilAkhir = $totalpotongan - $hpp;
                 // return $hasilAkhir;
                 // return $penjualan." / ".$totalpotongan;

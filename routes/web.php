@@ -72,10 +72,6 @@ Route::prefix('konfigurasi')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('supplier', SupplierController::class);
 });
 
-
-
-
-
 Route::view('sample-page', 'pages.sample-page')->name('sample-page');
 Route::view('landing-page', 'pages.landing-page')->name('landing-page');
 

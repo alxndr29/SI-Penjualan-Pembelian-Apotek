@@ -107,7 +107,7 @@
                     <label class="form-label">Role</label>
                     <select class="form-select digits" name="role">
                         <option value="Admin" selected>Admin</option>
-                        <option value="User">User</option>
+                        <option value="Pegawai">Pegawai</option>
                     </select>
                 </div>
             </div>
