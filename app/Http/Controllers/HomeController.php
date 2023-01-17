@@ -58,9 +58,10 @@ class HomeController extends Controller
     }
     public function resetProdukExpired(){
         try{
-            DB::statement("update stock_in as si inner join products as p on p.id = si.product_id set si.jumlah = 0 where si.expired < CURDATE() && p.product_id = 1");
+            DB::statement("update stock_in as si inner join products as p on p.id = si.product_id set si.jumlah = 0 where si.expired_date < CURDATE() && p.product_type_id = 1");
+            return redirect('/dashboard')->with('sukses','Sukses');
         }catch(\Exception $e){
-
+            return $e->getMessage();
         }
     }
 }

@@ -1,0 +1,8 @@
+select `m`.`name` AS `bulan`,
+(select sum(`so`.`total`) from `db_apotek_paramel`.`sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Lunas'))) AS `pemasukan`,
+(select sum(`po`.`total`) AS `pengeluaran` from `db_apotek_paramel`.`purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Lunas'))) AS `pengeluaran`,
+(select sum(`po`.`total`) AS `pengeluaran` from `db_apotek_paramel`.`purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Belum Lunas'))) AS `piutang`,
+(select sum(`so`.`total`) from `db_apotek_paramel`.`sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Belum Lunas'))) AS `hutang`,
+(select sum(stock_out.harga * stock_out.keuntungan / 100) as untung_kotor from (sales_order inner join (stock_out inner join products on stock_out.product_id = products.id) on sales_order.id = stock_out.sales_order_id) where month(sales_order.transaction_date) = m.id) AS untung_kotor,
+(select sum( (stock_out.harga ) - ((stock_out.harga * stock_out.diskon / 100) - (stock_out.harga * stock_out.diskon / 100 * 0.11)) ) as rugi_kotor from (sales_order inner join (stock_out inner join products on stock_out.product_id = products.id) on sales_order.id = stock_out.sales_order_id) where month(sales_order.transaction_date) = m.id) AS rugi_kotor
+from `db_apotek_paramel`.`months` `m`;

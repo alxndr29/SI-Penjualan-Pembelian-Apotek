@@ -33,6 +33,8 @@
                                     <th>Pengeluaran</th>
                                     <th>Piutang</th>
                                     <th>Hutang</th>
+                                    <th>Keuntungan</th>
+                                    <th>Laba Kotor</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,6 +49,8 @@
                                     <td style="text-align:right;">{{number_format($item->pengeluaran,0,',','.') }}</td>
                                     <td style="text-align:right;">{{number_format($item->piutang,0,',','.') }}</td>
                                     <td style="text-align:right;">{{number_format($item->hutang,0,',','.') }}</td>
+                                    <td style="text-align:right;">{{number_format(99999,0,',','.') }}</td>
+                                    <td style="text-align:right;">{{number_format(88888,0,',','.') }}</td>
                                 </tr>
                                 @endforeach
                         </table>
