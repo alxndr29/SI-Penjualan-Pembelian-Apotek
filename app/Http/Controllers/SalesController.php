@@ -97,6 +97,18 @@ class SalesController extends Controller
             $sales->save();
 
             foreach ($request->get('data_produk') as $value) {
+                $harga_ppn = ($value['harga'] * 0.11 + $value['harga']);
+                $hargaperitem = ($harga_ppn * $value['keuntungan'] / 100) + $harga_ppn;
+                $potongan = $hargaperitem - ($hargaperitem * $value['diskon'] / 100);
+
+                $penjualan = $value['qty'] * $hargaperitem;
+                $totalpotongan =  $value['qty'] * $potongan;
+
+                $hpp =  $value['qty'] * $value['harga'];
+
+                $hasilAkhir = $totalpotongan - $hpp;
+                // return $hasilAkhir;
+                // return $penjualan." / ".$totalpotongan;
                 DB::table('stock_out')->insert([
                     'sales_order_id' => $sales->id,
                     'product_id' => $value['id'],
@@ -106,7 +118,9 @@ class SalesController extends Controller
                     'harga' => $value['harga'],
                     'keuntungan' => $value['keuntungan'],
                     'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
+                    'updated_at' => Carbon::now(),
+                    'laba_keuntungan' => ($value['harga'] * $value['keuntungan'] / 100),
+                    'laba_kotor' => $hasilAkhir
                 ]);
                 if ($value['product_type_id'] == "1") {
                     $stok_in = StockIN::where('product_id', $value['id'])->orderBy('expired_date', 'asc')->get();
