@@ -87,6 +87,15 @@
                                 <p class="fw-bolder" id="detail-produk-harga">-</p>
                             </div>
                         </div>
+
+                        <div class="d-flex justify-content-between mt-3">
+                            <div>
+                                <p class="fw-light">Expired Date</p>
+                            </div>
+                            <div>
+                                <p class="fw-bolder" id="detail-produk-expired">-</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -343,9 +352,10 @@
                             console.log(v.types_name);
                             if (jmlh > parseInt(v.jumlah_stok)) {
                                 alert('Stok tidak mencukupi. Sisa stok: ' + v.jumlah_stok);
-                            // } else if (current_date >= specific_date) {
-                            //     alert('produk tdk dapat dijual. Tanggal Expired ' + v.expired_date)
-                            // } 
+                            }
+                            else if (current_date >= specific_date && v.types_name == "Type A") {
+                                alert('Produk tdk dapat dijual. Tanggal Expired ' + v.expired_date)
+                            } 
                             else {
                                 daftar_produk_jual[counter] = {};
                                 daftar_produk_jual[counter].categories_name = v.categories_name;
@@ -400,7 +410,6 @@
             });
         });
     });
-
     function get_data() {
         $("#select-product").append('<option value="" selected>' + 'Pilih Produk' + '</option>');
         $.ajax({
@@ -418,7 +427,6 @@
             }
         });
     }
-
     function show_detail_produk(id) {
         $.each(data_produk, function(i, v) {
             if (v.id == id) {
@@ -426,10 +434,12 @@
                 $("#detail-produk-kategori").html(v.categories_name);
                 $("#detail-produk-satuan").html(v.uom_name);
                 $("#detail-produk-harga").html('Rp.' + addCommas(v.harga));
+                if (v.types_name == "Type A") {
+                    $("#detail-produk-expired").html(v.expired_date);
+                }
             }
         });
     }
-
     var total_harga_barang = 0;
     var grand_total = 0;
     var ppn = 0;

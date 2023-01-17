@@ -56,4 +56,11 @@ class HomeController extends Controller
             ->sum('total');
         return view('dashboard.index', compact('products', 'productByExpiredDate', 'jumlahProdukTerjual', 'pendapatan', 'jumlahProdukStokHabis'));
     }
+    public function resetProdukExpired(){
+        try{
+            DB::statement("update stock_in as si inner join products as p on p.id = si.product_id set si.jumlah = 0 where si.expired < CURDATE() && p.product_id = 1");
+        }catch(\Exception $e){
+
+        }
+    }
 }
