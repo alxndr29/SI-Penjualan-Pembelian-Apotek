@@ -108,19 +108,19 @@ class StockOpnameController extends Controller
                                     $selisih = $selisih - $stok;
                                 } else { }
                             } else if ($selisih > 0) {
-                                $stok = (int) $value2->jumlah;
-                                if ($stok != 0 && ($stok >= $selisih)) {
-                                    $stok_in = StockIN::where('id', '=', $value2->id)->first();
-                                    $stok_in->jumlah = ($stok + $selisih);
-                                    $stok_in->save();
-                                    $selisih = $stok + $selisih;
-                                    break;
-                                } else if ($stok != 0 && ($stok < $selisih)) {
-                                    $stok_in = StockIN::where('product_id', '=', $value2['id'])->where('id', '=', $value2->id)->first();
-                                    $stok_in->jumlah = 0;
-                                    $stok_in->save();
-                                    $selisih = $selisih + $stok;
-                                } else { }
+                                // $stok = (int) $value2->jumlah;
+                                // if ($stok != 0 && ($stok >= $selisih)) {
+                                //     $stok_in = StockIN::where('id', '=', $value2->id)->first();
+                                //     $stok_in->jumlah = ($stok + $selisih);
+                                //     $stok_in->save();
+                                //     $selisih = $stok + $selisih;
+                                //     break;
+                                // } else if ($stok != 0 && ($stok < $selisih)) {
+                                //     $stok_in = StockIN::where('product_id', '=', $value2['id'])->where('id', '=', $value2->id)->first();
+                                //     $stok_in->jumlah = 0;
+                                //     $stok_in->save();
+                                //     $selisih = $selisih + $stok;
+                                // } else { }
                             } else { }
                         }
                     }
@@ -331,19 +331,19 @@ class StockOpnameController extends Controller
                                 $selisih = $selisih - $stok;
                             } else { }
                         } else if ($selisih > 0) {
-                            $stok = (int) $value2->jumlah;
-                            if ($stok != 0 && ($stok >= $selisih)) {
-                                $stok_in = StockIN::where('id', '=', $value2->id)->first();
-                                $stok_in->jumlah = ($stok + $selisih);
-                                $stok_in->save();
-                                $selisih = $stok + $selisih;
-                                break;
-                            } else if ($stok != 0 && ($stok < $selisih)) {
-                                $stok_in = StockIN::where('product_id', '=', $value2['id'])->where('id', '=', $value2->id)->first();
-                                $stok_in->jumlah = 0;
-                                $stok_in->save();
-                                $selisih = $selisih + $stok;
-                            } else { }
+                            // $stok = (int) $value2->jumlah;
+                            // if ($stok != 0 && ($stok >= $selisih)) {
+                            //     $stok_in = StockIN::where('id', '=', $value2->id)->first();
+                            //     $stok_in->jumlah = ($stok + $selisih);
+                            //     $stok_in->save();
+                            //     $selisih = $stok + $selisih;
+                            //     break;
+                            // } else if ($stok != 0 && ($stok < $selisih)) {
+                            //     $stok_in = StockIN::where('product_id', '=', $value2['id'])->where('id', '=', $value2->id)->first();
+                            //     $stok_in->jumlah = 0;
+                            //     $stok_in->save();
+                            //     $selisih = $selisih + $stok;
+                            // } else { }
                         } else { }
                     }
                 }
