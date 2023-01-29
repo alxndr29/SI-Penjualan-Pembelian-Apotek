@@ -46,6 +46,8 @@ Route::prefix('penyimpanan')->middleware('auth')->group(function () {
     Route::get('barang-masuk', [PenyimpananController::class, 'barangMasukView'])->name('barang-masuk');
     Route::get('barang-keluar', [PenyimpananController::class, 'barangKeluarView'])->name('barang-keluar');
     Route::resource('stock-opname', StockOpnameController::class)->middleware(['admin']);
+    Route::post('verifikasiOpname', [StockOpnameController::class, 'verifikasiOpname'])->name('verifikasi-opname')->middleware(['admin']);
+    Route::post('closing-stock', [StockOpnameController::class, 'closingStock'])->name('closing-stock')->middleware(['admin']);
 });
 Route::prefix('keuangan')->middleware('auth')->group(function () {
     Route::get('hutang', [KeuanganController::class, 'hutangView'])->name('hutang');

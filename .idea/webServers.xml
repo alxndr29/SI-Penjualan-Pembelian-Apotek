@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="3e0e9f15-0d44-4f8e-afd1-02476432abf3" name="MSGLOW" url="http://beautyyglow.com">
+        <fileTransfer rootFolder="/domains/beautyyglow.com" host="beautyyglow.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

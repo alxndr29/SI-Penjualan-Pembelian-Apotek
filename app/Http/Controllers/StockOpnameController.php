@@ -23,7 +23,6 @@ class StockOpnameController extends Controller
         $products = DB::table('get_product')->get();
         return view('pages.penyimpanan.stock-opname.create', compact('products'));
     }
-
     public function store(Request $request)
     {
         DB::beginTransaction();
@@ -150,7 +149,70 @@ class StockOpnameController extends Controller
             return $e->getMessage();
         }
     }
+    public function verifikasiOpname(Request $request)
+    {
+        $month = Carbon::parse($request->date)->format('m');
+        $year = Carbon::parse($request->date)->format('Y');
+        $listMonth = [
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember'
+        ];
 
+        if($month == 01){
+            $lastMonth = 12;
+            $lastYear = $year - 1;
+        }
+        else{
+            $lastMonth = $month -1 ;
+        }
+
+
+        $stockProduct = DB::table('products as p')
+            ->select(
+                'p.nama','p.id as product_id',
+                db::raw("(SELECT DOX.stock_akhir FROM detail_stock_opname AS DOX WHERE dox.product_id = p.id AND YEAR(dox.created_at) = " . $lastYear . " AND MONTH(dox.created_at) = " . $lastMonth  . ") AS stock_last_month"),
+                db::raw("(SELECT SUM(si.stok_masuk) FROM stock_in AS si INNER JOIN purchase_order AS po ON si.purchase_order_id = po.id WHERE po.state = 'Lunas' AND si.product_id = p.id AND MONTH(po.transaction_date) = '" . $month . "' AND YEAR(po.transaction_date) = " . $year . ") AS stok_masuk"),
+                db::raw("(SELECT SUM(s_out.jumlah) FROM stock_out AS s_out INNER JOIN sales_order AS so ON s_out.sales_order_id = so.id WHERE so.state = 'Lunas' AND s_out.product_id = p.id AND MONTH(so.transaction_date) = '" . $month . "' AND YEAR(so.transaction_date) = " . $year . ") AS stok_keluar"),
+            )->get();
+
+        return response()->json([
+            'status' => 200,
+            'data' => view('pages.penyimpanan.stock-opname._verifikasiOpnameModal',compact('stockProduct'))->render(),
+            'stockProduct' => $stockProduct,
+            'bulan' => $listMonth[$month]
+        ]);
+    }
+
+    public function closingStock(Request $request)
+    {
+        $stockOpname = DB::table('detail_stock_opname')->where('stock_opname_id', $request->stock_opname_id)->get();
+
+        DB::table('stock_opname')
+            ->where('id', $request->stock_opname_id)
+            ->update([
+                'state_closing' => 1
+            ]);
+        foreach ($request->stok_akhir as $key => $value)
+        {
+            DB::table('detail_stock_opname')
+                ->where('product_id', $key)
+                ->where('stock_opname_id', $request->stock_opname_id)
+                ->update([
+                    'stock_akhir' => $value
+                ]);
+        }
+        return redirect()->route('stock-opname.index')->with(['success' => 'Berhasil Closing Stock']);
+    }
     public function edit($id)
     {
         // $data = DB::table('detail_stock_opname as dso')
@@ -167,7 +229,7 @@ class StockOpnameController extends Controller
         //         db::raw('(SELECT si.harga FROM stock_in AS si WHERE si.product_id = p.id AND si.jumlah > 0 ORDER BY CASE WHEN p.product_type_id = 1 then si.created_at END ASC, CASE WHEN p.product_type_id = 2 THEN si.expired_date END ASC LIMIT 1) AS harga'),
         //         db::raw("(SELECT SUM(si.jumlah) FROM stock_in AS si WHERE si.product_id = dso.product_id) AS stok_barang")
         //     )->get();
-        $data = StockOpname::find($id)->first();
+        $data = StockOpname::find($id);
         // $data2 = StockOpname::join('detail_stock_opname', 'stock_opname.id', '=', 'detail_stock_opname.stock_opname_id')
         //     ->join('products', 'products.id', 'detail_stock_opname.product_id')
         //     ->select('products.nama','products.id as idproducts', 'detail_stock_opname.*')

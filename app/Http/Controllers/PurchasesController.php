@@ -81,6 +81,7 @@ class PurchasesController extends Controller
                 $stock_in->jumlah = $value['qty_pembelian'];
                 $stock_in->diskon = $value['diskon_pembelian'];
                 $stock_in->harga = $value['harga_pembelian'];
+                $stock_in->stok_masuk = $value['qty_pembelian'];
                 $stock_in->harga_ratarata = ($avg->jmlhharga + ($value['harga_pembelian'] * $value['qty_pembelian'])) / ($avg->jmlh + $value['qty_pembelian']);
                 if ($stk) {
                     $stock_in->total_stok = $stk->jumlah + $value['qty_pembelian'];

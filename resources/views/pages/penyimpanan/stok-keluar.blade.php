@@ -34,6 +34,8 @@
                                     <th>Customer</th>
                                     <th>Jumlah Stok Dikeluarkan</th>
                                     <th>Harga</th>
+                                    <th>Diskon</th>
+                                    <th>Keuntungan</th>
                                     <th>Grand Total</th>
                                 </tr>
                             </thead>
@@ -50,7 +52,9 @@
                                     <td><span class="fw-bold badge badge-info">{{$item->Product->Type->name}}</span> - {{$item->Product->Category->name}}</td>
                                     <td>{{$item->SalesOrder->Customer->name}}</td>
                                     <td>{{$item->jumlah}} {{$item->Product->UOM->name}}</td>
-                                    <td style="text-align:right;">{{number_format($item->harga * $item->jumlah,0,',','.') }}</td>
+                                    <td style="text-align:right;">Rp. {{number_format($item->harga,0,',','.') }}</td>
+                                    <td style="text-align:right;">{{number_format($item->diskon,0,',','.') }}</td>
+                                    <td style="text-align:right;">{{number_format($item->keuntungan,0,',','.') }}</td>
                                     <td style="text-align:right;">{{number_format( ($item->harga * $item->jumlah) + ($item->harga * $item->jumlah * $item->Product->keuntungan / 100) - ($item->harga * $item->jumlah * $item->Product->diskon / 100) )}}</td>
                                 </tr>
 

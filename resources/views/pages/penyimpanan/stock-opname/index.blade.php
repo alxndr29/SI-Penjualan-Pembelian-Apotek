@@ -68,14 +68,21 @@
                                     <td>{{$item->tanggal_mulai}}</td>
                                     <td>{{$item->tanggal_berakhir}}</td>
                                     <td>{{$item->operator}}</td>
-                                    <td><span class="badge badge-{{$item->state == 'Draft' ? 'warning' : 'success'}}">{{$item->state}}</span></td>
+                                    <td><span class="badge badge-{{$item->state == 'Draft' ? 'warning text-dark' : 'success'}}">{{$item->state}}</span></td>
                                     <td>
-                                        @if ($item->state == "Draft")
-                                        <a href="{{ route('stock-opname.edit',$item->id) }}" class="btn btn-info btn-sm" type="submit">
-                                            Lanjutkan Pemeriksaaan
-                                        </a>
+
+                                        @if($item->state_closing == 0)
+                                            <a href="{{ route('stock-opname.edit',$item->id) }}" class="btn  btn-sm btn-{{$item->state == "Draft" ? 'info' : 'danger'}}" type="submit" >
+                                                @if ($item->state == "Draft")
+                                                    Lanjutkan Pemeriksaaan
+                                                @elseif($item->state == "Finish")
+                                                    Closing Stock
+                                                @endif
+                                            </a>
                                         @endif
-                                        <button class="btn btn-outline-primary btn-sm me-2" onClick="modalOpname({{$item->id}})">Detail Barang</button>
+
+
+                                        <button class="btn btn-primary btn-sm me-2" onClick="modalOpname({{$item->id}})">Detail Barang</button>
                                     </td>
                                 </tr>
 
@@ -140,7 +147,7 @@
                         </tr>
                     </thead>
                     <tbody id="isi-tabel">
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -156,7 +163,7 @@
 <script type="text/javascript">
     // A $( document ).ready() block.
     $(document).ready(function() {
-       
+
     });
 
     function modalOpname(id) {
@@ -185,7 +192,7 @@
                 console.log(response);
             }
         });
-        
+
     }
 </script>
 @endsection
