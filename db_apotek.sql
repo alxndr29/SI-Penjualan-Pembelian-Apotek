@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 21 Des 2022 pada 19.32
+-- Waktu pembuatan: 17 Jan 2023 pada 14.40
 -- Versi server: 5.7.33
 -- Versi PHP: 8.1.3
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_apotek_paramel`
+-- Database: `db_apotek`
 --
 
 -- --------------------------------------------------------
@@ -44,7 +44,7 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `name`, `address`, `telephone`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Pelanggan Umum', NULL, NULL, 1, '2022-11-20 02:19:05', '2022-11-20 02:19:07', NULL),
-(3, 'Alexander Evan', 'Jln. Pesona Surya Milenia', NULL, 1, '2022-11-20 02:19:09', '2022-10-25 03:32:40', NULL),
+(3, 'Alexander Evan', 'Jln. Pesona Surya Milenia', 1234, 1, '2022-11-20 02:19:09', '2023-01-16 07:24:35', NULL),
 (4, 'Gusti Bagus Wahyu', 'Jln. Rungkut Mejoyo Selatan V No. 3', 5555, 1, '2022-11-20 02:19:07', '2022-11-20 02:19:08', NULL),
 (5, 'rwerr', 'sada', 1231, 1, '2022-12-21 11:28:57', '2022-12-21 11:30:05', '2022-12-21 19:30:05');
 
@@ -93,6 +93,8 @@ CREATE TABLE `get_cashflow` (
 ,`pengeluaran` double
 ,`piutang` double
 ,`hutang` double
+,`laba_keuntungan` decimal(41,0)
+,`laba_kotor` decimal(41,0)
 );
 
 -- --------------------------------------------------------
@@ -245,8 +247,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_type_id`, `product_category_id`, `product_uom_id`, `nama`, `min_stock`, `diskon`, `keuntungan`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(2, 2, 2, 2, 'Paracetamol 1000Mg', 40, 10, 100, '2022-11-18 13:18:29', '2022-12-21 11:31:56', NULL),
-(4, 1, 1, 1, 'Neozep', 1, 1, 1, NULL, NULL, NULL);
+(2, 2, 2, 2, 'Paracetamol 1000Mg', 40, 10, 20, '2022-11-18 13:18:29', '2022-12-21 11:31:56', NULL),
+(4, 1, 1, 1, 'Neozep', 15, 10, 20, '2023-01-17 12:55:07', '2023-01-17 12:55:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -347,13 +349,7 @@ CREATE TABLE `purchase_order` (
 --
 
 INSERT INTO `purchase_order` (`id`, `supplier_id`, `employe_id`, `no_transaction`, `transaction_date`, `payment_method`, `tanggal_jatuh_tempo`, `tanggal_pelunasan`, `total`, `state`, `created_at`, `updated_at`) VALUES
-(45, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 108900, 'Lunas', '2022-12-11 06:07:50', '2022-12-11 06:07:50'),
-(46, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 245025, 'Lunas', '2022-12-11 06:08:48', '2022-12-11 06:08:48'),
-(55, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 245025, 'Lunas', '2022-12-11 06:14:56', '2022-12-11 06:14:56'),
-(56, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 68062.5, 'Lunas', '2022-12-11 06:16:18', '2022-12-11 06:16:18'),
-(57, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 108900, 'Lunas', '2022-12-11 06:17:36', '2022-12-11 06:17:36'),
-(58, 1, 1, '1234567', '2022-12-11 00:00:00', 'Tunai', NULL, NULL, 218350, 'Lunas', '2022-12-11 06:18:07', '2022-12-11 06:18:07'),
-(59, 1, 1, 'INV//-PURCHASE-592022-12-21', '2022-12-21 00:00:00', 'Tunai', NULL, NULL, 6589, 'Lunas', '2022-12-21 11:25:16', '2022-12-21 11:25:16');
+(1, 1, 1, 'INV//-PURCHASE-1-2023-01-17', '2023-01-17 00:00:00', 'Tunai', NULL, NULL, 121000, 'Lunas', '2023-01-17 06:20:24', '2023-01-17 06:20:24');
 
 -- --------------------------------------------------------
 
@@ -381,12 +377,7 @@ CREATE TABLE `sales_order` (
 --
 
 INSERT INTO `sales_order` (`id`, `customer_id`, `employee_id`, `no_transaction`, `transaction_date`, `payment_method`, `no_bpjs`, `total`, `state`, `tanggal_pelunasan`, `created_at`, `updated_at`) VALUES
-(16, 1, 1, '1', '2022-12-11 13:59:34', 'Cash', 'Tidak Ada', 110000, 'Lunas', NULL, '2022-12-11 05:59:34', '2022-12-11 05:59:34'),
-(17, 3, 1, '1', '2022-12-11 14:03:37', 'Cash', 'Tidak Ada', 123750, 'Lunas', NULL, '2022-12-11 06:03:37', '2022-12-11 06:03:37'),
-(18, 1, 1, '1', '2022-12-11 14:08:15', 'Cash', 'Tidak Ada', 110000, 'Lunas', NULL, '2022-12-11 06:08:15', '2022-12-11 06:08:15'),
-(19, 1, 1, '1', '2022-12-11 14:15:51', 'Cash', 'Tidak Ada', 123750, 'Lunas', NULL, '2022-12-11 06:15:51', '2022-12-11 06:15:51'),
-(20, 4, 1, '1', '2022-12-21 19:01:59', 'Cash', 'Tidak Ada', 86120.1, 'Lunas', NULL, '2022-12-21 11:01:59', '2022-12-21 11:01:59'),
-(22, 4, 1, 'INV//-SALES-212022-12-21', '2022-12-21 19:24:53', 'Cash', 'Tidak Ada', 51915.6, 'Lunas', NULL, '2022-12-21 11:24:53', '2022-12-21 11:24:53');
+(5, 1, 1, 'INV//-SALES-1-2023-01-17', '2023-01-17 14:32:55', 'Cash', 'Tidak Ada', 66550, 'Lunas', NULL, '2023-01-17 06:32:55', '2023-01-17 06:32:55');
 
 -- --------------------------------------------------------
 
@@ -400,6 +391,7 @@ CREATE TABLE `stock_in` (
   `product_id` bigint(20) UNSIGNED NOT NULL,
   `expired_date` date DEFAULT NULL,
   `jumlah` int(11) NOT NULL,
+  `stok_masuk` int(11) DEFAULT NULL,
   `diskon` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -412,15 +404,8 @@ CREATE TABLE `stock_in` (
 -- Dumping data untuk tabel `stock_in`
 --
 
-INSERT INTO `stock_in` (`id`, `purchase_order_id`, `product_id`, `expired_date`, `jumlah`, `diskon`, `harga`, `created_at`, `updated_at`, `harga_ratarata`, `total_stok`) VALUES
-(18, 45, 2, '2022-12-11', 0, 1, 10000, '2022-12-11 06:07:50', '2022-12-11 06:08:15', 10000, 10),
-(20, 55, 2, '2022-12-11', 6, 1, 15000, '2022-12-11 06:14:56', '2022-12-21 11:24:53', 13000, 15),
-(21, 56, 2, '2022-12-11', 5, 1, 12500, '2022-12-11 06:16:18', '2022-12-11 06:16:18', 12916.666666667, 15),
-(22, 57, 4, '2022-12-11', 4, 1, 10000, '2022-12-11 06:17:36', '2022-12-21 11:24:53', 10000, 10),
-(23, 58, 4, '2022-12-11', 10, 1, 15000, '2022-12-11 06:18:07', '2022-12-11 06:18:07', 12500, 20),
-(24, 58, 2, '2022-12-11', 5, 0, 10000, '2022-12-11 06:18:07', '2022-12-11 06:18:07', 12500, 10),
-(25, 59, 2, '2022-12-21', 1, 1, 1000, '2022-12-21 11:25:16', '2022-12-21 11:25:16', 12029.411764706, 6),
-(26, 59, 4, '2022-12-22', 2, 0, 2500, '2022-12-21 11:25:16', '2022-12-21 11:25:16', 12656.25, 12);
+INSERT INTO `stock_in` (`id`, `purchase_order_id`, `product_id`, `expired_date`, `jumlah`, `stok_masuk`, `diskon`, `harga`, `created_at`, `updated_at`, `harga_ratarata`, `total_stok`) VALUES
+(1, 1, 2, '2023-01-17', 5, NULL, 0, 11000, '2023-01-17 06:20:24', '2023-01-17 06:32:55', 11000, 10);
 
 -- --------------------------------------------------------
 
@@ -454,6 +439,8 @@ CREATE TABLE `stock_out` (
   `keuntungan` int(11) NOT NULL,
   `diskon` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
+  `laba_keuntungan` int(20) NOT NULL,
+  `laba_kotor` int(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -462,15 +449,8 @@ CREATE TABLE `stock_out` (
 -- Dumping data untuk tabel `stock_out`
 --
 
-INSERT INTO `stock_out` (`id`, `sales_order_id`, `product_id`, `jumlah`, `keuntungan`, `diskon`, `harga`, `created_at`, `updated_at`) VALUES
-(1, 16, 2, 10, 100, 10, 10000, '2022-12-11 05:59:34', '2022-12-11 05:59:34'),
-(2, 17, 2, 5, 100, 10, 15000, '2022-12-11 06:03:37', '2022-12-11 06:03:37'),
-(3, 18, 2, 10, 100, 10, 10000, '2022-12-11 06:08:15', '2022-12-11 06:08:15'),
-(4, 19, 2, 5, 100, 10, 15000, '2022-12-11 06:15:51', '2022-12-11 06:15:51'),
-(5, 20, 2, 2, 100, 10, 15000, '2022-12-21 11:01:59', '2022-12-21 11:01:59'),
-(6, 20, 4, 3, 1, 1, 10000, '2022-12-21 11:01:59', '2022-12-21 11:01:59'),
-(9, 22, 2, 1, 100, 10, 15000, '2022-12-21 11:24:53', '2022-12-21 11:24:53'),
-(10, 22, 4, 2, 1, 1, 10000, '2022-12-21 11:24:53', '2022-12-21 11:24:53');
+INSERT INTO `stock_out` (`id`, `sales_order_id`, `product_id`, `jumlah`, `keuntungan`, `diskon`, `harga`, `laba_keuntungan`, `laba_kotor`, `created_at`, `updated_at`) VALUES
+(1, 5, 2, 5, 20, 10, 11000, 2200, 10934, '2023-01-17 06:32:55', '2023-01-17 06:32:55');
 
 -- --------------------------------------------------------
 
@@ -514,17 +494,18 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `role` enum('Admin','Pegawai') COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Username A', 'usera@usera.com', '2022-10-25 11:24:34', '$2y$10$UR1uHRLZaJ189lWbmzq3AOhKVmf4ZUEfOw1oaRFwhsxY/Ej5bRema', '123', NULL, NULL, NULL),
-(2, 'bagus', 'qwe@gmail.com', NULL, '$2y$10$fPOwjReqqwpYpCajq8Pqwe9e8m3Eibt.n.VHBTfXhdk2LhXm8ccwq', NULL, '2022-10-25 07:12:42', '2022-10-25 07:12:42', NULL),
-(3, 'Evan', 'k@k.com', NULL, '$2y$10$XdjC46c/0Vi0fMvDtZbkM.F15oFMIrJKC2csaSLznBo3Xc1.Cuo8q', NULL, '2022-12-21 11:14:17', '2022-12-21 11:14:17', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`, `role`) VALUES
+(1, 'Username A', 'usera@usera.com', '2022-10-25 11:24:34', '$2y$10$UR1uHRLZaJ189lWbmzq3AOhKVmf4ZUEfOw1oaRFwhsxY/Ej5bRema', 'BjXLTmsSjOvO0t6do3OEM7JtbTqO3OiDcrlcZO6qTHt6TK12BHSHNDIb10wh', '2023-01-15 16:00:00', '2023-01-17 04:27:31', NULL, 'Admin'),
+(2, 'Bagus Nicolas', 'bagus@gmail.com', NULL, '$2y$10$m0aCwqvZ28Jb0pwBBZF2leRJnlvtVSvGMPhFtJyamHDaKVzX5tKSG', NULL, '2022-10-25 07:12:42', '2023-01-16 06:39:25', NULL, 'Admin'),
+(3, 'Evan', 'k@k.com', NULL, '$2y$10$XdjC46c/0Vi0fMvDtZbkM.F15oFMIrJKC2csaSLznBo3Xc1.Cuo8q', NULL, '2022-12-21 11:14:17', '2023-01-16 06:35:46', '2023-01-16 06:35:46', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -533,7 +514,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 DROP TABLE IF EXISTS `get_cashflow`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `get_cashflow`  AS SELECT `m`.`name` AS `bulan`, (select sum(`so`.`total`) from `sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Lunas'))) AS `pemasukan`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Lunas'))) AS `pengeluaran`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Belum Lunas'))) AS `piutang`, (select sum(`so`.`total`) from `sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Belum Lunas'))) AS `hutang` FROM `months` AS `m`  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `get_cashflow`  AS SELECT `m`.`name` AS `bulan`, (select sum(`so`.`total`) from `sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Lunas'))) AS `pemasukan`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Lunas'))) AS `pengeluaran`, (select sum(`po`.`total`) AS `pengeluaran` from `purchase_order` `po` where ((month(`po`.`transaction_date`) = `m`.`id`) and (`po`.`state` = 'Belum Lunas'))) AS `piutang`, (select sum(`so`.`total`) from `sales_order` `so` where ((month(`so`.`transaction_date`) = `m`.`id`) and (`so`.`state` = 'Belum Lunas'))) AS `hutang`, (select sum(`stock_out`.`laba_keuntungan`) AS `laba_keuntungan` from (`sales_order` join (`stock_out` join `products` on((`stock_out`.`product_id` = `products`.`id`))) on((`sales_order`.`id` = `stock_out`.`sales_order_id`))) where (month(`sales_order`.`transaction_date`) = `m`.`id`)) AS `laba_keuntungan`, (select sum(`stock_out`.`laba_kotor`) AS `laba_kotor` from (`sales_order` join (`stock_out` join `products` on((`stock_out`.`product_id` = `products`.`id`))) on((`sales_order`.`id` = `stock_out`.`sales_order_id`))) where (month(`sales_order`.`transaction_date`) = `m`.`id`)) AS `laba_kotor` FROM `months` AS `m`;
 
 -- --------------------------------------------------------
 
@@ -689,7 +670,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT untuk tabel `detail_stock_opname`
 --
 ALTER TABLE `detail_stock_opname`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -713,7 +694,7 @@ ALTER TABLE `months`
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `product_categories`
@@ -737,19 +718,19 @@ ALTER TABLE `product_uom`
 -- AUTO_INCREMENT untuk tabel `purchase_order`
 --
 ALTER TABLE `purchase_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `sales_order`
 --
 ALTER TABLE `sales_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `stock_in`
 --
 ALTER TABLE `stock_in`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `stock_opname`
@@ -761,7 +742,7 @@ ALTER TABLE `stock_opname`
 -- AUTO_INCREMENT untuk tabel `stock_out`
 --
 ALTER TABLE `stock_out`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `suppliers`
